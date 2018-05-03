@@ -16,7 +16,26 @@
 #include <libconfig.h++>
 #include <signal.h>
 #include "bd.h"
+#include <time.h>
+#include <boost/log/trivial.hpp>
+#include <boost/log/sources/severity_logger.hpp>
+#include <boost/log/utility/setup/file.hpp>
+#include <boost/log/utility/setup/console.hpp>
+#include <boost/log/expressions.hpp>
+#include <boost/log/utility/setup/common_attributes.hpp>
+#include <boost/log/keywords/format.hpp>
+#include <boost/log/support/date_time.hpp>
+#include <boost/thread.hpp>
+namespace logging = boost::log;
+namespace sinks = boost::log::sinks;
+namespace src = boost::log::sources;
+namespace expr = boost::log::expressions;
+namespace attrs = boost::log::attributes;
+namespace keywords = boost::log::keywords;
+using namespace logging::trivial;
+src::severity_logger< severity_level > lg;
 vector<std::string>* table_name;
+vector<std::string>* paths;
 using namespace std;
 using namespace rapidjson;
 PGconn* conn;
@@ -152,6 +171,10 @@ void pars(string mass_from_js)
                 {
                     string new_pcap=val.GetString();
                     pcap=pcap+new_pcap.substr(36,string::npos);
+                    while(pcap.find(" ")!=string::npos)
+                    {
+                        pcap.erase(pcap.begin()+pcap.find(" "));
+                    }
                     data.at(data_for_search_iter)=pcap;
                 }
             }
@@ -161,18 +184,74 @@ void pars(string mass_from_js)
     data_ln.push_back(data);
 }
 
+bool myfunction (file_data i,file_data j) {
+    return (i.file_mtime>j.file_mtime);
+}
+
+vector<file_data> dmpfile_lookup(string absolute_path)
+{
+    DIR* dir;
+    struct dirent* entry;
+    struct stat sb;
+    vector<file_data> vdata_file;
+    dir=opendir(absolute_path.c_str());
+        if(dir==NULL){
+            BOOST_LOG_SEV(lg, error) <<"Can not open folder ";
+            return vdata_file;
+        }
+        while ((entry=readdir(dir))!=NULL)
+        {
+            std::string str_file=entry->d_name;
+            std::string str_dir_file=absolute_path+"/"+str_file;
+            //если в папке есть файлы cмотрим какие
+            if(str_file!="."&&str_file!="..")
+            {
+                file_data time_name_file;
+                stat((char*)str_dir_file.c_str(),&sb);
+                //если в папке есть файлы расширения .cdr заносим в буфер
+                if(S_ISREG(sb.st_mode)&&str_file=="dmp")
+                {
+                    time_name_file.file_mtime=sb.st_mtim.tv_sec;
+                    time_name_file.name=str_dir_file;
+                    vdata_file.push_back(time_name_file);
+                }
+            }
+        }
+        closedir(dir);
+    //сортируем в порядке времени изменения файла
+    std::sort (vdata_file.begin(), vdata_file.end(), myfunction);
+    return vdata_file;
+}
+
+
+void finish_prog_func(int sig){
+    bd->finish();
+    exit(0);
+}
+
+void sig_abort_func(int sig){
+    bd->finish();
+    exit(0);
+}
+
 void init()
 {
     //open config file
     libconfig::Config conf;
     try
     {
-        conf.readFile("./json_parser.conf");
+        conf.readFile("/opt/svyazcom/etc/dmp_sca.conf");
     }
     catch(libconfig::ParseException e)
     {
-        std::cout<<"Can not open file";
+        BOOST_LOG_SEV(lg, error) <<"Can not open file";
     }
+    //load paths
+    paths=new vector<string>;
+    paths->push_back(conf.lookup("application.paths.sourceDir"));
+    paths->push_back(conf.lookup("application.paths.doneDir"));
+    paths->push_back(conf.lookup("application.paths.uploadDir"));
+    paths->push_back(conf.lookup("application.paths.logDir"));
     //load database data from config file
     bd=new BD(
               conf.lookup("application.dataBase.dbname"),
@@ -195,56 +274,22 @@ void init()
     {
         data_for_search->push_back(conf.lookup("application.data_for_search")[i]);
     }
-}
 
-void finish_prog_func(int sig){
-    bd->finish();
-    exit(0);
-}
+    //std::string log_path_str= conf.lookup("application.paths.logDir");
 
-void sig_abort_func(int sig){
-    bd->finish();
-    exit(0);
-}
-
-bool myfunction (file_data i,file_data j) {
-    return (i.file_mtime>j.file_mtime);
-}
-
-vector<file_data> dmpfile_lookup(string absolute_path)
-{
-    DIR* dir;
-    struct dirent* entry;
-    struct stat sb;
-    vector<file_data> vdata_file;
-    dir=opendir(absolute_path.c_str());
-        if(dir==NULL){
-            cout<<"Can not open folder ";
-            return vdata_file;
-        }
-        while ((entry=readdir(dir))!=NULL)
-        {
-            std::string str_file=entry->d_name;
-            std::string str_dir_file=absolute_path+"/"+str_file;
-            //если в папке есть файлы cмотрим какие
-            if(str_file!="."&&str_file!=".."){
-                file_data time_name_file;
-                stat((char*)str_dir_file.c_str(),&sb);
-                //если в папке есть файлы расширения .cdr заносим в буфер
-                if(S_ISREG(sb.st_mode)){
-                    size_t pos=str_file.rfind(".");
-                    std::string ext=str_file.substr(pos, string::npos);
-                    if(ext==".cdr"){
-                    time_name_file.file_mtime=sb.st_mtim.tv_sec;
-                    time_name_file.name=str_dir_file;
-                    vdata_file.push_back(time_name_file);
-                    }
-                }
-            }
-        }
-    //сортируем в порядке времени изменения файла
-    std::sort (vdata_file.begin(), vdata_file.end(), myfunction);
-    return vdata_file;
+        logging::add_file_log
+        (
+            keywords::file_name =paths->at(3)+"/%Y-%m-%d.log",
+                    keywords::auto_flush = true ,
+            keywords::time_based_rotation = sinks::file::rotation_at_time_point(0, 0, 0),
+            keywords::format =
+            (
+                expr::stream
+                << expr::format_date_time< boost::posix_time::ptime >("TimeStamp", "%Y-%m-%d %H:%M:%S")
+                << "\t: <" << logging::trivial::severity
+                << "> \t" << expr::smessage
+            )
+        );
 }
 
 int main()
@@ -252,36 +297,60 @@ int main()
     init();
     signal(SIGINT, finish_prog_func);
     signal(SIGABRT,sig_abort_func);
-    vector<file_data> dmp=dmpfile_lookup("./DMP");
-    for(int i=0;i<dmp.size();i++)
+    logging::add_common_attributes();
+    BOOST_LOG_SEV(lg, info) << "Settings accepted";
+    while(1)
     {
-        std::cout<<dmp.at(i).name;
-    }
-    /*FILE * file;
-    file = fopen("1.json","r");
-    int n;
-    vector<string> rows;
-    while( !feof(file) )
-    {
-        char buf[100000];
-        fgets(buf,100000,file);
-        if(strlen(buf)==0)
+        sleep(60);
+        vector<file_data> dmp=dmpfile_lookup(paths->at(0));
+        for(int i=0;i<dmp.size();i++)
         {
-            break;
+            string absolute_path_to_file=dmp.at(i).name;
+            BOOST_LOG_SEV(lg, info) <<"File detected "<<absolute_path_to_file;
+            time_t td;
+            td=time(NULL);
+            string time=__TIME__;
+            string work_file=paths->at(2)+"/"+time+absolute_path_to_file.substr(absolute_path_to_file.rfind("/")+1,string::npos);
+            std::string str_copy_result_cmd="cp "+absolute_path_to_file+" "+work_file+" -f";
+            BOOST_LOG_SEV(lg, info) <<str_copy_result_cmd;
+            system(str_copy_result_cmd.c_str());
+            std::string str_result_cmd="mv "+absolute_path_to_file+" "+paths->at(1)+" -f";
+            BOOST_LOG_SEV(lg, info) <<str_result_cmd;
+            system(str_result_cmd.c_str());
+            BOOST_LOG_SEV(lg, info) <<"Getting started with the file "<<work_file;
+            FILE * file;
+            file = fopen(work_file.c_str(),"r");
+            vector<string> rows;
+            while( !feof(file) )
+            {
+                char buf[100000];
+                fgets(buf,100000,file);
+                if(strlen(buf)==0)
+                {
+                    break;
+                }
+                string str(buf);
+                memset(buf,0,100000);
+                rows.push_back(str);
+            }
+            int n=rows.size();
+            BOOST_LOG_SEV(lg, info) <<n<<" lines to load into the database";
+            for(int i=0;i<n;i++)
+            {
+                pars(rows.at(i));
+            }
+            //bd->prepare_query_and_insert(data_ln,bd->str_dbtable,table_name);
+            std::string copy_res=bd->copy(data_ln,table_name);
+            if(copy_res=="Successfully added to the database")  BOOST_LOG_SEV(lg, info) <<"Successfully added to the database";
+            else BOOST_LOG_SEV(lg, error)<<copy_res;
+            fclose(file);
+            bd->finish();
+            std::string str_rm_cmd="mv "+work_file+" "+paths->at(1)+" -f";
+            system(str_rm_cmd.c_str());
+            BOOST_LOG_SEV(lg, info) <<str_rm_cmd;
         }
-        string str(buf);
-        memset(buf,0,100000);
-        rows.push_back(str);
+        dmp.clear();
     }
-    for(int i=0;i<rows.size();i++)
-    {
-        pars(rows.at(i));
-    }
-
-    //bd->prepare_query_and_insert(data_ln,bd->str_dbtable,table_name);
-    bd->copy(data_ln,table_name);
-    fclose(file);
-    bd->finish();*/
     return 0;
 }
 

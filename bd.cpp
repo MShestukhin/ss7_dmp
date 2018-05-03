@@ -66,7 +66,7 @@ void BD::prepare_query_and_insert(std::vector<std::vector<std::string> > massln,
     }
 }
 
-void BD::copy(std::vector<std::vector<std::string> > massln, std::vector<std::string> *table_name)
+std::string BD::copy(std::vector<std::vector<std::string> > massln, std::vector<std::string> *table_name)
 {
     std::string buffer;
     for(int j=0; j<massln.size();j++)
@@ -102,17 +102,16 @@ void BD::copy(std::vector<std::vector<std::string> > massln, std::vector<std::st
                     PGresult *res = PQgetResult(conn);
                     if(PQresultStatus(res) == PGRES_COMMAND_OK)
                     {
-
-                    std::cout<<"done";
+                    return "Successfully added to the database";
                     }
                     else
                     {
-                    std::cout<<PQerrorMessage(conn);
+                    return PQerrorMessage(conn);
                     }
                 }
                 else
                 {
-                    std::cout<<PQerrorMessage(conn);
+                    return PQerrorMessage(conn);
                 }
             }
     }

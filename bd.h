@@ -25,7 +25,7 @@ public:
     void INSERT(std::string insert_cmd_str,  char* paramValues[],int num_param);
     void prepare_query_and_insert(std::vector<std::vector<std::string> > massln, std::string table_name, std::vector<std::string>* table_field);
     void finish();
-    void copy(std::vector<std::vector<std::string> > massln,std::vector<std::string>* table_name);
+    std::string copy(std::vector<std::vector<std::string> > massln,std::vector<std::string>* table_name);
 };
 
 #endif // BD_H
