@@ -42,17 +42,20 @@ PGconn* conn;
 bd_data* conf_data; //in which database should connect
 vector<string>* data_for_search; //data from config file
 BD* bd; //data base worker
-vector<vector<std::string> > data_ln; //data which should insert to database
+vector<ignor_list> ignor_lists;
+ //data which should insert to database
+
+std::string to_string(int number)
+{
+    char str[11];
+    sprintf(str, "%d", number);
+    return std::string(str);
+}
 
 std::string GetElementValue(const Value& val)
 {
   if (val.GetType() == rapidjson::kNumberType)
-  {
-      char str[11];
-      int number = val.GetInt();
-      sprintf(str, "%d", number);
-      return std::string(str);
-  }
+    return to_string(val.GetInt());
   else if (val.GetType() == rapidjson::kStringType)
     return val.GetString();
   else if (val.GetType() == rapidjson::kArrayType)
@@ -62,15 +65,16 @@ std::string GetElementValue(const Value& val)
   return "Unknown";
 }
 
-std::string timeStampToString(string ts) {
-      int n=atoi(ts.c_str());
-      time_t t = n;
-      struct tm * ptm = localtime(&t);
-      char buf[30];
-      // Format: 2007-10-23 10:45:51
-      strftime (buf, 30, "%F %H:%M:%S",  ptm);
-      std::string result(buf);
-      return result;
+std::string timeStampToString(string ts)
+{
+    int n=atoi(ts.c_str());
+    time_t t = n;
+    struct tm * ptm = localtime(&t);
+    char buf[30];
+    //Format: 2007-10-23 10:45:51
+    strftime (buf, 30, "%F %H:%M:%S",  ptm);
+    std::string result(buf);
+    return result;
 }
 
 vector<string> split(string str,char delimitr)
@@ -78,18 +82,14 @@ vector<string> split(string str,char delimitr)
     vector<string> mass;
     int pos=0;
     if(str.find(delimitr)!=pos!=string::npos)
-    {
         while(pos!=string::npos)
         {
-        pos=str.find(delimitr);
-        mass.push_back(str.substr(0,pos));
-        str.erase(0,pos+1);
+            pos=str.find(delimitr);
+            mass.push_back(str.substr(0,pos));
+            str.erase(0,pos+1);
         }
-    }
     else
-    {
         mass.push_back(str);
-    }
     return mass;
 }
 
@@ -113,78 +113,122 @@ string json_data_find(std::string json_data,std::string jstr)
     return str_result;
 }
 
-void pars(string mass_from_js)
+int processing_ignor_list(string jstr)
+{
+    Document document;
+    document.Parse(jstr.c_str());
+    for(int i=0;i<ignor_lists.size();i++)
+    {
+        vector<string> mass_str=split(ignor_lists.at(i).name, '.');
+        Value::ConstMemberIterator iter=document.FindMember(mass_str.at(0).c_str()); //is object from conf file object which i find from json file
+        if(iter!=document.MemberEnd())
+        {
+            Value& val=document[mass_str.at(0).c_str()]; //try find value of parametr which i need
+            for(int t=1; t<mass_str.size();t++)
+            {
+                Value& obj=val;
+                val=obj[mass_str.at(t).c_str()];
+            }
+            for(int j=0;j<ignor_lists.at(i).values.size();j++)
+            {
+                string v=ignor_lists.at(i).values.at(j);
+                std::string vall=GetElementValue(val);
+                if(v==vall)
+                    return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+vector<string> pars(string mass_from_js)
 {
     int end_jstr;
     int i=0;
     int data_for_search_iter=0;
     vector<string> data;
-    //before bigin pars put all data in vector 0
-    for(int i=0;i<data_for_search->size();i++)
-    {
-        data.push_back("0");
-    }
+    //before start pars put all data in vector 0
+    for(int i=0;i<data_for_search->size();i++)    
+        data.push_back("0");    
     //find data in json file
     string pcap; //special streeng in which will develop all pcap
-    while(data_for_search_iter<data_for_search->size()){
+    while(data_for_search_iter<data_for_search->size())
+    {
         string testStr=mass_from_js; //string like [{some data,data},{some data:{data,data}},{}]
+        vector<string> mass_str;
         while((end_jstr=testStr.find('}'))!=string::npos)
         {
             unsigned int begin_jstr=testStr.find('{'); //begin build object when find {
             i=0;
             while(testStr.at(end_jstr+i)!=',')         //if i find somthing like }, then continue work whie object
             {
-            if(testStr.at(end_jstr+i)==']')
-                break;
-            i++;
+                if(testStr.at(end_jstr+i)==']')
+                    break;
+                i++;
             }
             end_jstr=testStr.find('}')+i;
             string jstr=testStr.substr(begin_jstr,end_jstr-1); //this is object somthing like {SCCP:{A:7983...,B:7950...}}
             testStr.erase(begin_jstr,end_jstr);                //delete find object in all string
-            string json_data=data_for_search->at(data_for_search_iter); //object from conf file which should i find
-            vector<string> mass_str=split(json_data, '.'); //split by point
-            Document document;
-            document.Parse(jstr.c_str()); //pars json str
-            Value::ConstMemberIterator iter=document.FindMember(mass_str.at(0).c_str()); //is object from conf file object which i find from json file
-            if(iter!=document.MemberEnd())
+            string json_str=data_for_search->at(data_for_search_iter); //object from conf file which should i find
+            vector<string> mass_or_str=split(json_str, '/');
+            for(int i=0;i<mass_or_str.size();i++)
             {
-                Value& val=document[mass_str.at(0).c_str()]; //try find value of parametr which i need
-                for(int i=1; i<mass_str.size();i++)
+                string json_data=mass_or_str.at(i);
+                mass_str=split(json_data, '.'); //split by point
+                if(processing_ignor_list(jstr)==1)
                 {
-                    Value& obj=val;
-                    val=obj[mass_str.at(i).c_str()];
+                    data.clear();
+                    return data;
                 }
-               // std::cout<<mass_str.at(0);
-                if(mass_str.at(0)=="TS") //if object is pcap i should sum str_pcap
+                Document document;
+                document.Parse(jstr.c_str()); //pars json str
+                Value::ConstMemberIterator iter=document.FindMember(mass_str.at(0).c_str()); //is object from conf file object which i find from json file
+                if(iter!=document.MemberEnd())
                 {
-                    string TS=val.GetString();
-                    TS=timeStampToString(TS);
-                    data.at(data_for_search_iter)=TS;
-                    break;
-                }
-                else if(mass_str.at(0)!="PCAP") //if object is pcap i should sum str_pcap
-                {
-                    data.at(data_for_search_iter)=val.GetString(); //if its not pcap i find object once
-                    break;
-                }
-                else
-                {
-                    string new_pcap=val.GetString();
-                    pcap=pcap+new_pcap.substr(36,string::npos);
-                    while(pcap.find(" ")!=string::npos)
+                    Value& val=document[mass_str.at(0).c_str()]; //try find value of parametr which i need
+                    for(int i=1; i<mass_str.size();i++)
                     {
-                        pcap.erase(pcap.begin()+pcap.find(" "));
+                        Value& obj=val;
+                        Value::ConstMemberIterator j=val.FindMember(mass_str.at(i).c_str());
+                        if(j!=val.MemberEnd())
+                            val=obj[mass_str.at(i).c_str()];
+                        else
+                            break;
                     }
-                    data.at(data_for_search_iter)=pcap;
+                    //std::cout<<mass_str.at(0)<<" - "<<GetElementValue(val)<<"\n";
+                    if(mass_str.at(0)=="TS") //if object is pcap i should sum str_pcap
+                    {
+                        string TS=val.GetString();
+                        TS=timeStampToString(TS);
+                        data.at(data_for_search_iter)=TS;
+                        break;
+                    }
+                    if(mass_str.at(0)!="PCAP") //if object is pcap i should sum str_pcap
+                    {
+                        std::string val_str=val.GetString();
+                        if(val_str.size()!=0)
+                            data.at(data_for_search_iter)=val_str; //if its not pcap i find object once
+                        break;
+                    }
+                    else
+                    {
+                        string new_pcap=val.GetString();
+                        new_pcap+="\\n";
+                        pcap=pcap+new_pcap;
+                        data.at(data_for_search_iter)=pcap;
+                    }
                 }
             }
+            if(data.at(data_for_search_iter)!="0"&&mass_str.at(0)!="PCAP")
+                break;
         }
         data_for_search_iter++;
     }
-    data_ln.push_back(data);
+    return data;
 }
 
-bool myfunction (file_data i,file_data j) {
+bool myfunction (file_data i,file_data j)
+{
     return (i.file_mtime>j.file_mtime);
 }
 
@@ -195,7 +239,8 @@ vector<file_data> dmpfile_lookup(string absolute_path)
     struct stat sb;
     vector<file_data> vdata_file;
     dir=opendir(absolute_path.c_str());
-        if(dir==NULL){
+        if(dir==NULL)
+        {
             BOOST_LOG_SEV(lg, error) <<"Can not open folder ";
             return vdata_file;
         }
@@ -203,12 +248,12 @@ vector<file_data> dmpfile_lookup(string absolute_path)
         {
             std::string str_file=entry->d_name;
             std::string str_dir_file=absolute_path+"/"+str_file;
-            //если в папке есть файлы cмотрим какие
+            //lookup some file in dir
             if(str_file!="."&&str_file!="..")
             {
                 file_data time_name_file;
                 stat((char*)str_dir_file.c_str(),&sb);
-                //если в папке есть файлы расширения .cdr заносим в буфер
+                //if there are files dmp
                 if(S_ISREG(sb.st_mode)&&str_file=="dmp")
                 {
                     time_name_file.file_mtime=sb.st_mtim.tv_sec;
@@ -240,11 +285,11 @@ void init()
     libconfig::Config conf;
     try
     {
-        conf.readFile("/opt/svyazcom/etc/dmp_sca.conf");
+        conf.readFile("/opt/svyazcom/etc/dmp2db_smsc_lv2.conf"); //opt/svyazcom/etc/dmp_sca.conf
     }
     catch(libconfig::ParseException e)
     {
-        BOOST_LOG_SEV(lg, error) <<"Can not open file";
+        BOOST_LOG_SEV(lg, error)<<"Can not open file";
     }
     //load paths
     paths=new vector<string>;
@@ -263,16 +308,33 @@ void init()
     //load tables data
     table_name=new vector<std::string>;
     int number_of_table=conf.lookup("application.tableData").getLength();
-    for(int i=0;i<number_of_table;i++)
-    {
+    for(int i=0;i<number_of_table;i++)    
         table_name->push_back(conf.lookup("application.tableData")[i]);
-    }
+
     //load data which should search in json file
     data_for_search=new vector<string>;
     int count_data_for_search=conf.lookup("application.data_for_search").getLength();
-    for(int i=0;i<count_data_for_search;i++)
-    {
+
+    for(int i=0;i<count_data_for_search;i++)    
         data_for_search->push_back(conf.lookup("application.data_for_search")[i]);
+
+    int ignor_list_size=conf.lookup("application.ignor_list").getLength();
+
+    for (int i=0;i<ignor_list_size;i++)
+    {
+        ignor_list list;
+        string conf_str="application.ignor_list.obj"+to_string(i)+".name";
+        string str_name=conf.lookup(conf_str);
+        list.name=str_name;
+        conf_str="application.ignor_list.obj"+to_string(i)+".values";
+        //std::cout<<conf_str<<"\n";
+        int ignor_list_num_values=conf.lookup(conf_str).getLength();
+        for(int j=0;j<ignor_list_num_values;j++)
+        {
+            string str_v=conf.lookup(conf_str)[j];
+            list.values.push_back(str_v);
+        }
+        ignor_lists.push_back(list);
     }
 
     //std::string log_path_str= conf.lookup("application.paths.logDir");
@@ -307,16 +369,15 @@ int main()
         {
             string absolute_path_to_file=dmp.at(i).name;
             BOOST_LOG_SEV(lg, info) <<"File detected "<<absolute_path_to_file;
-            time_t td;
-            td=time(NULL);
-            string time=__TIME__;
-            string work_file=paths->at(2)+"/"+time+absolute_path_to_file.substr(absolute_path_to_file.rfind("/")+1,string::npos);
+            char buffer[80];
+            time_t seconds = time(NULL);
+            tm* timeinfo = localtime(&seconds);
+            const char* format = "%B_%d_%Y_%I:%M:%S";
+            strftime(buffer, 80, format, timeinfo);
+            string work_file=paths->at(2)+"/"+std::string(buffer)+absolute_path_to_file.substr(absolute_path_to_file.rfind("/")+1,string::npos);
             std::string str_copy_result_cmd="cp "+absolute_path_to_file+" "+work_file+" -f";
             BOOST_LOG_SEV(lg, info) <<str_copy_result_cmd;
             system(str_copy_result_cmd.c_str());
-            std::string str_result_cmd="mv "+absolute_path_to_file+" "+paths->at(1)+" -f";
-            BOOST_LOG_SEV(lg, info) <<str_result_cmd;
-            system(str_result_cmd.c_str());
             BOOST_LOG_SEV(lg, info) <<"Getting started with the file "<<work_file;
             FILE * file;
             file = fopen(work_file.c_str(),"r");
@@ -326,31 +387,35 @@ int main()
                 char buf[100000];
                 fgets(buf,100000,file);
                 if(strlen(buf)==0)
-                {
                     break;
-                }
                 string str(buf);
                 memset(buf,0,100000);
                 rows.push_back(str);
             }
             int n=rows.size();
-            BOOST_LOG_SEV(lg, info) <<n<<" lines to load into the database";
+            vector<vector<std::string> > data_ln;
             for(int i=0;i<n;i++)
             {
-                pars(rows.at(i));
+                vector<std::string> ml_rows=pars(rows.at(i));
+                if(ml_rows.size()>0)
+                    data_ln.push_back(ml_rows);
             }
-            //bd->prepare_query_and_insert(data_ln,bd->str_dbtable,table_name);
+            BOOST_LOG_SEV(lg, info) <<data_ln.size()<<" lines to load into the database";
+            int start_time=clock();
             std::string copy_res=bd->copy(data_ln,table_name);
+            int finish_time=clock();
             if(copy_res=="Successfully added to the database")  BOOST_LOG_SEV(lg, info) <<"Successfully added to the database";
             else BOOST_LOG_SEV(lg, error)<<copy_res;
             fclose(file);
-            bd->finish();
             std::string str_rm_cmd="mv "+work_file+" "+paths->at(1)+" -f";
             system(str_rm_cmd.c_str());
             BOOST_LOG_SEV(lg, info) <<str_rm_cmd;
+            std::string str_result_cmd="mv "+absolute_path_to_file+" "+paths->at(1)+" -f";
+            BOOST_LOG_SEV(lg, info) <<str_result_cmd;
+            system(str_result_cmd.c_str());
         }
-        dmp.clear();
     }
+    bd->finish();
     return 0;
 }
 

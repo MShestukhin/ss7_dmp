@@ -1,4 +1,4 @@
-project(dmp_sca)
+project(dmp2db_smsc_lvl2)
 
 SET(CMAKE_CXX_FLAGS "-lrt")
 cmake_minimum_required(VERSION 2.8)
@@ -14,13 +14,13 @@ link_directories(${Boost_LIBRARY_DIRS})
 
 add_library(parser STATIC  ./parser.cpp)
 
-target_link_libraries(dmp_sca ${Boost_LIBRARIES})
+target_link_libraries(dmp2db_smsc_lvl2 ${Boost_LIBRARIES})
 
 add_library(libpq STATIC IMPORTED)
 set_target_properties(libpq PROPERTIES IMPORTED_LOCATION /usr/local/pgsql/lib/libpq.so)
 
-target_link_libraries(dmp_sca libpq)
+target_link_libraries(dmp2db_smsc_lvl2 libpq)
 
 add_library(libconfig STATIC IMPORTED)
 set_target_properties(libconfig PROPERTIES IMPORTED_LOCATION /usr/local/lib/libconfig++.a)
-target_link_libraries(dmp_sca libconfig)
+target_link_libraries(dmp2db_smsc_lvl2 libconfig)

@@ -1,6 +1,7 @@
 #include "bd.h"
 #include <boost/thread.hpp>
 #include <string>
+
 BD::BD(std::string dbname, std::string dbhost, std::string dbuser, std::string dbpassword, std::string dbtable, std::string dbschema)
 {
     str_dbname=dbname;
@@ -12,15 +13,18 @@ BD::BD(std::string dbname, std::string dbhost, std::string dbuser, std::string d
     connect();
 }
 
-void BD::connect(){
+void BD::connect()
+{
     std::string str_connect_to_db="dbname="+str_dbname+" host="+str_dbhost+" user="+str_dbuser+" password="+str_dbpassword;
     conn=PQconnectdb(str_connect_to_db.c_str());
-    if (PQstatus(conn) == CONNECTION_BAD) {
+    if (PQstatus(conn) == CONNECTION_BAD)
+    {
         puts("We were unable to connect to the database");
     }
 }
 
-void BD::INSERT(std::string insert_cmd_str,  char* paramValues[],int num_param){
+void BD::INSERT(std::string insert_cmd_str,  char* paramValues[],int num_param)
+{
     PGresult* res;
     res=PQexecParams(conn,
                      insert_cmd_str.c_str(),
@@ -39,7 +43,8 @@ void BD::INSERT(std::string insert_cmd_str,  char* paramValues[],int num_param){
     PQclear(res);
 }
 
-void BD::prepare_query_and_insert(std::vector<std::vector<std::string> > massln, std::string table_name, std::vector<std::string>* table_field){
+void BD::prepare_query_and_insert(std::vector<std::vector<std::string> > massln, std::string table_name, std::vector<std::string>* table_field)
+{
     std::string insert_begin="INSERT INTO "+str_dbschema+"."+table_name+" (";
     std::string insert_end=") VALUES(";
     for(int i=0;i<table_field->size();i++)
@@ -48,7 +53,8 @@ void BD::prepare_query_and_insert(std::vector<std::vector<std::string> > massln,
         char n[10];
         sprintf(n,"%d",i+1);
         insert_end=insert_end+"$"+n;
-        if((i+1)!=table_field->size()){
+        if((i+1)!=table_field->size())
+        {
             insert_end+=",";
             insert_begin+=",";
         }
@@ -59,9 +65,8 @@ void BD::prepare_query_and_insert(std::vector<std::vector<std::string> > massln,
     {
         char* paramValues[massln.at(j).size()];
         for(int i=0;i<massln.at(j).size();i++)
-        {
             paramValues[i]=(char*)massln.at(j).at(i).c_str();
-        }
+
         INSERT(insert_cmd_str,paramValues,massln.at(0).size());
     }
 }
@@ -74,9 +79,7 @@ std::string BD::copy(std::vector<std::vector<std::string> > massln, std::vector<
         std::string row;
         int i=0;
         for(i;i<massln.at(j).size()-1;i++)
-        {
             row+=massln.at(j).at(i)+",";
-        }
         row+=massln.at(j).at(i);
         buffer+=row+"\n";
     }
@@ -85,10 +88,10 @@ std::string BD::copy(std::vector<std::vector<std::string> > massln, std::vector<
     std::string query_str="copy steer.ss7_log(";
     int i=0;
     for(i;i<table_name->size()-1;i++)
-    {
         query_str+=table_name->at(i)+",";
-    }
+
     query_str+=table_name->at(i)+") FROM STDIN DELIMITER ',';";
+
   //  std::cout<<query_str;
 
     PGresult* res;
@@ -101,22 +104,18 @@ std::string BD::copy(std::vector<std::vector<std::string> > massln, std::vector<
                 {
                     PGresult *res = PQgetResult(conn);
                     if(PQresultStatus(res) == PGRES_COMMAND_OK)
-                    {
-                    return "Successfully added to the database";
-                    }
+                        return "Successfully added to the database";
                     else
-                    {
-                    return PQerrorMessage(conn);
-                    }
+                        return PQerrorMessage(conn);
                 }
                 else
-                {
                     return PQerrorMessage(conn);
-                }
             }
     }
+    PQclear(res);
 }
 
-void BD::finish(){
+void BD::finish()
+{
     PQfinish(conn);
 }

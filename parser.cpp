@@ -18,11 +18,8 @@ vector<vector<std::string> > parser::pars_file(std::string fileName,char delimit
     FILE* file;
     char* nameFile=(char*)fileName.c_str();
     file=fopen(nameFile,"r");
-    if(file == NULL)
-    {
-        return rows;
-
-    }
+    if(file == NULL)    
+        return rows;    
     for(int i=1; i<start_reading_line;i++)
     {
         char buf[100];
@@ -33,29 +30,27 @@ vector<vector<std::string> > parser::pars_file(std::string fileName,char delimit
     {
         char buf[100];
         fgets(buf,100,file);
-            if(strlen(buf)==0)
-            {
-                break;
-            }
+        if(strlen(buf)==0)
+            break;
+
         std::string s1(buf);
         memset(buf,0,100);
         if(delimiter==NULL)
         {
             std::string::size_type n = s1.find(",");
             if ( n != std::string::npos )
-            {
                 delimiter=',';
-            }
+
             else
-            {
                 delimiter=';';
-            }
         }
         int j=0;
         int i=0;
         int end=0;
-        while(i<s1.size()){
-            if(s1.at(i)==delimiter){
+        while(i<s1.size())
+        {
+            if(s1.at(i)==delimiter)
+            {
                 std::string str=s1.substr(end,i-end);
                 row.push_back(str);
                 end=i+1;
@@ -71,12 +66,10 @@ vector<vector<std::string> > parser::pars_file(std::string fileName,char delimit
         row.push_back(s1);
         if(data_num!=0)
         {
-            if(j!=data_num-1){
-                mass_broken_ln.push_back(s1);
-            }
-            else{
+            if(j!=data_num-1)
+                mass_broken_ln.push_back(s1);            
+            else
                rows.push_back(row);
-            }
         }
     }
     fclose(file);

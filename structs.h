@@ -1,8 +1,9 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 #include <iostream>
+#include <vector>
 // структура с полями: дата, имзи, три номера, длительность звонка в сек и результат
-struct line
+/*struct line
 {
     char* date;
     char* imsi;
@@ -22,7 +23,7 @@ struct line
         res="";
         resKey="";
     }
-};
+};*/
 
 struct file_data
 {
@@ -121,6 +122,12 @@ struct Table_conf_data{
         result=res;
         result_key=key;
     }
+};
+
+struct ignor_list
+{
+    std::string name;
+    std::vector<std::string> values;
 };
 
 #endif // STRUCTS_H
