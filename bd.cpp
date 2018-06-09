@@ -13,14 +13,16 @@ BD::BD(std::string dbname, std::string dbhost, std::string dbuser, std::string d
     connect();
 }
 
-void BD::connect()
+int BD::connect()
 {
     std::string str_connect_to_db="dbname="+str_dbname+" host="+str_dbhost+" user="+str_dbuser+" password="+str_dbpassword;
     conn=PQconnectdb(str_connect_to_db.c_str());
     if (PQstatus(conn) == CONNECTION_BAD)
     {
-        puts("We were unable to connect to the database");
+       // std::cout<<"We were unable to connect to the database\n";
+        return 1;
     }
+    return 0;
 }
 
 void BD::INSERT(std::string insert_cmd_str,  char* paramValues[],int num_param)
@@ -71,7 +73,7 @@ void BD::prepare_query_and_insert(std::vector<std::vector<std::string> > massln,
     }
 }
 
-std::string BD::copy(std::vector<std::vector<std::string> > massln, std::vector<std::string> *table_name)
+std::string BD::copy(std::vector<std::vector<std::string> > massln,std::string table_str, std::vector<std::string> *table_name)
 {
     std::string buffer;
     for(int j=0; j<massln.size();j++)
@@ -85,7 +87,7 @@ std::string BD::copy(std::vector<std::vector<std::string> > massln, std::vector<
     }
    // std::cout<<buffer;
 
-    std::string query_str="copy steer.ss7_log(";
+    std::string query_str="copy steer."+table_str+"(";
     int i=0;
     for(i;i<table_name->size()-1;i++)
         query_str+=table_name->at(i)+",";

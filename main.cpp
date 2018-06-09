@@ -52,6 +52,13 @@ std::string to_string(int number)
     return std::string(str);
 }
 
+bool contains(std::string s_cel,std::string s_find){
+    if (s_cel.find(s_find) != std::string::npos) {
+        return true;
+    }
+    return false;
+}
+
 std::string GetElementValue(const Value& val)
 {
   if (val.GetType() == rapidjson::kNumberType)
@@ -148,8 +155,8 @@ vector<string> pars(string mass_from_js)
     int data_for_search_iter=0;
     vector<string> data;
     //before start pars put all data in vector 0
-    for(int i=0;i<data_for_search->size();i++)    
-        data.push_back("0");    
+    for(int i=0;i<data_for_search->size();i++)
+        data.push_back("0");
     //find data in json file
     string pcap; //special streeng in which will develop all pcap
     while(data_for_search_iter<data_for_search->size())
@@ -196,7 +203,7 @@ vector<string> pars(string mass_from_js)
                             break;
                     }
                     //std::cout<<mass_str.at(0)<<" - "<<GetElementValue(val)<<"\n";
-                    if(mass_str.at(0)=="TS") //if object is pcap i should sum str_pcap
+                    if(mass_str.at(0)=="TS")
                     {
                         string TS=val.GetString();
                         TS=timeStampToString(TS);
@@ -267,6 +274,41 @@ vector<file_data> dmpfile_lookup(string absolute_path)
     std::sort (vdata_file.begin(), vdata_file.end(), myfunction);
     return vdata_file;
 }
+vector<file_data> uploadfile_lookup(string absolute_path)
+{
+    DIR* dir;
+    struct dirent* entry;
+    struct stat sb;
+    vector<file_data> vdata_file;
+    dir=opendir(absolute_path.c_str());
+        if(dir==NULL)
+        {
+            BOOST_LOG_SEV(lg, error) <<"Can not open folder ";
+            return vdata_file;
+        }
+        while ((entry=readdir(dir))!=NULL)
+        {
+            std::string str_file=entry->d_name;
+            std::string str_dir_file=absolute_path+"/"+str_file;
+            //lookup some file in dir
+            if(str_file!="."&&str_file!="..")
+            {
+                file_data time_name_file;
+                stat((char*)str_dir_file.c_str(),&sb);
+                //if there are files dmp
+                if(contains(str_file,"dmp"))
+                {
+                    time_name_file.file_mtime=sb.st_mtim.tv_sec;
+                    time_name_file.name=str_dir_file;
+                    vdata_file.push_back(time_name_file);
+                }
+            }
+        }
+        closedir(dir);
+    //сортируем в порядке времени изменения файла
+    std::sort (vdata_file.begin(), vdata_file.end(), myfunction);
+    return vdata_file;
+}
 
 
 void finish_prog_func(int sig){
@@ -285,7 +327,8 @@ void init()
     libconfig::Config conf;
     try
     {
-        conf.readFile("/opt/svyazcom/etc/dmp2db_smsc_lv2.conf"); //opt/svyazcom/etc/dmp_sca.conf
+        //conf.readFile("/opt/svyazcom/etc/dmp2db_smsc_lv2.conf"); //opt/svyazcom/etc/dmp_sca.conf
+        conf.readFile("./dmp2db_smsc_lv2.conf");
     }
     catch(libconfig::ParseException e)
     {
@@ -339,7 +382,7 @@ void init()
 
     //std::string log_path_str= conf.lookup("application.paths.logDir");
 
-        logging::add_file_log
+       /* logging::add_file_log
         (
             keywords::file_name =paths->at(3)+"/%Y-%m-%d.log",
                     keywords::auto_flush = true ,
@@ -351,33 +394,47 @@ void init()
                 << "\t: <" << logging::trivial::severity
                 << "> \t" << expr::smessage
             )
-        );
+        );*/
+}
+
+void transport_dmp_to_upload(){
+    vector<file_data> dmp=dmpfile_lookup(paths->at(0));
+    for(int i=0;i<dmp.size();i++)
+    {
+        string absolute_path_to_file=dmp.at(i).name;
+        BOOST_LOG_SEV(lg, info) <<"File detected "<<absolute_path_to_file;
+        char buffer[80];
+        time_t seconds = time(NULL);
+        tm* timeinfo = localtime(&seconds);
+        const char* format = "%B_%d_%Y_%I:%M:%S";
+        strftime(buffer, 80, format, timeinfo);
+        string work_file=paths->at(2)+"/"+std::string(buffer)+absolute_path_to_file.substr(absolute_path_to_file.rfind("/")+1,string::npos);
+        std::string str_copy_result_cmd="cp "+absolute_path_to_file+" "+work_file+" -f";
+        BOOST_LOG_SEV(lg, info) <<str_copy_result_cmd;
+        system(str_copy_result_cmd.c_str());
+        string str_rm_cmd="mv "+absolute_path_to_file+" "+paths->at(1)+" -f";
+        system(str_rm_cmd.c_str());
+        BOOST_LOG_SEV(lg, info) <<str_rm_cmd;
+    }
 }
 
 int main()
 {
+//    bool (*p2)(string str)=NULL;
+//    p2=&contains;
     init();
     signal(SIGINT, finish_prog_func);
     signal(SIGABRT,sig_abort_func);
     logging::add_common_attributes();
     BOOST_LOG_SEV(lg, info) << "Settings accepted";
+    //
     while(1)
     {
-        sleep(60);
-        vector<file_data> dmp=dmpfile_lookup(paths->at(0));
-        for(int i=0;i<dmp.size();i++)
-        {
-            string absolute_path_to_file=dmp.at(i).name;
-            BOOST_LOG_SEV(lg, info) <<"File detected "<<absolute_path_to_file;
-            char buffer[80];
-            time_t seconds = time(NULL);
-            tm* timeinfo = localtime(&seconds);
-            const char* format = "%B_%d_%Y_%I:%M:%S";
-            strftime(buffer, 80, format, timeinfo);
-            string work_file=paths->at(2)+"/"+std::string(buffer)+absolute_path_to_file.substr(absolute_path_to_file.rfind("/")+1,string::npos);
-            std::string str_copy_result_cmd="cp "+absolute_path_to_file+" "+work_file+" -f";
-            BOOST_LOG_SEV(lg, info) <<str_copy_result_cmd;
-            system(str_copy_result_cmd.c_str());
+        sleep(2);
+        transport_dmp_to_upload();
+        vector<file_data> upload_file=uploadfile_lookup(paths->at(2));
+        for(int i=0; i<upload_file.size();i++){
+            string work_file=upload_file.at(i).name;
             BOOST_LOG_SEV(lg, info) <<"Getting started with the file "<<work_file;
             FILE * file;
             file = fopen(work_file.c_str(),"r");
@@ -401,18 +458,22 @@ int main()
                     data_ln.push_back(ml_rows);
             }
             BOOST_LOG_SEV(lg, info) <<data_ln.size()<<" lines to load into the database";
-            int start_time=clock();
-            std::string copy_res=bd->copy(data_ln,table_name);
-            int finish_time=clock();
+            int i=0;
+            while(bd->connect()){
+                sleep(10);
+                transport_dmp_to_upload();
+                i++;
+                if(i%5==0)
+                    BOOST_LOG_SEV(lg, error) << "We were unable to connect to the database\n";
+            };
+            std::string table_str="ss7_log";
+            std::string copy_res=bd->copy(data_ln,table_str,table_name);
             if(copy_res=="Successfully added to the database")  BOOST_LOG_SEV(lg, info) <<"Successfully added to the database";
             else BOOST_LOG_SEV(lg, error)<<copy_res;
             fclose(file);
             std::string str_rm_cmd="mv "+work_file+" "+paths->at(1)+" -f";
             system(str_rm_cmd.c_str());
             BOOST_LOG_SEV(lg, info) <<str_rm_cmd;
-            std::string str_result_cmd="mv "+absolute_path_to_file+" "+paths->at(1)+" -f";
-            BOOST_LOG_SEV(lg, info) <<str_result_cmd;
-            system(str_result_cmd.c_str());
         }
     }
     bd->finish();
