@@ -10,7 +10,7 @@ BD::BD(std::string dbname, std::string dbhost, std::string dbuser, std::string d
     str_dbpassword=dbpassword;
     str_dbtable=dbtable;
     str_dbschema=dbschema;
-    connect();
+    //connect();
 }
 
 int BD::connect()
@@ -20,6 +20,7 @@ int BD::connect()
     if (PQstatus(conn) == CONNECTION_BAD)
     {
        // std::cout<<"We were unable to connect to the database\n";
+        //PQfinish(conn);
         return 1;
     }
     return 0;

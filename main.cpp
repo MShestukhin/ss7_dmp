@@ -158,7 +158,7 @@ vector<string> pars(string mass_from_js)
     for(int i=0;i<data_for_search->size();i++)
         data.push_back("0");
     //find data in json file
-    string pcap; //special streeng in which will develop all pcap
+    string pcap; //special string in which will develop all pcap
     while(data_for_search_iter<data_for_search->size())
     {
         string testStr=mass_from_js; //string like [{some data,data},{some data:{data,data}},{}]
@@ -239,20 +239,19 @@ bool myfunction (file_data i,file_data j)
     return (i.file_mtime>j.file_mtime);
 }
 
-vector<file_data> dmpfile_lookup(string absolute_path)
-{
+vector<file_data> dmpfile_lookup(string absolute_path){
     DIR* dir;
     struct dirent* entry;
     struct stat sb;
     vector<file_data> vdata_file;
     dir=opendir(absolute_path.c_str());
-        if(dir==NULL)
-        {
-            BOOST_LOG_SEV(lg, error) <<"Can not open folder ";
-            return vdata_file;
-        }
-        while ((entry=readdir(dir))!=NULL)
-        {
+    if(dir==NULL)
+    {
+        BOOST_LOG_SEV(lg, error) <<"Can not open folder ";
+        return vdata_file;
+    }
+    while ((entry=readdir(dir))!=NULL)
+    {
             std::string str_file=entry->d_name;
             std::string str_dir_file=absolute_path+"/"+str_file;
             //lookup some file in dir
@@ -268,12 +267,13 @@ vector<file_data> dmpfile_lookup(string absolute_path)
                     vdata_file.push_back(time_name_file);
                 }
             }
-        }
-        closedir(dir);
+    }
+    closedir(dir);
     //сортируем в порядке времени изменения файла
     std::sort (vdata_file.begin(), vdata_file.end(), myfunction);
     return vdata_file;
 }
+
 vector<file_data> uploadfile_lookup(string absolute_path)
 {
     DIR* dir;
@@ -382,19 +382,19 @@ void init()
 
     //std::string log_path_str= conf.lookup("application.paths.logDir");
 
-       /* logging::add_file_log
+    /*logging::add_file_log
+    (
+        keywords::file_name =paths->at(3)+"/%Y-%m-%d.log",
+                keywords::auto_flush = true ,
+        keywords::time_based_rotation = sinks::file::rotation_at_time_point(0, 0, 0),
+        keywords::format =
         (
-            keywords::file_name =paths->at(3)+"/%Y-%m-%d.log",
-                    keywords::auto_flush = true ,
-            keywords::time_based_rotation = sinks::file::rotation_at_time_point(0, 0, 0),
-            keywords::format =
-            (
-                expr::stream
-                << expr::format_date_time< boost::posix_time::ptime >("TimeStamp", "%Y-%m-%d %H:%M:%S")
-                << "\t: <" << logging::trivial::severity
-                << "> \t" << expr::smessage
-            )
-        );*/
+            expr::stream
+            << expr::format_date_time< boost::posix_time::ptime >("TimeStamp", "%Y-%m-%d %H:%M:%S")
+            << "\t: <" << logging::trivial::severity
+            << "> \t" << expr::smessage
+        )
+    );*/
 }
 
 void transport_dmp_to_upload(){
@@ -427,6 +427,7 @@ int main()
     signal(SIGABRT,sig_abort_func);
     logging::add_common_attributes();
     BOOST_LOG_SEV(lg, info) << "Settings accepted";
+    bd->connect();
     //
     while(1)
     {
@@ -459,15 +460,16 @@ int main()
             }
             BOOST_LOG_SEV(lg, info) <<data_ln.size()<<" lines to load into the database";
             int i=0;
-            while(bd->connect()){
-                sleep(10);
-                transport_dmp_to_upload();
-                i++;
-                if(i%5==0)
-                    BOOST_LOG_SEV(lg, error) << "We were unable to connect to the database\n";
-            };
+//            while(bd->connect()){
+//                sleep(10);
+//                transport_dmp_to_upload();
+//                i++;
+//                if(i%5==0)
+//                    BOOST_LOG_SEV(lg, error) << "We were unable to connect to the database\n";
+//            };
             std::string table_str="ss7_log";
             std::string copy_res=bd->copy(data_ln,table_str,table_name);
+            bd->finish();
             if(copy_res=="Successfully added to the database")  BOOST_LOG_SEV(lg, info) <<"Successfully added to the database";
             else BOOST_LOG_SEV(lg, error)<<copy_res;
             fclose(file);
