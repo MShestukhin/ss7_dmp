@@ -13,14 +13,17 @@ BD::BD(std::string dbname, std::string dbhost, std::string dbuser, std::string d
     //connect();
 }
 
-int BD::connect()
+void BD::connect()
 {
     std::string str_connect_to_db="dbname="+str_dbname+" host="+str_dbhost+" user="+str_dbuser+" password="+str_dbpassword;
     conn=PQconnectdb(str_connect_to_db.c_str());
-    if (PQstatus(conn) == CONNECTION_BAD)
+}
+
+int BD::status(){
+    if (PQstatus(conn) != CONNECTION_OK)
     {
        // std::cout<<"We were unable to connect to the database\n";
-        //PQfinish(conn);
+        PQfinish(conn);
         return 1;
     }
     return 0;

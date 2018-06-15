@@ -21,7 +21,8 @@ public:
        std::string dbpassword,
        std::string dbtable,
        std::string dbschema);
-    int connect();
+    void connect();
+    int status();
     void INSERT(std::string insert_cmd_str,  char* paramValues[],int num_param);
     void prepare_query_and_insert(std::vector<std::vector<std::string> > massln, std::string table_name, std::vector<std::string>* table_field);
     void finish();

@@ -327,8 +327,8 @@ void init()
     libconfig::Config conf;
     try
     {
-        //conf.readFile("/opt/svyazcom/etc/dmp2db_smsc_lv2.conf"); //opt/svyazcom/etc/dmp_sca.conf
-        conf.readFile("./dmp2db_smsc_lv2.conf");
+        conf.readFile("/opt/svyazcom/etc/dmp2db_smsc_lv2.conf"); //opt/svyazcom/etc/dmp_sca.conf
+        //conf.readFile("./dmp2db_smsc_lv2.conf");
     }
     catch(libconfig::ParseException e)
     {
@@ -382,7 +382,7 @@ void init()
 
     //std::string log_path_str= conf.lookup("application.paths.logDir");
 
-    /*logging::add_file_log
+    logging::add_file_log
     (
         keywords::file_name =paths->at(3)+"/%Y-%m-%d.log",
                 keywords::auto_flush = true ,
@@ -394,7 +394,7 @@ void init()
             << "\t: <" << logging::trivial::severity
             << "> \t" << expr::smessage
         )
-    );*/
+    );
 }
 
 void transport_dmp_to_upload(){
@@ -428,10 +428,9 @@ int main()
     logging::add_common_attributes();
     BOOST_LOG_SEV(lg, info) << "Settings accepted";
     bd->connect();
-    //
     while(1)
     {
-        sleep(2);
+        sleep(60);
         transport_dmp_to_upload();
         vector<file_data> upload_file=uploadfile_lookup(paths->at(2));
         for(int i=0; i<upload_file.size();i++){
@@ -460,16 +459,16 @@ int main()
             }
             BOOST_LOG_SEV(lg, info) <<data_ln.size()<<" lines to load into the database";
             int i=0;
-//            while(bd->connect()){
-//                sleep(10);
-//                transport_dmp_to_upload();
-//                i++;
-//                if(i%5==0)
-//                    BOOST_LOG_SEV(lg, error) << "We were unable to connect to the database\n";
-//            };
+            while(bd->status()){
+                sleep(60);
+                transport_dmp_to_upload();
+                bd->connect();
+                i++;
+                if(i%5==0)
+                    BOOST_LOG_SEV(lg, error) << "We were unable to connect to the database\n";
+            };
             std::string table_str="ss7_log";
             std::string copy_res=bd->copy(data_ln,table_str,table_name);
-            bd->finish();
             if(copy_res=="Successfully added to the database")  BOOST_LOG_SEV(lg, info) <<"Successfully added to the database";
             else BOOST_LOG_SEV(lg, error)<<copy_res;
             fclose(file);
