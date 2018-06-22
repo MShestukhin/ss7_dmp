@@ -33,17 +33,25 @@ namespace expr = boost::log::expressions;
 namespace attrs = boost::log::attributes;
 namespace keywords = boost::log::keywords;
 using namespace logging::trivial;
-src::severity_logger< severity_level > lg;
-vector<std::string>* table_name;
-vector<std::string>* paths;
 using namespace std;
 using namespace rapidjson;
+
 PGconn* conn;
 bd_data* conf_data; //in which database should connect
 vector<string>* data_for_search; //data from config file
 BD* bd; //data base worker
 vector<ignor_list> ignor_lists;
- //data which should insert to database
+int dmp_processing_period;
+int db_reconnect_period;
+src::severity_logger< severity_level > lg;
+vector<std::string>* table_name;
+vector<std::string>* paths;
+bool (*pt2Func)(string,string ) = NULL;
+std::string file_name;
+
+int toNumber(std::string str){
+    return atoi(str.c_str());
+}
 
 std::string to_string(int number)
 {
@@ -57,6 +65,13 @@ bool contains(std::string s_cel,std::string s_find){
         return true;
     }
     return false;
+}
+
+bool compare_str(string str_first,string str_second ){
+    if(str_first==str_second)
+        return true;
+    else
+        return false;
 }
 
 std::string GetElementValue(const Value& val)
@@ -155,8 +170,17 @@ vector<string> pars(string mass_from_js)
     int data_for_search_iter=0;
     vector<string> data;
     //before start pars put all data in vector 0
-    for(int i=0;i<data_for_search->size();i++)
-        data.push_back("0");
+    for(int i=0;i<data_for_search->size();i++){
+        string json_data=data_for_search->at(i);
+        if(contains(json_data,"{:")){
+            int str_begin=json_data.find(":");
+            int str_end=json_data.find("}");
+            data.push_back(json_data.substr(str_begin+1,str_end-str_begin-1));
+        }
+        else{
+            data.push_back("0");
+        }
+    }
     //find data in json file
     string pcap; //special string in which will develop all pcap
     while(data_for_search_iter<data_for_search->size())
@@ -165,9 +189,10 @@ vector<string> pars(string mass_from_js)
         vector<string> mass_str;
         while((end_jstr=testStr.find('}'))!=string::npos)
         {
+            std::string default_value=data.at(data_for_search_iter);
             unsigned int begin_jstr=testStr.find('{'); //begin build object when find {
             i=0;
-            while(testStr.at(end_jstr+i)!=',')         //if i find somthing like }, then continue work whie object
+            while(testStr.at(end_jstr+i)!=',')         //if i find somthing like }, then continue work while object
             {
                 if(testStr.at(end_jstr+i)==']')
                     break;
@@ -178,15 +203,17 @@ vector<string> pars(string mass_from_js)
             testStr.erase(begin_jstr,end_jstr);                //delete find object in all string
             string json_str=data_for_search->at(data_for_search_iter); //object from conf file which should i find
             vector<string> mass_or_str=split(json_str, '/');
+            string json_data;
             for(int i=0;i<mass_or_str.size();i++)
             {
-                string json_data=mass_or_str.at(i);
+                json_data=mass_or_str.at(i);
                 mass_str=split(json_data, '.'); //split by point
                 if(processing_ignor_list(jstr)==1)
                 {
                     data.clear();
                     return data;
                 }
+
                 Document document;
                 document.Parse(jstr.c_str()); //pars json str
                 Value::ConstMemberIterator iter=document.FindMember(mass_str.at(0).c_str()); //is object from conf file object which i find from json file
@@ -202,7 +229,6 @@ vector<string> pars(string mass_from_js)
                         else
                             break;
                     }
-                    //std::cout<<mass_str.at(0)<<" - "<<GetElementValue(val)<<"\n";
                     if(mass_str.at(0)=="TS")
                     {
                         string TS=val.GetString();
@@ -226,7 +252,7 @@ vector<string> pars(string mass_from_js)
                     }
                 }
             }
-            if(data.at(data_for_search_iter)!="0"&&mass_str.at(0)!="PCAP")
+            if(data.at(data_for_search_iter)!=default_value&&mass_str.at(0)!="PCAP")
                 break;
         }
         data_for_search_iter++;
@@ -239,7 +265,7 @@ bool myfunction (file_data i,file_data j)
     return (i.file_mtime>j.file_mtime);
 }
 
-vector<file_data> dmpfile_lookup(string absolute_path){
+vector<file_data> dmpfile_lookup(string absolute_path,bool (*pt2Func)(string,string )){
     DIR* dir;
     struct dirent* entry;
     struct stat sb;
@@ -260,7 +286,7 @@ vector<file_data> dmpfile_lookup(string absolute_path){
                 file_data time_name_file;
                 stat((char*)str_dir_file.c_str(),&sb);
                 //if there are files dmp
-                if(S_ISREG(sb.st_mode)&&str_file=="dmp")
+                if(S_ISREG(sb.st_mode)&&(*pt2Func)(str_file,file_name))
                 {
                     time_name_file.file_mtime=sb.st_mtim.tv_sec;
                     time_name_file.name=str_dir_file;
@@ -274,37 +300,36 @@ vector<file_data> dmpfile_lookup(string absolute_path){
     return vdata_file;
 }
 
-vector<file_data> uploadfile_lookup(string absolute_path)
-{
+vector<file_data> uploadfile_lookup(string absolute_path){
     DIR* dir;
     struct dirent* entry;
     struct stat sb;
     vector<file_data> vdata_file;
     dir=opendir(absolute_path.c_str());
-        if(dir==NULL)
-        {
-            BOOST_LOG_SEV(lg, error) <<"Can not open folder ";
-            return vdata_file;
-        }
-        while ((entry=readdir(dir))!=NULL)
-        {
-            std::string str_file=entry->d_name;
-            std::string str_dir_file=absolute_path+"/"+str_file;
-            //lookup some file in dir
-            if(str_file!="."&&str_file!="..")
+    if(dir==NULL)
+    {
+        BOOST_LOG_SEV(lg, error) <<"Can not open folder ";
+        return vdata_file;
+    }
+    while ((entry=readdir(dir))!=NULL)
+    {        
+        std::string str_file=entry->d_name;
+        std::string str_dir_file=absolute_path+"/"+str_file;
+        //lookup some file in dir
+        if(str_file!="."&&str_file!="..")
+        {           
+            file_data time_name_file;
+            stat((char*)str_dir_file.c_str(),&sb);
+            //if there are files dmp
+            if(contains(str_file,file_name))
             {
-                file_data time_name_file;
-                stat((char*)str_dir_file.c_str(),&sb);
-                //if there are files dmp
-                if(contains(str_file,"dmp"))
-                {
-                    time_name_file.file_mtime=sb.st_mtim.tv_sec;
-                    time_name_file.name=str_dir_file;
-                    vdata_file.push_back(time_name_file);
-                }
+                time_name_file.file_mtime=sb.st_mtim.tv_sec;
+                time_name_file.name=str_dir_file;
+                vdata_file.push_back(time_name_file);
             }
         }
-        closedir(dir);
+    }
+    closedir(dir);
     //сортируем в порядке времени изменения файла
     std::sort (vdata_file.begin(), vdata_file.end(), myfunction);
     return vdata_file;
@@ -317,8 +342,9 @@ void finish_prog_func(int sig){
 }
 
 void sig_abort_func(int sig){
+    BOOST_LOG_SEV(lg, error) <<"Abnormal shutdown";
     bd->finish();
-    exit(0);
+    exit(1);
 }
 
 void init()
@@ -327,14 +353,33 @@ void init()
     libconfig::Config conf;
     try
     {
-        conf.readFile("/opt/svyazcom/etc/dmp2db_smsc_lv2.conf"); //opt/svyazcom/etc/dmp_sca.conf
-        //conf.readFile("./dmp2db_smsc_lv2.conf");
+        //conf.readFile("/opt/svyazcom/etc/dmp2db_smsc_lv2.conf"); //opt/svyazcom/etc/dmp_sca.conf
+        conf.readFile("./dmp2db_smsc_lv2.conf");
     }
     catch(libconfig::ParseException e)
     {
         BOOST_LOG_SEV(lg, error)<<"Can not open file";
     }
     //load paths
+    string str=conf.lookup("application.paths.sourceFile");
+    if(contains(str,"*")){
+        pt2Func = &contains;
+        int begin_or_end=str.find("*");
+        if(begin_or_end>0){
+            file_name=str.substr(0,str.size()-1);
+        }
+        else{
+            file_name=str.substr(1,str.size()-1);
+        }
+    }
+    else{
+        file_name=str;
+         pt2Func = &compare_str;
+    }
+    string str_dmp_timer=conf.lookup("application.timers.lookup_files_timer");
+    dmp_processing_period=toNumber(str_dmp_timer);
+    string str_db_reconect_period=conf.lookup("application.timers.reconect_db_timer");
+    db_reconnect_period=toNumber(str_db_reconect_period);
     paths=new vector<string>;
     paths->push_back(conf.lookup("application.paths.sourceDir"));
     paths->push_back(conf.lookup("application.paths.doneDir"));
@@ -370,7 +415,6 @@ void init()
         string str_name=conf.lookup(conf_str);
         list.name=str_name;
         conf_str="application.ignor_list.obj"+to_string(i)+".values";
-        //std::cout<<conf_str<<"\n";
         int ignor_list_num_values=conf.lookup(conf_str).getLength();
         for(int j=0;j<ignor_list_num_values;j++)
         {
@@ -382,23 +426,23 @@ void init()
 
     //std::string log_path_str= conf.lookup("application.paths.logDir");
 
-    logging::add_file_log
-    (
-        keywords::file_name =paths->at(3)+"/%Y-%m-%d.log",
-                keywords::auto_flush = true ,
-        keywords::time_based_rotation = sinks::file::rotation_at_time_point(0, 0, 0),
-        keywords::format =
-        (
-            expr::stream
-            << expr::format_date_time< boost::posix_time::ptime >("TimeStamp", "%Y-%m-%d %H:%M:%S")
-            << "\t: <" << logging::trivial::severity
-            << "> \t" << expr::smessage
-        )
-    );
+//    logging::add_file_log
+//    (
+//        keywords::file_name =paths->at(3)+"/%Y-%m-%d.log",
+//                keywords::auto_flush = true ,
+//        keywords::time_based_rotation = sinks::file::rotation_at_time_point(0, 0, 0),
+//        keywords::format =
+//        (
+//            expr::stream
+//            << expr::format_date_time< boost::posix_time::ptime >("TimeStamp", "%Y-%m-%d %H:%M:%S")
+//            << "\t: <" << logging::trivial::severity
+//            << "> \t" << expr::smessage
+//        )
+//    );
 }
 
 void transport_dmp_to_upload(){
-    vector<file_data> dmp=dmpfile_lookup(paths->at(0));
+    vector<file_data> dmp=dmpfile_lookup(paths->at(0),pt2Func);
     for(int i=0;i<dmp.size();i++)
     {
         string absolute_path_to_file=dmp.at(i).name;
@@ -430,7 +474,7 @@ int main()
     bd->connect();
     while(1)
     {
-        sleep(60);
+        sleep(dmp_processing_period);
         transport_dmp_to_upload();
         vector<file_data> upload_file=uploadfile_lookup(paths->at(2));
         for(int i=0; i<upload_file.size();i++){
@@ -460,7 +504,8 @@ int main()
             BOOST_LOG_SEV(lg, info) <<data_ln.size()<<" lines to load into the database";
             int i=0;
             while(bd->status()){
-                sleep(60);
+                sleep(db_reconnect_period);
+                std::cout<<db_reconnect_period<<"\n";
                 transport_dmp_to_upload();
                 bd->connect();
                 i++;
