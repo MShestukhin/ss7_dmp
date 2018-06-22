@@ -510,6 +510,7 @@ int main()
                 bd->connect();
                 i++;
                 if(i%5==0)
+
                     BOOST_LOG_SEV(lg, error) << "We were unable to connect to the database\n";
             };
             std::string table_str="ss7_log";
