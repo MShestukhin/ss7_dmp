@@ -1,5 +1,5 @@
 #include <iostream>
-#include <libconfig.h++>
+#include "include/libconfig.h++"
 #include <fstream>
 #include "parser.h"
 #include <string>
@@ -11,9 +11,8 @@
 #include "include/rapidjson/istreamwrapper.h"
 #include "include/rapidjson/reader.h"
 #include <boost/thread.hpp>
-#include </usr/local/pgsql/include/libpq-fe.h>
+#include "include/libpq-fe.h"
 #include "structs.h"
-#include <libconfig.h++>
 #include <signal.h>
 #include "bd.h"
 #include <time.h>
@@ -53,7 +52,7 @@ int toNumber(std::string str){
     return atoi(str.c_str());
 }
 
-std::string to_string(int number)
+std::string toString(int number)
 {
     char str[11];
     sprintf(str, "%d", number);
@@ -77,7 +76,7 @@ bool compare_str(string str_first,string str_second ){
 std::string GetElementValue(const Value& val)
 {
   if (val.GetType() == rapidjson::kNumberType)
-    return to_string(val.GetInt());
+    return toString(val.GetInt());
   else if (val.GetType() == rapidjson::kStringType)
     return val.GetString();
   else if (val.GetType() == rapidjson::kArrayType)
@@ -204,24 +203,19 @@ vector<string> pars(string mass_from_js)
             string json_str=data_for_search->at(data_for_search_iter); //object from conf file which should i find
             vector<string> mass_or_str=split(json_str, '/');
             string json_data;
-            for(int i=0;i<mass_or_str.size();i++)
-            {
+            for(int i=0;i<mass_or_str.size();i++){
                 json_data=mass_or_str.at(i);
                 mass_str=split(json_data, '.'); //split by point
-                if(processing_ignor_list(jstr)==1)
-                {
+                if(processing_ignor_list(jstr)==1){
                     data.clear();
                     return data;
                 }
-
                 Document document;
                 document.Parse(jstr.c_str()); //pars json str
                 Value::ConstMemberIterator iter=document.FindMember(mass_str.at(0).c_str()); //is object from conf file object which i find from json file
-                if(iter!=document.MemberEnd())
-                {
+                if(iter!=document.MemberEnd()){
                     Value& val=document[mass_str.at(0).c_str()]; //try find value of parametr which i need
-                    for(int i=1; i<mass_str.size();i++)
-                    {
+                    for(int i=1; i<mass_str.size();i++){
                         Value& obj=val;
                         Value::ConstMemberIterator j=val.FindMember(mass_str.at(i).c_str());
                         if(j!=val.MemberEnd())
@@ -229,8 +223,7 @@ vector<string> pars(string mass_from_js)
                         else
                             break;
                     }
-                    if(mass_str.at(0)=="TS")
-                    {
+                    if(mass_str.at(0)=="TS"){
                         string TS=val.GetString();
                         TS=timeStampToString(TS);
                         data.at(data_for_search_iter)=TS;
@@ -271,23 +264,19 @@ vector<file_data> dmpfile_lookup(string absolute_path,bool (*pt2Func)(string,str
     struct stat sb;
     vector<file_data> vdata_file;
     dir=opendir(absolute_path.c_str());
-    if(dir==NULL)
-    {
+    if(dir==NULL){
         BOOST_LOG_SEV(lg, error) <<"Can not open folder ";
         return vdata_file;
     }
-    while ((entry=readdir(dir))!=NULL)
-    {
+    while ((entry=readdir(dir))!=NULL){
             std::string str_file=entry->d_name;
             std::string str_dir_file=absolute_path+"/"+str_file;
             //lookup some file in dir
-            if(str_file!="."&&str_file!="..")
-            {
+            if(str_file!="."&&str_file!=".."){
                 file_data time_name_file;
                 stat((char*)str_dir_file.c_str(),&sb);
                 //if there are files dmp
-                if(S_ISREG(sb.st_mode)&&(*pt2Func)(str_file,file_name))
-                {
+                if(S_ISREG(sb.st_mode)&&(*pt2Func)(str_file,file_name)){
                     time_name_file.file_mtime=sb.st_mtim.tv_sec;
                     time_name_file.name=str_dir_file;
                     vdata_file.push_back(time_name_file);
@@ -311,18 +300,15 @@ vector<file_data> uploadfile_lookup(string absolute_path){
         BOOST_LOG_SEV(lg, error) <<"Can not open folder ";
         return vdata_file;
     }
-    while ((entry=readdir(dir))!=NULL)
-    {        
+    while ((entry=readdir(dir))!=NULL){
         std::string str_file=entry->d_name;
         std::string str_dir_file=absolute_path+"/"+str_file;
         //lookup some file in dir
-        if(str_file!="."&&str_file!="..")
-        {           
+        if(str_file!="."&&str_file!=".."){
             file_data time_name_file;
             stat((char*)str_dir_file.c_str(),&sb);
             //if there are files dmp
-            if(contains(str_file,file_name))
-            {
+            if(contains(str_file,file_name)){
                 time_name_file.file_mtime=sb.st_mtim.tv_sec;
                 time_name_file.name=str_dir_file;
                 vdata_file.push_back(time_name_file);
@@ -347,8 +333,7 @@ void sig_abort_func(int sig){
     exit(1);
 }
 
-void init()
-{
+void init(){
     //open config file
     libconfig::Config conf;
     try
@@ -411,10 +396,10 @@ void init()
     for (int i=0;i<ignor_list_size;i++)
     {
         ignor_list list;
-        string conf_str="application.ignor_list.obj"+to_string(i)+".name";
+        string conf_str="application.ignor_list.obj"+toString(i)+".name";
         string str_name=conf.lookup(conf_str);
         list.name=str_name;
-        conf_str="application.ignor_list.obj"+to_string(i)+".values";
+        conf_str="application.ignor_list.obj"+toString(i)+".values";
         int ignor_list_num_values=conf.lookup(conf_str).getLength();
         for(int j=0;j<ignor_list_num_values;j++)
         {
@@ -483,8 +468,7 @@ int main()
             FILE * file;
             file = fopen(work_file.c_str(),"r");
             vector<string> rows;
-            while( !feof(file) )
-            {
+            while( !feof(file) ){
                 char buf[100000];
                 fgets(buf,100000,file);
                 if(strlen(buf)==0)
@@ -495,22 +479,19 @@ int main()
             }
             int n=rows.size();
             vector<vector<std::string> > data_ln;
-            for(int i=0;i<n;i++)
-            {
+            for(int i=0;i<n;i++){
                 vector<std::string> ml_rows=pars(rows.at(i));
                 if(ml_rows.size()>0)
                     data_ln.push_back(ml_rows);
             }
             BOOST_LOG_SEV(lg, info) <<data_ln.size()<<" lines to load into the database";
-            int i=0;
+            /*int*/ i=0;
             while(bd->status()){
                 sleep(db_reconnect_period);
-                std::cout<<db_reconnect_period<<"\n";
                 transport_dmp_to_upload();
                 bd->connect();
                 i++;
                 if(i%5==0)
-
                     BOOST_LOG_SEV(lg, error) << "We were unable to connect to the database\n";
             };
             std::string table_str="ss7_log";

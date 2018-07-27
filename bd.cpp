@@ -72,7 +72,6 @@ void BD::prepare_query_and_insert(std::vector<std::vector<std::string> > massln,
         char* paramValues[massln.at(j).size()];
         for(int i=0;i<massln.at(j).size();i++)
             paramValues[i]=(char*)massln.at(j).at(i).c_str();
-
         INSERT(insert_cmd_str,paramValues,massln.at(0).size());
     }
 }
