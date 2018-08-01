@@ -66,7 +66,6 @@ void BD::prepare_query_and_insert(std::vector<std::vector<std::string> > massln,
         }
     }
     std::string insert_cmd_str=insert_begin+insert_end+")";
-    std::cout<<insert_cmd_str<<"\n";
     for(int j=0;j<massln.size();j++)
     {
         char* paramValues[massln.at(j).size()];
@@ -89,7 +88,6 @@ std::string BD::copy(std::vector<std::vector<std::string> > massln,std::string t
         row+=massln.at(j).at(i);
         buffer+=row+"\n";
     }
-   // std::cout<<buffer;
 
     std::string query_str="copy steer."+table_str+"(";
     int i=0;

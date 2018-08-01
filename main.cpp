@@ -76,6 +76,7 @@ bool compare_str(string str_first,string str_second ){
 std::string GetElementValue(const Value& val)
 {
   if (val.GetType() == rapidjson::kNumberType)
+      
     return to_string(val.GetInt());
   else if (val.GetType() == rapidjson::kStringType)
     return val.GetString();
@@ -172,110 +173,82 @@ int processing_ignor_list(string jstr)
     return 0;
 }
 
+
 vector<string> pars(string mass_from_js)
 {
     vector<string> data;
-    Document document;
-    document.Parse(mass_from_js.c_str());
-    for(Value::ConstValueIterator iter=document.Begin(); iter!=document.End();iter++){
-        Value::ConstMemberIterator j=(*iter).FindMember("TS");
-        if(j!=(*iter).MemberEnd()){
-            const Value& val=(*iter)["TS"];
-            //std::cout<<val.GetString()<<"\n";
+    for(int i=0;i<data_for_search->size();i++){
+        string json_data=data_for_search->at(i);
+        if(contains(json_data,"{:")){
+            int str_begin=json_data.find(":");
+            int str_end=json_data.find("}");
+            data.push_back(json_data.substr(str_begin+1,str_end-str_begin-1));
+        }
+        else{
+            data.push_back("0");
         }
     }
-
-//    int end_jstr;
-//    int i=0;
-//    int data_for_search_iter=0;
-//
-//    //before start pars put all data in vector 0
-//    for(int i=0;i<data_for_search->size();i++){
-//        string json_data=data_for_search->at(i);
-//        if(contains(json_data,"{:")){
-//            int str_begin=json_data.find(":");
-//            int str_end=json_data.find("}");
-//            data.push_back(json_data.substr(str_begin+1,str_end-str_begin-1));
-//        }
-//        else{
-//            data.push_back("0");
-//        }
-//    }
-//    //find data in json file
-//    string pcap; //special string in which will develop all pcap
-//    while(data_for_search_iter<data_for_search->size())
-//    {
-//        string testStr=mass_from_js; //string like [{some data,data},{some data:{data,data}},{}]
-//        vector<string> mass_str;
-//        while((end_jstr=testStr.find('}'))!=string::npos)
-//        {
-//            std::string default_value=data.at(data_for_search_iter);
-//            unsigned int begin_jstr=testStr.find('{'); //begin build object when find {
-//            i=0;
-//            while(testStr.at(end_jstr+i)!=',')         //if i find somthing like }, then continue work while object
-//            {
-//                if(testStr.at(end_jstr+i)==']')
-//                    break;
-//                i++;
-//            }
-//            end_jstr=testStr.find('}')+i;
-//            string jstr=testStr.substr(begin_jstr,end_jstr-1); //this is object somthing like {SCCP:{A:7983...,B:7950...}}
-//            testStr.erase(begin_jstr,end_jstr);                //delete find object in all string
-//            string json_str=data_for_search->at(data_for_search_iter); //object from conf file which should i find
-//            vector<string> mass_or_str=split(json_str,"/");
-//            string json_data;
-//            for(int i=0;i<mass_or_str.size();i++)
-//            {
-//                json_data=mass_or_str.at(i);
-//                mass_str=split(json_data, "."); //split by point
-//                if(processing_ignor_list(jstr)==1)
-//                {
-//                    data.clear();
-//                    return data;
-//                }
-//                Document document;
-//                document.Parse(jstr.c_str()); //pars json str
-//                Value::ConstMemberIterator iter=document.FindMember(mass_str.at(0).c_str()); //is object from conf file object which i find from json file
-//                if(iter!=document.MemberEnd())
-//                {
-//                    Value& val=document[mass_str.at(0).c_str()]; //try find value of parametr which i need
-//                    for(int i=1; i<mass_str.size();i++)
-//                    {
-//                        Value& obj=val;
-//                        Value::ConstMemberIterator j=val.FindMember(mass_str.at(i).c_str());
-//                        if(j!=val.MemberEnd())
-//                            val=obj[mass_str.at(i).c_str()];
-//                        else
-//                            break;
-//                    }
-//                    if(mass_str.at(0)=="TS")
-//                    {
-//                        string TS=val.GetString();
-//                        TS=timeStampToString(TS);
-//                        data.at(data_for_search_iter)=TS;
-//                        break;
-//                    }
-//                    if(mass_str.at(0)!="PCAP") //if object is pcap i should sum str_pcap
-//                    {
-//                        std::string val_str=val.GetString();
-//                        if(val_str.size()!=0)
-//                            data.at(data_for_search_iter)=val_str; //if its not pcap i find object once
-//                        break;
-//                    }
-//                    else
-//                    {
-//                        string new_pcap=val.GetString();
-//                        new_pcap+="\\n";
-//                        pcap=pcap+new_pcap;
-//                        data.at(data_for_search_iter)=pcap;
-//                    }
-//                }
-//            }
-//            if(data.at(data_for_search_iter)!=default_value&&mass_str.at(0)!="PCAP")
-//                break;
-//        }
-//        data_for_search_iter++;
-//    }
+    int data_for_search_iter=0;
+    Document document;
+    ParseResult ok=document.Parse(mass_from_js.c_str());
+    if(!ok){
+        BOOST_LOG_SEV(lg, error) <<"Json format error";
+        data.clear();
+        return data;
+    }
+    while(data_for_search_iter<data_for_search->size()){
+        std::string default_value=data.at(data_for_search_iter);
+        if(contains(data_for_search->at(data_for_search_iter),"MAP.VLR")){
+            document.Clear();
+            document.Parse(mass_from_js.c_str());
+        }
+        string pcap;
+        for(Value::ValueIterator iter=document.Begin(); iter!=document.End();iter++){
+            string json_str=data_for_search->at(data_for_search_iter); //object from conf file which should i find
+            vector<string> mass_or_str=split(json_str,"/");
+            vector<string> obj_str;
+            string json_data;
+            for(int i=0;i<mass_or_str.size();i++){
+                json_data=mass_or_str.at(i);
+                obj_str=split(json_data, "."); //split by point
+                Value::ConstMemberIterator j=(*iter).FindMember(obj_str.at(0).c_str());
+                if(j!=(*iter).MemberEnd()){
+                    Value& val=(*iter)[obj_str.at(0).c_str()];
+                    for(int j=1;j<obj_str.size();j++){
+                        Value& obj=val;
+                        Value::ConstMemberIterator jtr=val.FindMember(obj_str.at(j).c_str());
+                        if(jtr!=val.MemberEnd())
+                            val=obj[obj_str.at(j).c_str()];
+                        else
+                            break;
+                    }
+                    if(obj_str.at(0)=="TS")
+                    {
+                        string TS=val.GetString();
+                        TS=timeStampToString(TS);
+                        data.at(data_for_search_iter)=TS;
+                        break;
+                    }
+                    if(obj_str.at(0)!="PCAP") //if object is pcap i should sum str_pcap
+                    {
+                        std::string val_str1=val.GetString();
+                        if(val_str1.size()!=0)
+                            data.at(data_for_search_iter)=val_str1; //if its not pcap i find object once
+                        break;
+                    }
+                    else
+                    {
+                        string new_pcap=val.GetString();
+                        pcap=pcap+new_pcap+"\\n";
+                        data.at(data_for_search_iter)=pcap;
+                    }
+                }
+             }
+            if(data.at(data_for_search_iter)!=default_value&&obj_str.at(0)!="PCAP")
+                break;
+            }
+        data_for_search_iter++;
+        }
     return data;
 }
 
@@ -372,12 +345,25 @@ void init()
     libconfig::Config conf;
     try
     {
-        //conf.readFile("/opt/svyazcom/etc/dmp2db_smsc_lv2.conf"); //opt/svyazcom/etc/dmp_sca.conf
-        conf.readFile("./dmp2db_smsc_lv2.conf");
+        conf.readFile("/opt/svyazcom/etc/dmp2db_smsc_lv2.conf"); //opt/svyazcom/etc/dmp_sca.conf
+        //conf.readFile("./dmp2db_smsc_lv2.conf");
+    }
+    catch (libconfig::FileIOException e){
+        BOOST_LOG_SEV(lg, error)<<e.what();
+        exit(1);
+    }
+    catch (libconfig::ConfigException e){
+        BOOST_LOG_SEV(lg, error)<<e.what();
+        exit(1);
+    }
+    catch(libconfig::SettingException e){
+        BOOST_LOG_SEV(lg, error)<<e.what();
+        exit(1);
     }
     catch(libconfig::ParseException e)
     {
-        BOOST_LOG_SEV(lg, error)<<"Can not open file";
+        BOOST_LOG_SEV(lg, error)<<e.getError();
+        exit(1);
     }
     //load paths
     string str=conf.lookup("application.paths.sourceFile");
@@ -442,22 +428,19 @@ void init()
         }
         ignor_lists.push_back(list);
     }
-
-    //std::string log_path_str= conf.lookup("application.paths.logDir");
-
-//    logging::add_file_log
-//    (
-//        keywords::file_name =paths->at(3)+"/%Y-%m-%d.log",
-//                keywords::auto_flush = true ,
-//        keywords::time_based_rotation = sinks::file::rotation_at_time_point(0, 0, 0),
-//        keywords::format =
-//        (
-//            expr::stream
-//            << expr::format_date_time< boost::posix_time::ptime >("TimeStamp", "%Y-%m-%d %H:%M:%S")
-//            << "\t: <" << logging::trivial::severity
-//            << "> \t" << expr::smessage
-//        )
-//    );
+        logging::add_file_log
+        (
+            keywords::file_name =paths->at(3)+"/%Y-%m-%d.log",
+                    keywords::auto_flush = true ,
+            keywords::time_based_rotation = sinks::file::rotation_at_time_point(0, 0, 0),
+            keywords::format =
+            (
+                expr::stream
+                << expr::format_date_time< boost::posix_time::ptime >("TimeStamp", "%Y-%m-%d %H:%M:%S")
+                << "\t: <" << logging::trivial::severity
+                << "> \t" << expr::smessage
+            )
+        );
 }
 
 void transport_dmp_to_upload(){
@@ -475,9 +458,9 @@ void transport_dmp_to_upload(){
         std::string str_copy_result_cmd="mv "+absolute_path_to_file+" "+work_file+" -f";
         BOOST_LOG_SEV(lg, info) <<str_copy_result_cmd;
         system(str_copy_result_cmd.c_str());
-        string str_rm_cmd="mv "+absolute_path_to_file+" "+paths->at(1)+" -f";
-        system(str_rm_cmd.c_str());
-        BOOST_LOG_SEV(lg, info) <<str_rm_cmd;
+//        string str_rm_cmd="mv "+absolute_path_to_file+" "+paths->at(1)+" -f";
+//        system(str_rm_cmd.c_str());
+//        BOOST_LOG_SEV(lg, info) <<str_rm_cmd;
     }
 }
 
@@ -488,7 +471,7 @@ int main()
     signal(SIGABRT,sig_abort_func);
     logging::add_common_attributes();
     BOOST_LOG_SEV(lg, info) << "Settings accepted";
-    //bd->connect();
+    bd->connect();
     while(1)
     {
         sleep(dmp_processing_period);
@@ -500,40 +483,36 @@ int main()
             FILE * file;
             file = fopen(work_file.c_str(),"r");
             vector<string> rows;
-            while( !feof(file) )
-            {
+            while( !feof(file) ){
                 char buf[100000];
                 fgets(buf,100000,file);
                 if(strlen(buf)==0)
                     break;
                 string str(buf);
                 memset(buf,0,100000);
-                if(str.find("[")==str.rfind("[")&&contains(str,"[")){
-                    rows.push_back(str);
-                }
+                rows.push_back(str);
             }
             int n=rows.size();
             vector<vector<std::string> > data_ln;
-            for(int i=0;i<n;i++)
-            {
+            for(int i=0;i<n;i++){
                 vector<std::string> ml_rows=pars(rows.at(i));
                 if(ml_rows.size()>0)
                     data_ln.push_back(ml_rows);
             }
-//            BOOST_LOG_SEV(lg, info) <<data_ln.size()<<" lines to load into the database";
-//            int i=0;
-//            while(bd->status()){
-//                sleep(db_reconnect_period);
-//                transport_dmp_to_upload();
-//                bd->connect();
-//                i++;
-//                if(i%5==0)
-//                    BOOST_LOG_SEV(lg, error) << "We were unable to connect to the database\n";
-//            };
-//            std::string table_str="ss7_log";
-//            std::string copy_res=bd->copy(data_ln,table_str,table_name);
-//            if(copy_res=="Successfully added to the database")  BOOST_LOG_SEV(lg, info) <<"Successfully added to the database";
-//            else BOOST_LOG_SEV(lg, error)<<copy_res;
+            BOOST_LOG_SEV(lg, info) <<data_ln.size()<<" lines to load into the database";
+            /*int*/ i=0;
+            while(bd->status()){
+                sleep(db_reconnect_period);
+                transport_dmp_to_upload();
+                bd->connect();
+                i++;
+                if(i%5==0)
+                    BOOST_LOG_SEV(lg, error) << "We were unable to connect to the database\n";
+            };
+            std::string table_str="ss7_log";
+            std::string copy_res=bd->copy(data_ln,table_str,table_name);
+            if(copy_res=="Successfully added to the database")  BOOST_LOG_SEV(lg, info) <<"Successfully added to the database";
+            else BOOST_LOG_SEV(lg, error)<<copy_res;
             fclose(file);
             std::string str_rm_cmd="mv "+work_file+" "+paths->at(1)+" -f";
             system(str_rm_cmd.c_str());

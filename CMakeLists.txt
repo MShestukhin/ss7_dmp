@@ -25,3 +25,4 @@ target_link_libraries(dmp2db_smsc_lvl2 libpq)
 add_library(libconfig STATIC IMPORTED)
 set_target_properties(libconfig PROPERTIES IMPORTED_LOCATION /usr/local/lib/libconfig++.a)
 target_link_libraries(dmp2db_smsc_lvl2 libconfig)
+# see https://cmake.org/cmake/help/latest/module/FindBoost.html
