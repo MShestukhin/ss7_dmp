@@ -345,8 +345,8 @@ void init()
     libconfig::Config conf;
     try
     {
-        conf.readFile("/opt/svyazcom/etc/dmp2db_smsc_lv2.conf"); //opt/svyazcom/etc/dmp_sca.conf
-        //conf.readFile("./dmp2db_smsc_lv2.conf");
+        //conf.readFile("/opt/svyazcom/etc/dmp2db_smsc_lv2.conf"); //opt/svyazcom/etc/dmp_sca.conf
+        conf.readFile("./dmp2db_smsc_lv2.conf");
     }
     catch (libconfig::FileIOException e){
         BOOST_LOG_SEV(lg, error)<<e.what();
