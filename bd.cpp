@@ -89,7 +89,7 @@ std::string BD::copy(std::vector<std::vector<std::string> > massln,std::string t
         buffer+=row+"\n";
     }
 
-    std::string query_str="copy steer."+table_str+"(";
+    std::string query_str="copy "+str_dbschema+"."+table_str+"(";
     int i=0;
     for(i;i<table_name->size()-1;i++)
         query_str+=table_name->at(i)+",";

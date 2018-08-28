@@ -34,7 +34,7 @@ namespace keywords = boost::log::keywords;
 using namespace logging::trivial;
 using namespace std;
 using namespace rapidjson;
-
+int num_row=0;
 PGconn* conn;
 bd_data* conf_data; //in which database should connect
 vector<string>* data_for_search; //data from config file
@@ -47,7 +47,7 @@ vector<std::string>* table_name;
 vector<std::string>* paths;
 bool (*pt2Func)(string,string ) = NULL;
 std::string file_name;
-
+int droped_by_filter;
 int toNumber(std::string str){
     return atoi(str.c_str());
 }
@@ -75,8 +75,7 @@ bool compare_str(string str_first,string str_second ){
 
 std::string GetElementValue(const Value& val)
 {
-  if (val.GetType() == rapidjson::kNumberType)
-      
+  if (val.GetType() == rapidjson::kNumberType)    
     return to_string(val.GetInt());
   else if (val.GetType() == rapidjson::kStringType)
     return val.GetString();
@@ -173,10 +172,15 @@ int processing_ignor_list(string jstr)
     return 0;
 }
 
-
 vector<string> pars(string mass_from_js)
 {
+    num_row++;
     vector<string> data;
+    if(!contains(mass_from_js,"RULE")){
+        droped_by_filter++;
+        data.clear();
+        return data;
+    }
     for(int i=0;i<data_for_search->size();i++){
         string json_data=data_for_search->at(i);
         if(contains(json_data,"{:")){
@@ -192,7 +196,7 @@ vector<string> pars(string mass_from_js)
     Document document;
     ParseResult ok=document.Parse(mass_from_js.c_str());
     if(!ok){
-        BOOST_LOG_SEV(lg, error) <<"Json format error";
+        BOOST_LOG_SEV(lg, error) <<"Json format error at "<<num_row;
         data.clear();
         return data;
     }
@@ -341,12 +345,13 @@ void sig_abort_func(int sig){
 
 void init()
 {
+    droped_by_filter=0;
     //open config file
     libconfig::Config conf;
     try
     {
-        conf.readFile("/opt/svyazcom/etc/dmp2db_smsc_lv2.conf"); //opt/svyazcom/etc/dmp_sca.conf
-        //conf.readFile("./dmp2db_smsc_lv2.conf");
+        //conf.readFile("/opt/svyazcom/etc/dmp2db_smsc_lv2.conf"); //opt/svyazcom/etc/dmp_sca.conf
+        conf.readFile("./dmp2db_smsc_lv2.conf");
     }
     catch (libconfig::FileIOException e){
         BOOST_LOG_SEV(lg, error)<<e.what();
@@ -471,7 +476,6 @@ int main()
     signal(SIGABRT,sig_abort_func);
     logging::add_common_attributes();
     BOOST_LOG_SEV(lg, info) << "Settings accepted";
-    bd->connect();
     while(1)
     {
         sleep(dmp_processing_period);
@@ -493,14 +497,19 @@ int main()
                 rows.push_back(str);
             }
             int n=rows.size();
+            droped_by_filter=0;
             vector<vector<std::string> > data_ln;
+            num_row=0;
             for(int i=0;i<n;i++){
                 vector<std::string> ml_rows=pars(rows.at(i));
                 if(ml_rows.size()>0)
                     data_ln.push_back(ml_rows);
             }
+
             BOOST_LOG_SEV(lg, info) <<data_ln.size()<<" lines to load into the database";
+            BOOST_LOG_SEV(lg, warning) <<droped_by_filter<<" lines droped by filter";
             /*int*/ i=0;
+            bd->connect();
             while(bd->status()){
                 sleep(db_reconnect_period);
                 transport_dmp_to_upload();
@@ -513,13 +522,13 @@ int main()
             std::string copy_res=bd->copy(data_ln,table_str,table_name);
             if(copy_res=="Successfully added to the database")  BOOST_LOG_SEV(lg, info) <<"Successfully added to the database";
             else BOOST_LOG_SEV(lg, error)<<copy_res;
+            bd->finish();
             fclose(file);
             std::string str_rm_cmd="mv "+work_file+" "+paths->at(1)+" -f";
             system(str_rm_cmd.c_str());
             BOOST_LOG_SEV(lg, info) <<str_rm_cmd;
         }
     }
-    bd->finish();
     return 0;
 }
 
