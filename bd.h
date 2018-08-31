@@ -2,7 +2,7 @@
 #define BD_H
 #include <string>
 #include <vector>
-#include </usr/local/pgsql/include/libpq-fe.h>
+#include "include/libpq-fe.h"
 #include <signal.h>
 #include <iostream>
 class BD

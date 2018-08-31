@@ -1,6 +1,6 @@
 project(dmp2db_smsc_lvl2)
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 SET(CMAKE_CXX_FLAGS "-lrt")
 cmake_minimum_required(VERSION 2.8)
 aux_source_directory(. SRC_LIST)
@@ -14,15 +14,19 @@ include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
 add_library(parser STATIC  ./parser.cpp)
-
+add_subdirectory(cnora_cpp)
+### coren library
+add_subdirectory(coren_cpp)
 target_link_libraries(dmp2db_smsc_lvl2 ${Boost_LIBRARIES})
 
 add_library(libpq STATIC IMPORTED)
-set_target_properties(libpq PROPERTIES IMPORTED_LOCATION /usr/local/pgsql/lib/libpq.so)
+set_target_properties(libpq PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/lib/libpq.a)
 
 target_link_libraries(dmp2db_smsc_lvl2 libpq)
 
 add_library(libconfig STATIC IMPORTED)
-set_target_properties(libconfig PROPERTIES IMPORTED_LOCATION /usr/local/lib/libconfig++.a)
-target_link_libraries(dmp2db_smsc_lvl2 libconfig)
+set_target_properties(libconfig PROPERTIES IMPORTED_LOCATION /usr/lib/x86_64-linux-gnu/libconfig++.a)
+target_link_libraries(${PROJECT_NAME} libconfig)
+target_link_libraries(${PROJECT_NAME} cnora_service)
+target_link_libraries(${PROJECT_NAME} coren_interface)
 # see https://cmake.org/cmake/help/latest/module/FindBoost.html
