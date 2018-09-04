@@ -28,6 +28,7 @@
 #include "boost/signals2.hpp"
 #include <ctime>
 #include "CNora.h"
+
 namespace logging = boost::log;
 namespace sinks = boost::log::sinks;
 namespace src = boost::log::sources;
@@ -37,22 +38,21 @@ namespace keywords = boost::log::keywords;
 using namespace logging::trivial;
 using namespace std;
 using namespace rapidjson;
+
 int num_row=0;
-PGconn* conn;
-bd_data* conf_data; //in which database should connect
-vector<string>* data_for_search; //data from config file
-BD* bd; //data base worker
+vector<string> data_for_search; //data from config file
 vector<ignor_list> ignor_lists;
-int dmp_processing_period;
-int db_reconnect_period;
+int dmp_processing_period=0;
 src::severity_logger< severity_level > lg;
-vector<std::string>* table_name;
-vector<std::string>* paths;
-bool (*pt2Func)(string,string ) = NULL;
+vector<std::string> table_name;
+vector<std::string> table_type;
+vector<std::string> paths;
+bool (*pt2Func)(string,string ) = nullptr;
 std::string file_name;
 int droped_by_filter;
 string dbSchema;
 string dbTable;
+
 CoreN::InterfacePtr getCoreN(boost::asio::io_service& ios)
 {
     const std::string& unix_socket_name = "/opt/svyazcom/var/run/coren.sock";
@@ -75,7 +75,7 @@ CoreN::CNoraPtr getCNora(const CoreN::InterfacePtr& I)
 
 boost::asio::io_service io;
 const CoreN::InterfacePtr& I = getCoreN(io);
-const CoreN::CNoraPtr& cnora=getCNora(I);
+
 int toNumber(std::string str){
     return atoi(str.c_str());
 }
@@ -137,28 +137,14 @@ std::string timeStampToString(string ts)
 
 vector<string> split(string str,const char * delimitr)
 {
-    //usleep(100);
     std::vector<string> v;
     char* chars_array = strtok((char*)str.c_str(), delimitr);
     while(chars_array)
     {
         v.push_back(chars_array);
-        chars_array = strtok(NULL, delimitr);
+        chars_array = strtok(nullptr, delimitr);
     }
     return v;
-//    vector<string> mass;
-//    int pos=0;
-//    int end=0;
-//    if(str.find(delimitr)!=pos!=string::npos)
-//        while(pos!=string::npos)
-//        {
-//            pos=str.find(delimitr);
-//            mass.push_back(str.substr(end,pos));
-//            str.erase(0,pos+1);
-//        }
-//    else
-//        mass.push_back(str);
-//    return mass;
 }
 
 string json_data_find(std::string json_data,std::string jstr)
@@ -218,8 +204,8 @@ vector<string> pars(string mass_from_js)
         data.clear();
         return data;
     }
-    for(int i=0;i<data_for_search->size();i++){
-        string json_data=data_for_search->at(i);
+    for(int i=0;i<data_for_search.size();i++){
+        string json_data=data_for_search.at(i);
         if(contains(json_data,"{:")){
             int str_begin=json_data.find(":");
             int str_end=json_data.find("}");
@@ -237,15 +223,15 @@ vector<string> pars(string mass_from_js)
         data.clear();
         return data;
     }
-    while(data_for_search_iter<data_for_search->size()){
+    while(data_for_search_iter<data_for_search.size()){
         std::string default_value=data.at(data_for_search_iter);
-        if(contains(data_for_search->at(data_for_search_iter),"MAP.VLR")){
+        if(contains(data_for_search.at(data_for_search_iter),"MAP.VLR")){
             document.Clear();
             document.Parse(mass_from_js.c_str());
         }
         string pcap;
         for(Value::ValueIterator iter=document.Begin(); iter!=document.End();iter++){
-            string json_str=data_for_search->at(data_for_search_iter); //object from conf file which should i find
+            string json_str=data_for_search.at(data_for_search_iter); //object from conf file which should i find
             vector<string> mass_or_str=split(json_str,"/");
             vector<string> obj_str;
             string json_data;
@@ -304,12 +290,12 @@ vector<file_data> dmpfile_lookup(string absolute_path,bool (*pt2Func)(string,str
     struct stat sb;
     vector<file_data> vdata_file;
     dir=opendir(absolute_path.c_str());
-    if(dir==NULL)
+    if(dir==nullptr)
     {
         BOOST_LOG_SEV(lg, error) <<"Can not open folder ";
         return vdata_file;
     }
-    while ((entry=readdir(dir))!=NULL)
+    while ((entry=readdir(dir))!=nullptr)
     {
         std::string str_file=entry->d_name;
         std::string str_dir_file=absolute_path+"/"+str_file;
@@ -339,13 +325,13 @@ vector<file_data> uploadfile_lookup(string absolute_path){
     struct stat sb;
     vector<file_data> vdata_file;
     dir=opendir(absolute_path.c_str());
-    if(dir==NULL)
+    if(dir==nullptr)
     {
         BOOST_LOG_SEV(lg, error) <<"Can not open folder ";
         return vdata_file;
     }
-    while ((entry=readdir(dir))!=NULL)
-    {        
+    while ((entry=readdir(dir))!=nullptr)
+    {
         std::string str_file=entry->d_name;
         std::string str_dir_file=absolute_path+"/"+str_file;
         //lookup some file in dir
@@ -366,18 +352,6 @@ vector<file_data> uploadfile_lookup(string absolute_path){
     //сортируем в порядке времени изменения файла
     std::sort (vdata_file.begin(), vdata_file.end(), myfunction);
     return vdata_file;
-}
-
-
-void finish_prog_func(int sig){
-    bd->finish();
-    exit(0);
-}
-
-void sig_abort_func(int sig){
-    BOOST_LOG_SEV(lg, error) <<"Abnormal shutdown";
-    bd->finish();
-    exit(1);
 }
 
 void init()
@@ -423,35 +397,31 @@ void init()
         file_name=str;
          pt2Func = &compare_str;
     }
+
     string str_dmp_timer=conf.lookup("application.timers.lookup_files_timer");
     dmp_processing_period=toNumber(str_dmp_timer);
-    string str_db_reconect_period=conf.lookup("application.timers.reconect_db_timer");
-    db_reconnect_period=toNumber(str_db_reconect_period);
-    paths=new vector<string>;
-    paths->push_back(conf.lookup("application.paths.sourceDir"));
-    paths->push_back(conf.lookup("application.paths.doneDir"));
-    paths->push_back(conf.lookup("application.paths.uploadDir"));
-    paths->push_back(conf.lookup("application.paths.logDir"));
-    //load database data from config file
-    bd=new BD(
-              conf.lookup("application.dataBase.dbname"),
-              conf.lookup("application.dataBase.host"),
-              conf.lookup("application.dataBase.user"),
-              conf.lookup("application.dataBase.password"),
-              conf.lookup("application.dataBase.table"),
-              conf.lookup("application.dataBase.schema"));
-    //load tables data
-    table_name=new vector<std::string>;
+
+    paths.push_back(conf.lookup("application.paths.sourceDir"));
+    paths.push_back(conf.lookup("application.paths.doneDir"));
+    paths.push_back(conf.lookup("application.paths.uploadDir"));
+    paths.push_back(conf.lookup("application.paths.logDir"));
+
+    string schemaDb=conf.lookup("application.dataBase.schema");
+    string tableDb=conf.lookup("application.dataBase.table");
+    dbSchema=schemaDb;
+    dbTable=tableDb;
+
     int number_of_table=conf.lookup("application.tableData").getLength();
     for(int i=0;i<number_of_table;i++)    
-        table_name->push_back(conf.lookup("application.tableData")[i]);
+        table_name.push_back(conf.lookup("application.tableData")[i]);
+    for(int i=0;i<number_of_table;i++)
+        table_type.push_back(conf.lookup("application.tableTypeData")[i]);
 
     //load data which should search in json file
-    data_for_search=new vector<string>;
     int count_data_for_search=conf.lookup("application.data_for_search").getLength();
 
     for(int i=0;i<count_data_for_search;i++)    
-        data_for_search->push_back(conf.lookup("application.data_for_search")[i]);
+        data_for_search.push_back(conf.lookup("application.data_for_search")[i]);
 
     int ignor_list_size=conf.lookup("application.ignor_list").getLength();
 
@@ -486,50 +456,77 @@ void init()
 }
 
 void transport_dmp_to_upload(){
-    vector<file_data> dmp=dmpfile_lookup(paths->at(0),pt2Func);
+    vector<file_data> dmp=dmpfile_lookup(paths.at(0),pt2Func);
     for(int i=0;i<dmp.size();i++)
     {
         string absolute_path_to_file=dmp.at(i).name;
         BOOST_LOG_SEV(lg, info) <<"File detected "<<absolute_path_to_file;
         char buffer[80];
-        time_t seconds = time(NULL);
+        time_t seconds = time(nullptr);
         tm* timeinfo = localtime(&seconds);
         const char* format = "%B_%d_%Y_%I:%M:%S";
         strftime(buffer, 80, format, timeinfo);
-        string work_file=paths->at(2)+"/"+std::string(buffer)+absolute_path_to_file.substr(absolute_path_to_file.rfind("/")+1,string::npos);
+        string work_file=paths.at(2)+"/"+std::string(buffer)+absolute_path_to_file.substr(absolute_path_to_file.rfind("/")+1,string::npos);
         std::string str_copy_result_cmd="mv "+absolute_path_to_file+" "+work_file+" -f";
         BOOST_LOG_SEV(lg, info) <<str_copy_result_cmd;
         system(str_copy_result_cmd.c_str());
     }
 }
 
-struct output : public boost::static_visitor<>
-{
-  template <typename T>
-  void operator()(T t) const { std::cout << t << '\n'; }
-};
-
-class my_visitor : public boost::static_visitor<int>
-{
-    public:
-    int operator()(int i) const
+void insertDB(vector<vector<string>> data_ln){
+    //load tables data
+    const CoreN::CNoraPtr& cnora=getCNora(I);
+    CoreN::CNora::Values v;
+    std::string insert_begin="INSERT INTO "+dbSchema+"."+dbTable+" (";
+    std::string insert_end=") VALUES(";
+    for(int i=0;i<table_name.size();i++)
     {
-        return i;
+        insert_begin=insert_begin+table_name.at(i);
+        insert_end=insert_end+"$"+toString(i+1)+table_type.at(i);
+        if((i+1)!=table_name.size())
+        {
+            insert_end+=",";
+            insert_begin+=",";
+        }
     }
+    std::string insert_cmd_str=insert_begin+insert_end+")";
+    for(int i=0;i<data_ln.size();i++){
+        for(int j=0;j<data_ln.at(i).size();j++){
+            v.emplace_back(CoreN::CNora::Value(data_ln.at(i).at(j)));
+        }
+        cnora->Request(
+            insert_cmd_str, // SQL
+            v, // Binded params
+            CoreN::CNora::Commit | CoreN::CNora::StopSession, // Some flags for request
+                [](const CoreN::CNora::Rows& ) {},
+                [](const CoreN::Error& error){
+                    std::cout << "Request status: " << error << std::endl;
+                } // Method on request finish
+        );
+        v.clear();
+    };
+}
 
-    int operator()(const std::string & str) const
-    {
-        return str.length();
+void on_signal(const boost::system::error_code& error, int signal_number, const CoreN::InterfacePtr& I)
+{
+    if (error) {
+        log_error("Signal with error :"<<error.message());
     }
-};
-
+    log_info("Got signal "<<signal_number<<":"<<strsignal(signal_number));
+    I->UnRegister("", [](
+        const CoreN::Error& error,
+        CoreN::Service::Role /*role*/,
+        const boost::shared_ptr<CoreN::Service::Address>& /*master*/
+    ){
+        log_info("Service UnRegistered " << error);
+    });
+}
 
 void mainThread(){
-
     while(1){
         sleep(dmp_processing_period);
         transport_dmp_to_upload();
-        vector<file_data> upload_file=uploadfile_lookup(paths->at(2));
+        vector<file_data> upload_file=uploadfile_lookup(paths.at(2));
         for(int i=0; i<upload_file.size();i++){
             string work_file=upload_file.at(i).name;
             BOOST_LOG_SEV(lg, info) <<"Getting started with the file "<<work_file;
@@ -557,44 +554,7 @@ void mainThread(){
             BOOST_LOG_SEV(lg, info)<<data_ln.size()<<" lines to load into the database";
             BOOST_LOG_SEV(lg, warning)<<droped_by_filter<<" lines droped by filter";
             fclose(file);
-            //load tables data
-            const CoreN::CNoraPtr& cnora=getCNora(I);
-            CoreN::CNora::Values v;
-            string steerLog="steer_log";
-            string ss7_log="ss7_log";
-            std::string insert_begin="INSERT INTO "+steerLog+"."+ss7_log+" (";
-            std::string insert_end=") VALUES(";
-            vector<string> types={"::timestamp", "::varchar", "::int8", "::varchar", "::varchar","::text"};
-            for(int i=0;i<table_name->size();i++)
-            {
-                insert_begin=insert_begin+table_name->at(i);
-                char n[10];
-                sprintf(n,"%d",i+1);
-                insert_end=insert_end+"$"+n+types.at(i);
-                if((i+1)!=table_name->size())
-                {
-                    insert_end+=",";
-                    insert_begin+=",";
-                }
-            }
-            std::string insert_cmd_str=insert_begin+insert_end+")";
-            std::cout<<"\n"<<insert_cmd_str<<"\n";
-            for(int i=0;i<data_ln.size();i++){
-                for(int j=0;j<data_ln.at(i).size();j++){
-                    v.emplace_back(CoreN::CNora::Value(data_ln.at(i).at(j)));
-                }
-                std::cout<<data_ln.at(i).at(0)<<"\t";
-                cnora->Request(
-                    insert_cmd_str, // SQL
-                    v, // Binded params (now empty)
-                    CoreN::CNora::Commit | CoreN::CNora::StopSession, // Some flags for request
-                        [](const CoreN::CNora::Rows& ) {},
-                        [](const CoreN::Error& error){
-                            std::cout << "Request status: " << error << std::endl;
-                        } // Method on request finish
-                );
-                v.clear();
-            };
+            insertDB(data_ln);
         }
     }
 }
@@ -602,8 +562,6 @@ void mainThread(){
 int main()
 {
     init();
-    signal(SIGINT, finish_prog_func);
-    signal(SIGABRT,sig_abort_func);
     logging::add_common_attributes();
     BOOST_LOG_SEV(lg, info) << "Settings accepted";
     boost::thread thread(&mainThread);
@@ -611,11 +569,10 @@ int main()
         std::cout<<"\n" <<"Ready to work"<<"\n";
         handler();
     });
-//  OnPressed.connect(boost::bind(&on_signal, _1, _2, boost::ref(I)));
-//  boost::asio::signal_set signals(io, SIGINT, SIGTERM);
-//      signals.async_wait(
-//          boost::bind(&on_signal, _1, _2, boost::ref(I))
-//      );
+  boost::asio::signal_set signals(io, SIGINT, SIGTERM);
+      signals.async_wait(
+          boost::bind(&on_signal, _1, _2, boost::ref(I))
+      );
     boost::system::error_code error;
     io.run(error);
     thread.join();
