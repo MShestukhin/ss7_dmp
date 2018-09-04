@@ -1,0 +1,12 @@
+2018-08-21 15:18:50	: <info> 	Settings accepted
+2018-08-21 15:18:56	: <info> 	File detected ./DMP/dmp
+2018-08-21 15:18:56	: <info> 	mv ./DMP/dmp ./upload/August_21_2018_03:18:56dmp -f
+2018-08-21 15:18:56	: <info> 	Getting started with the file ./upload/August_21_2018_03:18:56dmp
+2018-08-21 15:18:56	: <error> 	Json format error at 272
+2018-08-21 15:18:56	: <error> 	Json format error at 643
+2018-08-21 15:18:56	: <error> 	Json format error at 644
+2018-08-21 15:18:56	: <error> 	Json format error at 846
+2018-08-21 15:18:56	: <info> 	736 lines to load into the database
+2018-08-21 15:18:56	: <warning> 	358 lines droped by filter
+2018-08-21 15:18:56	: <info> 	Successfully added to the database
+2018-08-21 15:18:56	: <info> 	mv ./upload/August_21_2018_03:18:56dmp ./doneDMP -f

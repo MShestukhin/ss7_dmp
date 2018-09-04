@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="coren_protocol"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\cnora_cpp\;CMake Files\cnora_cpp\protocol\;CMake Files\coren_cpp\;CMake Files\coren_cpp\protocol\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="coren_protocol">
+				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/libcoren_protocol.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/coren_cpp/protocol"/>
+					<Add directory="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/Makefile&quot;  VERBOSE=1 coren_protocol"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="coren_protocol/fast">
+				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/libcoren_protocol.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/coren_cpp/protocol"/>
+					<Add directory="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol"/>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/Makefile&quot;  VERBOSE=1 coren_protocol/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/coren_cpp/protocol/asn_autoexpand_buffer.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/coren_cpp/protocol/asn_autoexpand_buffer.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/AnnounceData.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/AnnounceData.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/BIT_STRING.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/BIT_STRING.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/CoreNError.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/CoreNError.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/CoreNErrorCode.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/CoreNErrorCode.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/CoreNInfoCode.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/CoreNInfoCode.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/CoreNInfoRequest.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/CoreNInfoRequest.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/CoreNInfoResponse.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/CoreNInfoResponse.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/CoreNProtocol.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/CoreNProtocol.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/ENUMERATED.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/ENUMERATED.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/INTEGER.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/INTEGER.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/Message.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/Message.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/MsgAddr.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/MsgAddr.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/NativeEnumerated.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/NativeEnumerated.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/NativeInteger.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/NativeInteger.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/OCTET_STRING.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/OCTET_STRING.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/SetSvcName.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/SetSvcName.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/SvcAnnounce.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/SvcAnnounce.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/UTF8String.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/UTF8String.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/asn_SEQUENCE_OF.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/asn_SEQUENCE_OF.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/asn_SET_OF.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/asn_SET_OF.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/asn_application.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/asn_codecs.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/asn_codecs_prim.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/asn_codecs_prim.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/asn_internal.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/asn_system.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/ber_decoder.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/ber_decoder.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/ber_tlv_length.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/ber_tlv_length.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/ber_tlv_tag.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/ber_tlv_tag.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/constr_CHOICE.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/constr_CHOICE.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/constr_SEQUENCE.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/constr_SEQUENCE.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/constr_SEQUENCE_OF.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/constr_SEQUENCE_OF.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/constr_SET_OF.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/constr_SET_OF.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/constr_TYPE.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/constr_TYPE.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/constraints.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/constraints.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/der_encoder.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/der_encoder.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/per_decoder.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/per_decoder.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/per_encoder.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/per_encoder.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/per_opentype.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/per_opentype.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/per_support.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/per_support.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/xer_decoder.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/xer_decoder.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/xer_encoder.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/xer_encoder.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/xer_support.c">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/xer_support.h">
+			<Option target="coren_protocol"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/cnora_cpp/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\cnora_cpp\"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/cnora_cpp/protocol/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\cnora_cpp\protocol\"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/coren_cpp/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\coren_cpp\"/>
+		</Unit>
+		<Unit filename="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/coren_cpp/protocol/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\coren_cpp\protocol\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

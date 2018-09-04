@@ -1,0 +1,2 @@
+/usr/bin/ar qc libcoren_interface.a  CMakeFiles/coren_interface.dir/src/Interface.cpp.o CMakeFiles/coren_interface.dir/src/Service.cpp.o CMakeFiles/coren_interface.dir/src/Session.cpp.o CMakeFiles/coren_interface.dir/src/Types.cpp.o CMakeFiles/coren_interface.dir/src/Utils.cpp.o CMakeFiles/coren_interface.dir/src/VirtualService.cpp.o CMakeFiles/coren_interface.dir/src/asn_utils.cpp.o CMakeFiles/coren_interface.dir/src/logger.cpp.o CMakeFiles/coren_interface.dir/src/main.cpp.o
+/usr/bin/ranlib libcoren_interface.a

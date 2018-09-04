@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/parser.cpp
+parser.h
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/parser.h
+
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/parser.h
+vector
+-
+string.h
+-
+iostream
+-
+stdio.h
+-
+dirent.h
+-
+

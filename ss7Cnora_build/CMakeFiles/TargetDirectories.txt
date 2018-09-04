@@ -1,0 +1,16 @@
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/rebuild_cache.dir
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/edit_cache.dir
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/dmp2db_smsc_lvl2.dir
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/parser.dir
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/CMakeFiles/rebuild_cache.dir
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/CMakeFiles/cnora_service.dir
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/CMakeFiles/edit_cache.dir
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/protocol/CMakeFiles/rebuild_cache.dir
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/protocol/CMakeFiles/edit_cache.dir
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/CMakeFiles/rebuild_cache.dir
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/CMakeFiles/coren_interface.dir
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/CMakeFiles/edit_cache.dir
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/CMakeFiles/rebuild_cache.dir
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/CMakeFiles/coren_protocol.dir
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/CMakeFiles/edit_cache.dir
