@@ -25,6 +25,7 @@
 #include <boost/log/support/date_time.hpp>
 #include <boost/thread.hpp>
 #include <boost/variant.hpp>
+#include "boost/signals2.hpp"
 #include <ctime>
 #include "CNora.h"
 namespace logging = boost::log;
@@ -50,6 +51,31 @@ vector<std::string>* paths;
 bool (*pt2Func)(string,string ) = NULL;
 std::string file_name;
 int droped_by_filter;
+string dbSchema;
+string dbTable;
+CoreN::InterfacePtr getCoreN(boost::asio::io_service& ios)
+{
+    const std::string& unix_socket_name = "/opt/svyazcom/var/run/coren.sock";
+    unsigned int reconnect_tmo = 5;
+    return CoreN::Interface::Create(ios, unix_socket_name, reconnect_tmo);
+}
+
+CoreN::CNoraPtr getCNora(const CoreN::InterfacePtr& I)
+{
+    const CoreN::Service::Address remote {
+        "CNORA", "", 0
+    };
+    const boost::chrono::milliseconds timeout {
+        1000
+    };
+    CoreN::CNoraPtr svc = boost::make_shared<CoreN::CNora>(I, remote, timeout);
+    I->AddService(CoreN::cnora_label, boost::dynamic_pointer_cast<CoreN::Service::Base>(svc));
+    return svc;
+}
+
+boost::asio::io_service io;
+const CoreN::InterfacePtr& I = getCoreN(io);
+const CoreN::CNoraPtr& cnora=getCNora(I);
 int toNumber(std::string str){
     return atoi(str.c_str());
 }
@@ -354,26 +380,6 @@ void sig_abort_func(int sig){
     exit(1);
 }
 
-CoreN::InterfacePtr getCoreN(boost::asio::io_service& ios)
-{
-    const std::string& unix_socket_name = "/opt/svyazcom/var/run/coren.sock";
-    unsigned int reconnect_tmo = 5;
-    return CoreN::Interface::Create(ios, unix_socket_name, reconnect_tmo);
-}
-
-CoreN::CNoraPtr getCNora(const CoreN::InterfacePtr& I)
-{
-    const CoreN::Service::Address remote {
-        "CNORA", "", 0
-    };
-    const boost::chrono::milliseconds timeout {
-        1000
-    };
-    CoreN::CNoraPtr svc = boost::make_shared<CoreN::CNora>(I, remote, timeout);
-    I->AddService(CoreN::cnora_label, boost::dynamic_pointer_cast<CoreN::Service::Base>(svc));
-    return svc;
-}
-
 void init()
 {
     droped_by_filter=0;
@@ -494,9 +500,6 @@ void transport_dmp_to_upload(){
         std::string str_copy_result_cmd="mv "+absolute_path_to_file+" "+work_file+" -f";
         BOOST_LOG_SEV(lg, info) <<str_copy_result_cmd;
         system(str_copy_result_cmd.c_str());
-//        string str_rm_cmd="mv "+absolute_path_to_file+" "+paths->at(1)+" -f";
-//        system(str_rm_cmd.c_str());
-//        BOOST_LOG_SEV(lg, info) <<str_rm_cmd;
     }
 }
 
@@ -508,7 +511,7 @@ struct output : public boost::static_visitor<>
 
 class my_visitor : public boost::static_visitor<int>
 {
-public:
+    public:
     int operator()(int i) const
     {
         return i;
@@ -520,53 +523,10 @@ public:
     }
 };
 
-void on_signal(const boost::system::error_code& error, int signal_number, const CoreN::InterfacePtr& I){
-//    if (error) {
-//        log_error("Signal with error :"<<error.message());
-//    }
-        const CoreN::CNoraPtr& cnora=getCNora(I);
-        cnora->Request(
-            "SELECT 2+8 res;", // SQL
-            CoreN::CNora::Values(), // Binded params (now empty)
-            CoreN::CNora::Commit | CoreN::CNora::StopSession, // Some flags for request
-            [](const CoreN::CNora::Rows& dataset) {
-                for (auto row : dataset) {
-                    for (auto column : row) {
-                        // Somethig like this
-                        BOOST_LOG_SEV(lg, info) << boost::apply_visitor(my_visitor(), column) << "\t";
-                        // See: http://www.boost.org/doc/libs/1_64_0/doc/html/variant/tutorial.html
-                    }
-                    BOOST_LOG_SEV(lg, info) << "\n";
-                }
-            }, // Method on data recv
-            [](const CoreN::Error& error){
-                std::cout << "Request status: " << error << std::endl;
-            } // Method on request finish
-        );
-}
 
-int main()
-{
-    init();
-    signal(SIGINT, finish_prog_func);
-    signal(SIGABRT,sig_abort_func);
-    logging::add_common_attributes();
-    BOOST_LOG_SEV(lg, info) << "Settings accepted";
-    boost::asio::io_service ios;
-    const CoreN::InterfacePtr& I = getCoreN(ios);
-    const CoreN::CNoraPtr& cnora=getCNora(I);
-    rebind(I->on_connect, [](const boost::function<void()>& handler){
-        std::cout<<"\n" <<"Ready to work"<<"\n";
-        handler();
-    });
-    boost::asio::signal_set signals(ios, SIGINT, SIGTERM);
-       signals.async_wait(
-           boost::bind(&on_signal, _1, _2, boost::ref(I))
-       );
-    boost::asio::deadline_timer timer(ios);
-    timer.expires_from_now(boost::posix_time::seconds(dmp_processing_period));
-    while(1)
-    {
+void mainThread(){
+
+    while(1){
         sleep(dmp_processing_period);
         transport_dmp_to_upload();
         vector<file_data> upload_file=uploadfile_lookup(paths->at(2));
@@ -594,55 +554,75 @@ int main()
                 if(ml_rows.size()>0)
                     data_ln.push_back(ml_rows);
             }
-
-            BOOST_LOG_SEV(lg, info) <<data_ln.size()<<" lines to load into the database";
-            BOOST_LOG_SEV(lg, warning) <<droped_by_filter<<" lines droped by filter";
-            cnora->Request(
-                "SELECT 2+2 res;", // SQL
-                CoreN::CNora::Values(), // Binded params (now empty)
-                CoreN::CNora::Commit | CoreN::CNora::StopSession, // Some flags for request
-                [](const CoreN::CNora::Rows& dataset) {
-                    for (auto row : dataset) {
-                        for (auto column : row) {
-                            // Somethig like this
-                           BOOST_LOG_SEV(lg, info) << "ff" << "\t";
-                            // See: http://www.boost.org/doc/libs/1_64_0/doc/html/variant/tutorial.html
-                        }
-                        BOOST_LOG_SEV(lg, info) << "\n";
-                    }
-                }, // Method on data recv
-                [](const CoreN::Error& error){
-                    std::cout << "Request status: " << error << std::endl;
-                } // Method on request finish
-            );
-            boost::system::error_code error;
-                ios.run(error);
-                if (error) {
-                    log_error("ios.run() error: " << error.message());
-                }
-                log_debug("ios thread terminated");
-            /*int*/ i=0;
-
-//            bd->connect();
-//            while(bd->status()){
-//                sleep(db_reconnect_period);
-//                transport_dmp_to_upload();
-//                bd->connect();
-//                i++;
-//                if(i%5==0)
-//                    BOOST_LOG_SEV(lg, error) << "We were unable to connect to the database\n";
-//            };
-//            std::string table_str="ss7_log";
-//            std::string copy_res=bd->copy(data_ln,table_str,table_name);
-//            if(copy_res=="Successfully added to the database")  BOOST_LOG_SEV(lg, info) <<"Successfully added to the database";
-//            else BOOST_LOG_SEV(lg, error)<<copy_res;
-//            bd->finish();
+            BOOST_LOG_SEV(lg, info)<<data_ln.size()<<" lines to load into the database";
+            BOOST_LOG_SEV(lg, warning)<<droped_by_filter<<" lines droped by filter";
             fclose(file);
-            std::string str_rm_cmd="mv "+work_file+" "+paths->at(1)+" -f";
-            //system(str_rm_cmd.c_str());
-            BOOST_LOG_SEV(lg, info) <<str_rm_cmd;
+            //load tables data
+            const CoreN::CNoraPtr& cnora=getCNora(I);
+            CoreN::CNora::Values v;
+            string steerLog="steer_log";
+            string ss7_log="ss7_log";
+            std::string insert_begin="INSERT INTO "+steerLog+"."+ss7_log+" (";
+            std::string insert_end=") VALUES(";
+            vector<string> types={"::timestamp", "::varchar", "::int8", "::varchar", "::varchar","::text"};
+            for(int i=0;i<table_name->size();i++)
+            {
+                insert_begin=insert_begin+table_name->at(i);
+                char n[10];
+                sprintf(n,"%d",i+1);
+                insert_end=insert_end+"$"+n+types.at(i);
+                if((i+1)!=table_name->size())
+                {
+                    insert_end+=",";
+                    insert_begin+=",";
+                }
+            }
+            std::string insert_cmd_str=insert_begin+insert_end+")";
+            std::cout<<"\n"<<insert_cmd_str<<"\n";
+            for(int i=0;i<data_ln.size();i++){
+                for(int j=0;j<data_ln.at(i).size();j++){
+                    v.emplace_back(CoreN::CNora::Value(data_ln.at(i).at(j)));
+                }
+                std::cout<<data_ln.at(i).at(0)<<"\t";
+                cnora->Request(
+                    insert_cmd_str, // SQL
+                    v, // Binded params (now empty)
+                    CoreN::CNora::Commit | CoreN::CNora::StopSession, // Some flags for request
+                        [](const CoreN::CNora::Rows& ) {},
+                        [](const CoreN::Error& error){
+                            std::cout << "Request status: " << error << std::endl;
+                        } // Method on request finish
+                );
+                v.clear();
+            };
         }
     }
+}
+
+int main()
+{
+    init();
+    signal(SIGINT, finish_prog_func);
+    signal(SIGABRT,sig_abort_func);
+    logging::add_common_attributes();
+    BOOST_LOG_SEV(lg, info) << "Settings accepted";
+    boost::thread thread(&mainThread);
+    rebind(I->on_connect, [](const boost::function<void()>& handler){
+        std::cout<<"\n" <<"Ready to work"<<"\n";
+        handler();
+    });
+//  OnPressed.connect(boost::bind(&on_signal, _1, _2, boost::ref(I)));
+//  boost::asio::signal_set signals(io, SIGINT, SIGTERM);
+//      signals.async_wait(
+//          boost::bind(&on_signal, _1, _2, boost::ref(I))
+//      );
+    boost::system::error_code error;
+    io.run(error);
+    thread.join();
+    if (error) {
+        log_error("ios.run() error: " << error.message());
+    }
+    log_debug("ios thread terminated");
     return 0;
 }
 
