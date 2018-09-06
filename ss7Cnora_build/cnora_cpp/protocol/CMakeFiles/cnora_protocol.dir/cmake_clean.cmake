@@ -35,7 +35,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/cnora_protocol.dir/xer_encoder.c.o"
   "CMakeFiles/cnora_protocol.dir/xer_support.c.o"
   "libcnora_protocol.pdb"
-  "libcnora_protocol.a"
+  "libcnora_protocol.so"
 )
 
 # Per-language clean rules from dependency scanning.

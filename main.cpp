@@ -10,7 +10,7 @@
 #include <boost/thread.hpp>
 #include "include/libpq-fe.h"
 #include "structs.h"
-#include <libconfig.h++>
+#include "libconfig.h++"
 #include <signal.h>
 #include "bd.h"
 #include <time.h>
@@ -52,21 +52,24 @@ std::string file_name;
 int droped_by_filter;
 string dbSchema;
 string dbTable;
-
+string unix_socket_name;
+string cnora_name;
+int coren_timeout;
+int cnora_timeout;
 CoreN::InterfacePtr getCoreN(boost::asio::io_service& ios)
 {
-    const std::string& unix_socket_name = "/opt/svyazcom/var/run/coren.sock";
+    //const std::string& unix_socket_name = "/opt/svyazcom/var/run/coren.sock";
     unsigned int reconnect_tmo = 5;
-    return CoreN::Interface::Create(ios, unix_socket_name, reconnect_tmo);
+    return CoreN::Interface::Create(ios, unix_socket_name, coren_timeout);
 }
 
 CoreN::CNoraPtr getCNora(const CoreN::InterfacePtr& I)
 {
     const CoreN::Service::Address remote {
-        "CNORA", "", 0
+        cnora_name, "", 0
     };
     const boost::chrono::milliseconds timeout {
-        1000
+        cnora_timeout
     };
     CoreN::CNoraPtr svc = boost::make_shared<CoreN::CNora>(I, remote, timeout);
     I->AddService(CoreN::cnora_label, boost::dynamic_pointer_cast<CoreN::Service::Base>(svc));
@@ -147,26 +150,6 @@ vector<string> split(string str,const char * delimitr)
     return v;
 }
 
-string json_data_find(std::string json_data,std::string jstr)
-{
-    vector<string> mass_str=split(json_data, ".");
-    Document document;
-    document.Parse(jstr.c_str());
-    Value::ConstMemberIterator iter=document.FindMember(mass_str.at(0).c_str());
-    string str_result;
-    if(iter!=document.MemberEnd())
-    {
-        Value& val=document[mass_str.at(0).c_str()];
-        for(int i=1; i<mass_str.size();i++)
-        {
-            Value& obj=val;
-            val=obj[mass_str.at(i).c_str()];
-        }
-        str_result=val.GetString();
-    }
-    return str_result;
-}
-
 int processing_ignor_list(string jstr)
 {
     Document document;
@@ -193,6 +176,26 @@ int processing_ignor_list(string jstr)
         }
     }
     return 0;
+}
+
+string json_data_find(std::string json_data,std::string jstr)
+{
+    vector<string> mass_str=split(json_data, ".");
+    Document document;
+    document.Parse(jstr.c_str());
+    Value::ConstMemberIterator iter=document.FindMember(mass_str.at(0).c_str());
+    string str_result;
+    if(iter!=document.MemberEnd())
+    {
+        Value& val=document[mass_str.at(0).c_str()];
+        for(int i=1; i<mass_str.size();i++)
+        {
+            Value& obj=val;
+            val=obj[mass_str.at(i).c_str()];
+        }
+        str_result=val.GetString();
+    }
+    return str_result;
 }
 
 vector<string> pars(string mass_from_js)
@@ -319,41 +322,6 @@ vector<file_data> dmpfile_lookup(string absolute_path,bool (*pt2Func)(string,str
     return vdata_file;
 }
 
-vector<file_data> uploadfile_lookup(string absolute_path){
-    DIR* dir;
-    struct dirent* entry;
-    struct stat sb;
-    vector<file_data> vdata_file;
-    dir=opendir(absolute_path.c_str());
-    if(dir==nullptr)
-    {
-        BOOST_LOG_SEV(lg, error) <<"Can not open folder ";
-        return vdata_file;
-    }
-    while ((entry=readdir(dir))!=nullptr)
-    {
-        std::string str_file=entry->d_name;
-        std::string str_dir_file=absolute_path+"/"+str_file;
-        //lookup some file in dir
-        if(str_file!="."&&str_file!="..")
-        {
-            file_data time_name_file;
-            stat((char*)str_dir_file.c_str(),&sb);
-            //if there are files dmp
-            if(contains(str_file,file_name))
-            {
-                time_name_file.file_mtime=sb.st_mtim.tv_sec;
-                time_name_file.name=str_dir_file;
-                vdata_file.push_back(time_name_file);
-            }
-        }
-    }
-    closedir(dir);
-    //сортируем в порядке времени изменения файла
-    std::sort (vdata_file.begin(), vdata_file.end(), myfunction);
-    return vdata_file;
-}
-
 void init()
 {
     droped_by_filter=0;
@@ -361,8 +329,8 @@ void init()
     libconfig::Config conf;
     try
     {
-        //conf.readFile("/opt/svyazcom/etc/dmp2db_smsc_lv2.conf"); //opt/svyazcom/etc/dmp_sca.conf
-        conf.readFile("./dmp2db_smsc_lv2.conf");
+        conf.readFile("/opt/svyazcom/etc/dmp2db_smsc_lv2.conf"); //opt/svyazcom/etc/dmp_sca.conf
+        //conf.readFile("./dmp2db_smsc_lv2.conf");
     }
     catch (libconfig::FileIOException e){
         BOOST_LOG_SEV(lg, error)<<e.what();
@@ -408,9 +376,13 @@ void init()
 
     string schemaDb=conf.lookup("application.dataBase.schema");
     string tableDb=conf.lookup("application.dataBase.table");
+    string socket_name=conf.lookup("application.coren.node.socket");
+    string cm=conf.lookup("application.coren.cnora.name");
+    cnora_timeout=conf.lookup("application.coren.cnora.timeout");
+    coren_timeout=conf.lookup("application.coren.node.reconnect");
     dbSchema=schemaDb;
     dbTable=tableDb;
-
+    unix_socket_name=socket_name;
     int number_of_table=conf.lookup("application.tableData").getLength();
     for(int i=0;i<number_of_table;i++)    
         table_name.push_back(conf.lookup("application.tableData")[i]);
@@ -440,19 +412,19 @@ void init()
         }
         ignor_lists.push_back(list);
     }
-//        logging::add_file_log
-//        (
-//            keywords::file_name =paths->at(3)+"/%Y-%m-%d.log",
-//                    keywords::auto_flush = true ,
-//            keywords::time_based_rotation = sinks::file::rotation_at_time_point(0, 0, 0),
-//            keywords::format =
-//            (
-//                expr::stream
-//                << expr::format_date_time< boost::posix_time::ptime >("TimeStamp", "%Y-%m-%d %H:%M:%S")
-//                << "\t: <" << logging::trivial::severity
-//                << "> \t" << expr::smessage
-//            )
-//        );
+        logging::add_file_log
+        (
+            keywords::file_name =paths.at(3)+"/%Y-%m-%d.log",
+                    keywords::auto_flush = true ,
+            keywords::time_based_rotation = sinks::file::rotation_at_time_point(0, 0, 0),
+            keywords::format =
+            (
+                expr::stream
+                << expr::format_date_time< boost::posix_time::ptime >("TimeStamp", "%Y-%m-%d %H:%M:%S")
+                << "\t: <" << logging::trivial::severity
+                << "> \t" << expr::smessage
+            )
+        );
 }
 
 void transport_dmp_to_upload(){
@@ -500,11 +472,44 @@ void insertDB(vector<vector<string>> data_ln){
             CoreN::CNora::Commit | CoreN::CNora::StopSession, // Some flags for request
                 [](const CoreN::CNora::Rows& ) {},
                 [](const CoreN::Error& error){
-                    std::cout << "Request status: " << error << std::endl;
+                    if(error!=0)
+                        std::cout << "Request status: " << error << std::endl;
                 } // Method on request finish
         );
         v.clear();
     };
+}
+
+void copyDb(vector<vector<string>> data_ln){
+    const CoreN::CNoraPtr& cnora=getCNora(I);
+    CoreN::CNora::Values v;
+
+    std::string query_str="copy "+dbSchema+"."+dbTable+"(";
+    int i=0;
+    for(i;i<table_name.size()-1;i++)
+        query_str+=table_name.at(i)+",";
+
+    query_str+=table_name.at(i)+") FROM STDIN DELIMITER ',';";
+    for(int j=0; j<data_ln.size();j++)
+    {
+        std::string row;
+        int i=0;
+        for(i;i<data_ln.at(j).size()-1;i++)
+            row+=data_ln.at(j).at(i)+",";
+        row+=data_ln.at(j).at(i)+"\n";
+        v.emplace_back(CoreN::CNora::Value(row));
+    }
+    cnora->Request(
+        query_str, // SQL
+        v, // Binded params
+        CoreN::CNora::Commit | CoreN::CNora::StopSession, // Some flags for request
+            [](const CoreN::CNora::Rows& ) {},
+            [](const CoreN::Error& error){
+                if(error!=0)
+                    std::cout << "Request status: " << error << std::endl;
+            } // Method on request finish
+    );
+    v.clear();
 }
 
 void on_signal(const boost::system::error_code& error, int signal_number, const CoreN::InterfacePtr& I)
@@ -520,13 +525,16 @@ void on_signal(const boost::system::error_code& error, int signal_number, const 
     ){
         log_info("Service UnRegistered " << error);
     });
+    io.stop();
 }
 
 void mainThread(){
     while(1){
+        if(io.stopped())
+            break;
         sleep(dmp_processing_period);
         transport_dmp_to_upload();
-        vector<file_data> upload_file=uploadfile_lookup(paths.at(2));
+        vector<file_data> upload_file=dmpfile_lookup(paths.at(2),contains);
         for(int i=0; i<upload_file.size();i++){
             string work_file=upload_file.at(i).name;
             BOOST_LOG_SEV(lg, info) <<"Getting started with the file "<<work_file;
@@ -555,6 +563,9 @@ void mainThread(){
             BOOST_LOG_SEV(lg, warning)<<droped_by_filter<<" lines droped by filter";
             fclose(file);
             insertDB(data_ln);
+            //copyDb(data_ln);
+            std::string str_rm_cmd="mv "+work_file+" "+paths.at(1)+" -f";
+            system(str_rm_cmd.c_str());
         }
     }
 }

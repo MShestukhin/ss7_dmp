@@ -18,10 +18,10 @@
 				</MakeCommands>
 			</Target>
 			<Target title="cnora_service">
-				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/libcnora_service.a" prefix_auto="0" extension_auto="0"/>
+				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/libcnora_service.so" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp"/>
 				<Option object_output="./"/>
-				<Option type="2"/>
+				<Option type="3"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/cnora_cpp/include"/>
@@ -46,10 +46,10 @@
 				</MakeCommands>
 			</Target>
 			<Target title="cnora_service/fast">
-				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/libcnora_service.a" prefix_auto="0" extension_auto="0"/>
+				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/libcnora_service.so" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp"/>
 				<Option object_output="./"/>
-				<Option type="2"/>
+				<Option type="3"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/cnora_cpp/include"/>
@@ -74,10 +74,10 @@
 				</MakeCommands>
 			</Target>
 			<Target title="cnora_protocol">
-				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/protocol/libcnora_protocol.a" prefix_auto="0" extension_auto="0"/>
+				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/protocol/libcnora_protocol.so" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/protocol"/>
 				<Option object_output="./"/>
-				<Option type="2"/>
+				<Option type="3"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/protocol"/>
@@ -98,10 +98,10 @@
 				</MakeCommands>
 			</Target>
 			<Target title="cnora_protocol/fast">
-				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/protocol/libcnora_protocol.a" prefix_auto="0" extension_auto="0"/>
+				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/protocol/libcnora_protocol.so" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/protocol"/>
 				<Option object_output="./"/>
-				<Option type="2"/>
+				<Option type="3"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/protocol"/>

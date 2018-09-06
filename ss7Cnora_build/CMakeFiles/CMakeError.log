@@ -1,22 +1,22 @@
 Determining if the pthread_create exist failed with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_012ba/fast"
-/usr/bin/make -f CMakeFiles/cmTC_012ba.dir/build.make CMakeFiles/cmTC_012ba.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_8d92a/fast"
+/usr/bin/make -f CMakeFiles/cmTC_8d92a.dir/build.make CMakeFiles/cmTC_8d92a.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_012ba.dir/CheckSymbolExists.c.o
-/usr/bin/gcc    -o CMakeFiles/cmTC_012ba.dir/CheckSymbolExists.c.o   -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
-Linking C executable cmTC_012ba
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_012ba.dir/link.txt --verbose=1
-/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_012ba.dir/CheckSymbolExists.c.o  -o cmTC_012ba 
-CMakeFiles/cmTC_012ba.dir/CheckSymbolExists.c.o: In function `main':
+Building C object CMakeFiles/cmTC_8d92a.dir/CheckSymbolExists.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTC_8d92a.dir/CheckSymbolExists.c.o   -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_8d92a
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8d92a.dir/link.txt --verbose=1
+/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_8d92a.dir/CheckSymbolExists.c.o  -o cmTC_8d92a 
+CMakeFiles/cmTC_8d92a.dir/CheckSymbolExists.c.o: In function `main':
 CheckSymbolExists.c:(.text+0x1b): undefined reference to `pthread_create'
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_012ba.dir/build.make:86: recipe for target 'cmTC_012ba' failed
-make[1]: *** [cmTC_012ba] Error 1
+CMakeFiles/cmTC_8d92a.dir/build.make:86: recipe for target 'cmTC_8d92a' failed
+make[1]: *** [cmTC_8d92a] Error 1
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Makefile:121: recipe for target 'cmTC_012ba/fast' failed
-make: *** [cmTC_012ba/fast] Error 2
+Makefile:121: recipe for target 'cmTC_8d92a/fast' failed
+make: *** [cmTC_8d92a/fast] Error 2
 
 File /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
 /* */
@@ -36,20 +36,20 @@ int main(int argc, char** argv)
 Determining if the function pthread_create exists in the pthreads failed with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_98881/fast"
-/usr/bin/make -f CMakeFiles/cmTC_98881.dir/build.make CMakeFiles/cmTC_98881.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_fdd2c/fast"
+/usr/bin/make -f CMakeFiles/cmTC_fdd2c.dir/build.make CMakeFiles/cmTC_fdd2c.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_98881.dir/CheckFunctionExists.c.o
-/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_98881.dir/CheckFunctionExists.c.o   -c /home/maxim/Downloads/cmake-3.12.0/Modules/CheckFunctionExists.c
-Linking C executable cmTC_98881
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_98881.dir/link.txt --verbose=1
-/usr/bin/gcc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_98881.dir/CheckFunctionExists.c.o  -o cmTC_98881 -lpthreads 
+Building C object CMakeFiles/cmTC_fdd2c.dir/CheckFunctionExists.c.o
+/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_fdd2c.dir/CheckFunctionExists.c.o   -c /home/maxim/Downloads/cmake-3.12.0/Modules/CheckFunctionExists.c
+Linking C executable cmTC_fdd2c
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fdd2c.dir/link.txt --verbose=1
+/usr/bin/gcc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_fdd2c.dir/CheckFunctionExists.c.o  -o cmTC_fdd2c -lpthreads 
 /usr/bin/x86_64-linux-gnu-ld: cannot find -lpthreads
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_98881.dir/build.make:86: recipe for target 'cmTC_98881' failed
-make[1]: *** [cmTC_98881] Error 1
+CMakeFiles/cmTC_fdd2c.dir/build.make:86: recipe for target 'cmTC_fdd2c' failed
+make[1]: *** [cmTC_fdd2c] Error 1
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Makefile:121: recipe for target 'cmTC_98881/fast' failed
-make: *** [cmTC_98881/fast] Error 2
+Makefile:121: recipe for target 'cmTC_fdd2c/fast' failed
+make: *** [cmTC_fdd2c/fast] Error 2
 
 

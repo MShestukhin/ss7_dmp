@@ -9,7 +9,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/coren_interface.dir/src/logger.cpp.o"
   "CMakeFiles/coren_interface.dir/src/main.cpp.o"
   "libcoren_interface.pdb"
-  "libcoren_interface.a"
+  "libcoren_interface.so"
 )
 
 # Per-language clean rules from dependency scanning.

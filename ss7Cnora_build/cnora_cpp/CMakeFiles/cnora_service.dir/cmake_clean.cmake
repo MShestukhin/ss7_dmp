@@ -2,7 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/cnora_service.dir/src/CNora.cpp.o"
   "CMakeFiles/cnora_service.dir/src/main.cpp.o"
   "libcnora_service.pdb"
-  "libcnora_service.a"
+  "libcnora_service.so"
 )
 
 # Per-language clean rules from dependency scanning.

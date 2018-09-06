@@ -28,28 +28,28 @@ The CXX compiler identification is GNU, found in "/opt/svyazcom/ss7_dmp_cnora/ss
 Determining if the C compiler works passed with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_be136/fast"
-/usr/bin/make -f CMakeFiles/cmTC_be136.dir/build.make CMakeFiles/cmTC_be136.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_1947f/fast"
+/usr/bin/make -f CMakeFiles/cmTC_1947f.dir/build.make CMakeFiles/cmTC_1947f.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_be136.dir/testCCompiler.c.o
-/usr/bin/gcc    -o CMakeFiles/cmTC_be136.dir/testCCompiler.c.o   -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTC_be136
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_be136.dir/link.txt --verbose=1
-/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_be136.dir/testCCompiler.c.o  -o cmTC_be136 
+Building C object CMakeFiles/cmTC_1947f.dir/testCCompiler.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTC_1947f.dir/testCCompiler.c.o   -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_1947f
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1947f.dir/link.txt --verbose=1
+/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_1947f.dir/testCCompiler.c.o  -o cmTC_1947f 
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
 
 
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_4815d/fast"
-/usr/bin/make -f CMakeFiles/cmTC_4815d.dir/build.make CMakeFiles/cmTC_4815d.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_d587e/fast"
+/usr/bin/make -f CMakeFiles/cmTC_d587e.dir/build.make CMakeFiles/cmTC_d587e.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_4815d.dir/CMakeCCompilerABI.c.o
-/usr/bin/gcc    -o CMakeFiles/cmTC_4815d.dir/CMakeCCompilerABI.c.o   -c /home/maxim/Downloads/cmake-3.12.0/Modules/CMakeCCompilerABI.c
-Linking C executable cmTC_4815d
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4815d.dir/link.txt --verbose=1
-/usr/bin/gcc     -v -rdynamic CMakeFiles/cmTC_4815d.dir/CMakeCCompilerABI.c.o  -o cmTC_4815d 
+Building C object CMakeFiles/cmTC_d587e.dir/CMakeCCompilerABI.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTC_d587e.dir/CMakeCCompilerABI.c.o   -c /home/maxim/Downloads/cmake-3.12.0/Modules/CMakeCCompilerABI.c
+Linking C executable cmTC_d587e
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d587e.dir/link.txt --verbose=1
+/usr/bin/gcc     -v -rdynamic CMakeFiles/cmTC_d587e.dir/CMakeCCompilerABI.c.o  -o cmTC_d587e 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/gcc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
@@ -61,9 +61,9 @@ Thread model: posix
 gcc version 7.3.0 (Ubuntu 7.3.0-16ubuntu3) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_4815d' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccwHRLCs.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_4815d /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_4815d.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_4815d' '-mtune=generic' '-march=x86-64'
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_d587e' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/cc5XhEvC.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_d587e /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_d587e.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_d587e' '-mtune=generic' '-march=x86-64'
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
 
 
@@ -71,14 +71,14 @@ Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_4815d/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_4815d.dir/build.make CMakeFiles/cmTC_4815d.dir/build]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_d587e/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_d587e.dir/build.make CMakeFiles/cmTC_d587e.dir/build]
   ignore line: [make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_4815d.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/gcc    -o CMakeFiles/cmTC_4815d.dir/CMakeCCompilerABI.c.o   -c /home/maxim/Downloads/cmake-3.12.0/Modules/CMakeCCompilerABI.c]
-  ignore line: [Linking C executable cmTC_4815d]
-  ignore line: [/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4815d.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/gcc     -v -rdynamic CMakeFiles/cmTC_4815d.dir/CMakeCCompilerABI.c.o  -o cmTC_4815d ]
+  ignore line: [Building C object CMakeFiles/cmTC_d587e.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/gcc    -o CMakeFiles/cmTC_d587e.dir/CMakeCCompilerABI.c.o   -c /home/maxim/Downloads/cmake-3.12.0/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTC_d587e]
+  ignore line: [/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d587e.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/gcc     -v -rdynamic CMakeFiles/cmTC_d587e.dir/CMakeCCompilerABI.c.o  -o cmTC_d587e ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/gcc]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper]
@@ -90,13 +90,13 @@ Parsed C implicit link information from above output:
   ignore line: [gcc version 7.3.0 (Ubuntu 7.3.0-16ubuntu3) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_4815d' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccwHRLCs.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_4815d /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_4815d.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_d587e' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/cc5XhEvC.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_d587e /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_d587e.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccwHRLCs.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/cc5XhEvC.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -116,7 +116,7 @@ Parsed C implicit link information from above output:
     arg [-znow] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_4815d] ==> ignore
+    arg [cmTC_d587e] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o] ==> ignore
@@ -128,7 +128,7 @@ Parsed C implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/7/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../..]
-    arg [CMakeFiles/cmTC_4815d.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_d587e.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--push-state] ==> ignore
     arg [--as-needed] ==> ignore
@@ -160,14 +160,14 @@ Parsed C implicit link information from above output:
 Detecting C [-std=c11] compiler features compiled with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_4536b/fast"
-/usr/bin/make -f CMakeFiles/cmTC_4536b.dir/build.make CMakeFiles/cmTC_4536b.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_1cc49/fast"
+/usr/bin/make -f CMakeFiles/cmTC_1cc49.dir/build.make CMakeFiles/cmTC_1cc49.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_4536b.dir/feature_tests.c.o
-/usr/bin/gcc   -std=c11 -o CMakeFiles/cmTC_4536b.dir/feature_tests.c.o   -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_4536b
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4536b.dir/link.txt --verbose=1
-/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_4536b.dir/feature_tests.c.o  -o cmTC_4536b 
+Building C object CMakeFiles/cmTC_1cc49.dir/feature_tests.c.o
+/usr/bin/gcc   -std=c11 -o CMakeFiles/cmTC_1cc49.dir/feature_tests.c.o   -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_1cc49
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1cc49.dir/link.txt --verbose=1
+/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_1cc49.dir/feature_tests.c.o  -o cmTC_1cc49 
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
 
 
@@ -180,14 +180,14 @@ make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/C
 Detecting C [-std=c99] compiler features compiled with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_56238/fast"
-/usr/bin/make -f CMakeFiles/cmTC_56238.dir/build.make CMakeFiles/cmTC_56238.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_5b778/fast"
+/usr/bin/make -f CMakeFiles/cmTC_5b778.dir/build.make CMakeFiles/cmTC_5b778.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_56238.dir/feature_tests.c.o
-/usr/bin/gcc   -std=c99 -o CMakeFiles/cmTC_56238.dir/feature_tests.c.o   -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_56238
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_56238.dir/link.txt --verbose=1
-/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_56238.dir/feature_tests.c.o  -o cmTC_56238 
+Building C object CMakeFiles/cmTC_5b778.dir/feature_tests.c.o
+/usr/bin/gcc   -std=c99 -o CMakeFiles/cmTC_5b778.dir/feature_tests.c.o   -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_5b778
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5b778.dir/link.txt --verbose=1
+/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_5b778.dir/feature_tests.c.o  -o cmTC_5b778 
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
 
 
@@ -200,14 +200,14 @@ make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/C
 Detecting C [-std=c90] compiler features compiled with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_d2e43/fast"
-/usr/bin/make -f CMakeFiles/cmTC_d2e43.dir/build.make CMakeFiles/cmTC_d2e43.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_2505b/fast"
+/usr/bin/make -f CMakeFiles/cmTC_2505b.dir/build.make CMakeFiles/cmTC_2505b.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_d2e43.dir/feature_tests.c.o
-/usr/bin/gcc   -std=c90 -o CMakeFiles/cmTC_d2e43.dir/feature_tests.c.o   -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_d2e43
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d2e43.dir/link.txt --verbose=1
-/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_d2e43.dir/feature_tests.c.o  -o cmTC_d2e43 
+Building C object CMakeFiles/cmTC_2505b.dir/feature_tests.c.o
+/usr/bin/gcc   -std=c90 -o CMakeFiles/cmTC_2505b.dir/feature_tests.c.o   -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_2505b
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2505b.dir/link.txt --verbose=1
+/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_2505b.dir/feature_tests.c.o  -o cmTC_2505b 
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
 
 
@@ -218,28 +218,28 @@ make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/C
 Determining if the CXX compiler works passed with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_c3b53/fast"
-/usr/bin/make -f CMakeFiles/cmTC_c3b53.dir/build.make CMakeFiles/cmTC_c3b53.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_8e332/fast"
+/usr/bin/make -f CMakeFiles/cmTC_8e332.dir/build.make CMakeFiles/cmTC_8e332.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_c3b53.dir/testCXXCompiler.cxx.o
-/usr/bin/g++     -o CMakeFiles/cmTC_c3b53.dir/testCXXCompiler.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTC_c3b53
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c3b53.dir/link.txt --verbose=1
-/usr/bin/g++       -rdynamic CMakeFiles/cmTC_c3b53.dir/testCXXCompiler.cxx.o  -o cmTC_c3b53 
+Building CXX object CMakeFiles/cmTC_8e332.dir/testCXXCompiler.cxx.o
+/usr/bin/g++     -o CMakeFiles/cmTC_8e332.dir/testCXXCompiler.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTC_8e332
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8e332.dir/link.txt --verbose=1
+/usr/bin/g++       -rdynamic CMakeFiles/cmTC_8e332.dir/testCXXCompiler.cxx.o  -o cmTC_8e332 
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
 
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_f8186/fast"
-/usr/bin/make -f CMakeFiles/cmTC_f8186.dir/build.make CMakeFiles/cmTC_f8186.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_f49d1/fast"
+/usr/bin/make -f CMakeFiles/cmTC_f49d1.dir/build.make CMakeFiles/cmTC_f49d1.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_f8186.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/g++     -o CMakeFiles/cmTC_f8186.dir/CMakeCXXCompilerABI.cpp.o -c /home/maxim/Downloads/cmake-3.12.0/Modules/CMakeCXXCompilerABI.cpp
-Linking CXX executable cmTC_f8186
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f8186.dir/link.txt --verbose=1
-/usr/bin/g++      -v -rdynamic CMakeFiles/cmTC_f8186.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_f8186 
+Building CXX object CMakeFiles/cmTC_f49d1.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/g++     -o CMakeFiles/cmTC_f49d1.dir/CMakeCXXCompilerABI.cpp.o -c /home/maxim/Downloads/cmake-3.12.0/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTC_f49d1
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f49d1.dir/link.txt --verbose=1
+/usr/bin/g++      -v -rdynamic CMakeFiles/cmTC_f49d1.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_f49d1 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/g++
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
@@ -251,9 +251,9 @@ Thread model: posix
 gcc version 7.3.0 (Ubuntu 7.3.0-16ubuntu3) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_f8186' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccVPWH5Z.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_f8186 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_f8186.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
-COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_f8186' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_f49d1' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccFDWdQ3.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_f49d1 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_f49d1.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_f49d1' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
 
 
@@ -261,14 +261,14 @@ Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_f8186/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_f8186.dir/build.make CMakeFiles/cmTC_f8186.dir/build]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_f49d1/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_f49d1.dir/build.make CMakeFiles/cmTC_f49d1.dir/build]
   ignore line: [make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_f8186.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/g++     -o CMakeFiles/cmTC_f8186.dir/CMakeCXXCompilerABI.cpp.o -c /home/maxim/Downloads/cmake-3.12.0/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [Linking CXX executable cmTC_f8186]
-  ignore line: [/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f8186.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/g++      -v -rdynamic CMakeFiles/cmTC_f8186.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_f8186 ]
+  ignore line: [Building CXX object CMakeFiles/cmTC_f49d1.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/g++     -o CMakeFiles/cmTC_f49d1.dir/CMakeCXXCompilerABI.cpp.o -c /home/maxim/Downloads/cmake-3.12.0/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTC_f49d1]
+  ignore line: [/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f49d1.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/g++      -v -rdynamic CMakeFiles/cmTC_f49d1.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_f49d1 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/g++]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper]
@@ -280,13 +280,13 @@ Parsed CXX implicit link information from above output:
   ignore line: [gcc version 7.3.0 (Ubuntu 7.3.0-16ubuntu3) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_f8186' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccVPWH5Z.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_f8186 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_f8186.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-rdynamic' '-o' 'cmTC_f49d1' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccFDWdQ3.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_f49d1 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. CMakeFiles/cmTC_f49d1.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/7/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccVPWH5Z.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccFDWdQ3.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -306,7 +306,7 @@ Parsed CXX implicit link information from above output:
     arg [-znow] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_f8186] ==> ignore
+    arg [cmTC_f49d1] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/Scrt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/7/crtbeginS.o] ==> ignore
@@ -318,7 +318,7 @@ Parsed CXX implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/7/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/7/../../..]
-    arg [CMakeFiles/cmTC_f8186.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_f49d1.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -346,14 +346,14 @@ Parsed CXX implicit link information from above output:
 Detecting CXX [-std=c++1z] compiler features compiled with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_291e9/fast"
-/usr/bin/make -f CMakeFiles/cmTC_291e9.dir/build.make CMakeFiles/cmTC_291e9.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_27bbd/fast"
+/usr/bin/make -f CMakeFiles/cmTC_27bbd.dir/build.make CMakeFiles/cmTC_27bbd.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_291e9.dir/feature_tests.cxx.o
-/usr/bin/g++    -std=c++1z -o CMakeFiles/cmTC_291e9.dir/feature_tests.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_291e9
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_291e9.dir/link.txt --verbose=1
-/usr/bin/g++       -rdynamic CMakeFiles/cmTC_291e9.dir/feature_tests.cxx.o  -o cmTC_291e9 
+Building CXX object CMakeFiles/cmTC_27bbd.dir/feature_tests.cxx.o
+/usr/bin/g++    -std=c++1z -o CMakeFiles/cmTC_27bbd.dir/feature_tests.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_27bbd
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_27bbd.dir/link.txt --verbose=1
+/usr/bin/g++       -rdynamic CMakeFiles/cmTC_27bbd.dir/feature_tests.cxx.o  -o cmTC_27bbd 
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
 
 
@@ -419,14 +419,14 @@ make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/C
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_b9736/fast"
-/usr/bin/make -f CMakeFiles/cmTC_b9736.dir/build.make CMakeFiles/cmTC_b9736.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_3b55b/fast"
+/usr/bin/make -f CMakeFiles/cmTC_3b55b.dir/build.make CMakeFiles/cmTC_3b55b.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_b9736.dir/feature_tests.cxx.o
-/usr/bin/g++    -std=c++14 -o CMakeFiles/cmTC_b9736.dir/feature_tests.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_b9736
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b9736.dir/link.txt --verbose=1
-/usr/bin/g++       -rdynamic CMakeFiles/cmTC_b9736.dir/feature_tests.cxx.o  -o cmTC_b9736 
+Building CXX object CMakeFiles/cmTC_3b55b.dir/feature_tests.cxx.o
+/usr/bin/g++    -std=c++14 -o CMakeFiles/cmTC_3b55b.dir/feature_tests.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_3b55b
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3b55b.dir/link.txt --verbose=1
+/usr/bin/g++       -rdynamic CMakeFiles/cmTC_3b55b.dir/feature_tests.cxx.o  -o cmTC_3b55b 
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
 
 
@@ -492,14 +492,14 @@ make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/C
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_77fa4/fast"
-/usr/bin/make -f CMakeFiles/cmTC_77fa4.dir/build.make CMakeFiles/cmTC_77fa4.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_9143e/fast"
+/usr/bin/make -f CMakeFiles/cmTC_9143e.dir/build.make CMakeFiles/cmTC_9143e.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_77fa4.dir/feature_tests.cxx.o
-/usr/bin/g++    -std=c++11 -o CMakeFiles/cmTC_77fa4.dir/feature_tests.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_77fa4
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_77fa4.dir/link.txt --verbose=1
-/usr/bin/g++       -rdynamic CMakeFiles/cmTC_77fa4.dir/feature_tests.cxx.o  -o cmTC_77fa4 
+Building CXX object CMakeFiles/cmTC_9143e.dir/feature_tests.cxx.o
+/usr/bin/g++    -std=c++11 -o CMakeFiles/cmTC_9143e.dir/feature_tests.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_9143e
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9143e.dir/link.txt --verbose=1
+/usr/bin/g++       -rdynamic CMakeFiles/cmTC_9143e.dir/feature_tests.cxx.o  -o cmTC_9143e 
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
 
 
@@ -565,14 +565,14 @@ make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/C
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_2cca6/fast"
-/usr/bin/make -f CMakeFiles/cmTC_2cca6.dir/build.make CMakeFiles/cmTC_2cca6.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_5fbb7/fast"
+/usr/bin/make -f CMakeFiles/cmTC_5fbb7.dir/build.make CMakeFiles/cmTC_5fbb7.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_2cca6.dir/feature_tests.cxx.o
-/usr/bin/g++    -std=c++98 -o CMakeFiles/cmTC_2cca6.dir/feature_tests.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_2cca6
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2cca6.dir/link.txt --verbose=1
-/usr/bin/g++       -rdynamic CMakeFiles/cmTC_2cca6.dir/feature_tests.cxx.o  -o cmTC_2cca6 
+Building CXX object CMakeFiles/cmTC_5fbb7.dir/feature_tests.cxx.o
+/usr/bin/g++    -std=c++98 -o CMakeFiles/cmTC_5fbb7.dir/feature_tests.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_5fbb7
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5fbb7.dir/link.txt --verbose=1
+/usr/bin/g++       -rdynamic CMakeFiles/cmTC_5fbb7.dir/feature_tests.cxx.o  -o cmTC_5fbb7 
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
 
 
@@ -636,42 +636,42 @@ make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/C
 Determining if the include file pthread.h exists passed with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_21464/fast"
-/usr/bin/make -f CMakeFiles/cmTC_21464.dir/build.make CMakeFiles/cmTC_21464.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_3776e/fast"
+/usr/bin/make -f CMakeFiles/cmTC_3776e.dir/build.make CMakeFiles/cmTC_3776e.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_21464.dir/CheckIncludeFile.c.o
-/usr/bin/gcc    -o CMakeFiles/cmTC_21464.dir/CheckIncludeFile.c.o   -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
-Linking C executable cmTC_21464
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_21464.dir/link.txt --verbose=1
-/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_21464.dir/CheckIncludeFile.c.o  -o cmTC_21464 
+Building C object CMakeFiles/cmTC_3776e.dir/CheckIncludeFile.c.o
+/usr/bin/gcc    -o CMakeFiles/cmTC_3776e.dir/CheckIncludeFile.c.o   -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+Linking C executable cmTC_3776e
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3776e.dir/link.txt --verbose=1
+/usr/bin/gcc      -rdynamic CMakeFiles/cmTC_3776e.dir/CheckIncludeFile.c.o  -o cmTC_3776e 
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
 
 
 Determining if the function pthread_create exists in the pthread passed with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_c1fde/fast"
-/usr/bin/make -f CMakeFiles/cmTC_c1fde.dir/build.make CMakeFiles/cmTC_c1fde.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_d5bcb/fast"
+/usr/bin/make -f CMakeFiles/cmTC_d5bcb.dir/build.make CMakeFiles/cmTC_d5bcb.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_c1fde.dir/CheckFunctionExists.c.o
-/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_c1fde.dir/CheckFunctionExists.c.o   -c /home/maxim/Downloads/cmake-3.12.0/Modules/CheckFunctionExists.c
-Linking C executable cmTC_c1fde
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c1fde.dir/link.txt --verbose=1
-/usr/bin/gcc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_c1fde.dir/CheckFunctionExists.c.o  -o cmTC_c1fde -lpthread 
+Building C object CMakeFiles/cmTC_d5bcb.dir/CheckFunctionExists.c.o
+/usr/bin/gcc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_d5bcb.dir/CheckFunctionExists.c.o   -c /home/maxim/Downloads/cmake-3.12.0/Modules/CheckFunctionExists.c
+Linking C executable cmTC_d5bcb
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d5bcb.dir/link.txt --verbose=1
+/usr/bin/gcc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_d5bcb.dir/CheckFunctionExists.c.o  -o cmTC_d5bcb -lpthread 
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
 
 
 Performing C++ SOURCE FILE Test COMPILER_SUPPORTS_CXX14 succeeded with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_1c8af/fast"
-/usr/bin/make -f CMakeFiles/cmTC_1c8af.dir/build.make CMakeFiles/cmTC_1c8af.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_226bd/fast"
+/usr/bin/make -f CMakeFiles/cmTC_226bd.dir/build.make CMakeFiles/cmTC_226bd.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_1c8af.dir/src.cxx.o
-/usr/bin/g++    -Wall -Wextra -DCOMPILER_SUPPORTS_CXX14   -std=c++14 -o CMakeFiles/cmTC_1c8af.dir/src.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp/src.cxx
-Linking CXX executable cmTC_1c8af
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1c8af.dir/link.txt --verbose=1
-/usr/bin/g++  -Wall -Wextra -DCOMPILER_SUPPORTS_CXX14    -rdynamic CMakeFiles/cmTC_1c8af.dir/src.cxx.o  -o cmTC_1c8af 
+Building CXX object CMakeFiles/cmTC_226bd.dir/src.cxx.o
+/usr/bin/g++    -Wall -Wextra -DCOMPILER_SUPPORTS_CXX14   -std=c++14 -o CMakeFiles/cmTC_226bd.dir/src.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_226bd
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_226bd.dir/link.txt --verbose=1
+/usr/bin/g++  -Wall -Wextra -DCOMPILER_SUPPORTS_CXX14    -rdynamic CMakeFiles/cmTC_226bd.dir/src.cxx.o  -o cmTC_226bd 
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
 
 Source file was:
@@ -679,14 +679,14 @@ int main() { return 0; }
 Performing C++ SOURCE FILE Test COMPILER_SUPPORTS_CXX11 succeeded with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_f4887/fast"
-/usr/bin/make -f CMakeFiles/cmTC_f4887.dir/build.make CMakeFiles/cmTC_f4887.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_62c00/fast"
+/usr/bin/make -f CMakeFiles/cmTC_62c00.dir/build.make CMakeFiles/cmTC_62c00.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_f4887.dir/src.cxx.o
-/usr/bin/g++    -Wall -Wextra -DCOMPILER_SUPPORTS_CXX11   -std=c++11 -o CMakeFiles/cmTC_f4887.dir/src.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp/src.cxx
-Linking CXX executable cmTC_f4887
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f4887.dir/link.txt --verbose=1
-/usr/bin/g++  -Wall -Wextra -DCOMPILER_SUPPORTS_CXX11    -rdynamic CMakeFiles/cmTC_f4887.dir/src.cxx.o  -o cmTC_f4887 
+Building CXX object CMakeFiles/cmTC_62c00.dir/src.cxx.o
+/usr/bin/g++    -Wall -Wextra -DCOMPILER_SUPPORTS_CXX11   -std=c++11 -o CMakeFiles/cmTC_62c00.dir/src.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_62c00
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_62c00.dir/link.txt --verbose=1
+/usr/bin/g++  -Wall -Wextra -DCOMPILER_SUPPORTS_CXX11    -rdynamic CMakeFiles/cmTC_62c00.dir/src.cxx.o  -o cmTC_62c00 
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
 
 Source file was:
@@ -694,14 +694,14 @@ int main() { return 0; }
 Performing C++ SOURCE FILE Test COMPILER_SUPPORTS_CXX0X succeeded with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_b7657/fast"
-/usr/bin/make -f CMakeFiles/cmTC_b7657.dir/build.make CMakeFiles/cmTC_b7657.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_36dcb/fast"
+/usr/bin/make -f CMakeFiles/cmTC_36dcb.dir/build.make CMakeFiles/cmTC_36dcb.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_b7657.dir/src.cxx.o
-/usr/bin/g++    -Wall -Wextra -DCOMPILER_SUPPORTS_CXX0X   -std=c++0x -o CMakeFiles/cmTC_b7657.dir/src.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp/src.cxx
-Linking CXX executable cmTC_b7657
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b7657.dir/link.txt --verbose=1
-/usr/bin/g++  -Wall -Wextra -DCOMPILER_SUPPORTS_CXX0X    -rdynamic CMakeFiles/cmTC_b7657.dir/src.cxx.o  -o cmTC_b7657 
+Building CXX object CMakeFiles/cmTC_36dcb.dir/src.cxx.o
+/usr/bin/g++    -Wall -Wextra -DCOMPILER_SUPPORTS_CXX0X   -std=c++0x -o CMakeFiles/cmTC_36dcb.dir/src.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_36dcb
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_36dcb.dir/link.txt --verbose=1
+/usr/bin/g++  -Wall -Wextra -DCOMPILER_SUPPORTS_CXX0X    -rdynamic CMakeFiles/cmTC_36dcb.dir/src.cxx.o  -o cmTC_36dcb 
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
 
 Source file was:
@@ -709,14 +709,14 @@ int main() { return 0; }
 Performing C++ SOURCE FILE Test COMPILER_SUPPORTS_CXX1Y succeeded with the following output:
 Change Dir: /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_4b419/fast"
-/usr/bin/make -f CMakeFiles/cmTC_4b419.dir/build.make CMakeFiles/cmTC_4b419.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_afec0/fast"
+/usr/bin/make -f CMakeFiles/cmTC_afec0.dir/build.make CMakeFiles/cmTC_afec0.dir/build
 make[1]: Entering directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_4b419.dir/src.cxx.o
-/usr/bin/g++    -Wall -Wextra -DCOMPILER_SUPPORTS_CXX1Y   -std=c++1y -o CMakeFiles/cmTC_4b419.dir/src.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp/src.cxx
-Linking CXX executable cmTC_4b419
-/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4b419.dir/link.txt --verbose=1
-/usr/bin/g++  -Wall -Wextra -DCOMPILER_SUPPORTS_CXX1Y    -rdynamic CMakeFiles/cmTC_4b419.dir/src.cxx.o  -o cmTC_4b419 
+Building CXX object CMakeFiles/cmTC_afec0.dir/src.cxx.o
+/usr/bin/g++    -Wall -Wextra -DCOMPILER_SUPPORTS_CXX1Y   -std=c++1y -o CMakeFiles/cmTC_afec0.dir/src.cxx.o -c /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_afec0
+/home/maxim/Downloads/cmake-3.12.0/bin/cmake -E cmake_link_script CMakeFiles/cmTC_afec0.dir/link.txt --verbose=1
+/usr/bin/g++  -Wall -Wextra -DCOMPILER_SUPPORTS_CXX1Y    -rdynamic CMakeFiles/cmTC_afec0.dir/src.cxx.o  -o cmTC_afec0 
 make[1]: Leaving directory '/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles/CMakeTmp'
 
 Source file was:

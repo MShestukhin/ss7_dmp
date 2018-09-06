@@ -39,7 +39,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/coren_protocol.dir/xer_support.c.o"
   "CMakeFiles/coren_protocol.dir/asn_autoexpand_buffer.c.o"
   "libcoren_protocol.pdb"
-  "libcoren_protocol.a"
+  "libcoren_protocol.so"
 )
 
 # Per-language clean rules from dependency scanning.

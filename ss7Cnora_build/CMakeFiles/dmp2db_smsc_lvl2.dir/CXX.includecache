@@ -160,14 +160,6 @@ boost/thread/mutex.hpp
 boost/program_options.hpp
 -
 
-/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/bd.cpp
-bd.h
-/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/bd.h
-boost/thread.hpp
--
-string
--
-
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/bd.h
 string
 -
@@ -394,7 +386,7 @@ include/libpq-fe.h
 structs.h
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/structs.h
 libconfig.h++
--
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/libconfig.h++
 signal.h
 -
 bd.h
@@ -429,10 +421,6 @@ ctime
 -
 CNora.h
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/CNora.h
-
-/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/parser.cpp
-parser.h
-/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/parser.h
 
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/parser.h
 vector
