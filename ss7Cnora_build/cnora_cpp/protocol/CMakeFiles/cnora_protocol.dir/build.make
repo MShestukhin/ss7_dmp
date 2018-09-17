@@ -553,48 +553,49 @@ cnora_protocol_OBJECTS = \
 # External object files for target cnora_protocol
 cnora_protocol_EXTERNAL_OBJECTS =
 
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/BIT_STRING.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/BOOLEAN.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/DbRequest.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/DbResponse.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/DbRow.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/DbRows.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/DbValue.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/DbValues.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/INTEGER.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/NULL.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/NativeEnumerated.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/NativeInteger.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/OCTET_STRING.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/REAL.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/UTF8String.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/asn_SEQUENCE_OF.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/asn_SET_OF.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/asn_codecs_prim.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/ber_decoder.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/ber_tlv_length.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/ber_tlv_tag.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/constr_CHOICE.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/constr_SEQUENCE.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/constr_SEQUENCE_OF.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/constr_SET_OF.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/constr_TYPE.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/constraints.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/der_encoder.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/per_decoder.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/per_encoder.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/per_opentype.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/per_support.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/xer_decoder.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/xer_encoder.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/xer_support.c.o
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/build.make
-cnora_cpp/protocol/libcnora_protocol.so: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Linking C shared library libcnora_protocol.so"
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/BIT_STRING.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/BOOLEAN.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/DbRequest.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/DbResponse.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/DbRow.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/DbRows.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/DbValue.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/DbValues.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/INTEGER.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/NULL.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/NativeEnumerated.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/NativeInteger.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/OCTET_STRING.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/REAL.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/UTF8String.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/asn_SEQUENCE_OF.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/asn_SET_OF.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/asn_codecs_prim.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/ber_decoder.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/ber_tlv_length.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/ber_tlv_tag.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/constr_CHOICE.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/constr_SEQUENCE.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/constr_SEQUENCE_OF.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/constr_SET_OF.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/constr_TYPE.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/constraints.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/der_encoder.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/per_decoder.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/per_encoder.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/per_opentype.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/per_support.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/xer_decoder.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/xer_encoder.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/xer_support.c.o
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/build.make
+cnora_cpp/protocol/libcnora_protocol.a: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Linking C static library libcnora_protocol.a"
+	cd /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/protocol && $(CMAKE_COMMAND) -P CMakeFiles/cnora_protocol.dir/cmake_clean_target.cmake
 	cd /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/cnora_cpp/protocol && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/cnora_protocol.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/build: cnora_cpp/protocol/libcnora_protocol.so
+cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/build: cnora_cpp/protocol/libcnora_protocol.a
 
 .PHONY : cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/build
 

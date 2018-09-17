@@ -609,52 +609,53 @@ coren_protocol_OBJECTS = \
 # External object files for target coren_protocol
 coren_protocol_EXTERNAL_OBJECTS =
 
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/AnnounceData.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/BIT_STRING.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/CoreNError.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/CoreNErrorCode.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/CoreNInfoCode.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/CoreNInfoRequest.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/CoreNInfoResponse.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/CoreNProtocol.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/ENUMERATED.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/INTEGER.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/Message.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/MsgAddr.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/NativeEnumerated.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/NativeInteger.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/OCTET_STRING.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/SetSvcName.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/SvcAnnounce.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/UTF8String.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/asn_SEQUENCE_OF.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/asn_SET_OF.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/asn_codecs_prim.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/ber_decoder.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/ber_tlv_length.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/ber_tlv_tag.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/constr_CHOICE.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/constr_SEQUENCE.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/constr_SEQUENCE_OF.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/constr_SET_OF.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/constr_TYPE.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/constraints.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/der_encoder.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/per_decoder.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/per_encoder.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/per_opentype.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/per_support.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/xer_decoder.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/xer_encoder.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/xer_support.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/asn_autoexpand_buffer.c.o
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/build.make
-coren_cpp/protocol/libcoren_protocol.so: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Linking C shared library libcoren_protocol.so"
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/AnnounceData.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/BIT_STRING.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/CoreNError.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/CoreNErrorCode.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/CoreNInfoCode.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/CoreNInfoRequest.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/CoreNInfoResponse.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/CoreNProtocol.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/ENUMERATED.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/INTEGER.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/Message.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/MsgAddr.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/NativeEnumerated.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/NativeInteger.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/OCTET_STRING.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/SetSvcName.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/SvcAnnounce.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/UTF8String.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/asn_SEQUENCE_OF.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/asn_SET_OF.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/asn_codecs_prim.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/ber_decoder.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/ber_tlv_length.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/ber_tlv_tag.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/constr_CHOICE.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/constr_SEQUENCE.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/constr_SEQUENCE_OF.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/constr_SET_OF.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/constr_TYPE.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/constraints.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/der_encoder.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/per_decoder.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/per_encoder.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/per_opentype.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/per_support.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/xer_decoder.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/xer_encoder.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/xer_support.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/asn_autoexpand_buffer.c.o
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/build.make
+coren_cpp/protocol/libcoren_protocol.a: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Linking C static library libcoren_protocol.a"
+	cd /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol && $(CMAKE_COMMAND) -P CMakeFiles/coren_protocol.dir/cmake_clean_target.cmake
 	cd /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/coren_protocol.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-coren_cpp/protocol/CMakeFiles/coren_protocol.dir/build: coren_cpp/protocol/libcoren_protocol.so
+coren_cpp/protocol/CMakeFiles/coren_protocol.dir/build: coren_cpp/protocol/libcoren_protocol.a
 
 .PHONY : coren_cpp/protocol/CMakeFiles/coren_protocol.dir/build
 

@@ -68,9 +68,9 @@ CMAKE_BINARY_DIR = /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build
 # Target rules for target CMakeFiles/dmp2db_smsc_lvl2.dir
 
 # All Build rule for target.
+CMakeFiles/dmp2db_smsc_lvl2.dir/all: cnora_cpp/CMakeFiles/cnora_service.dir/all
 CMakeFiles/dmp2db_smsc_lvl2.dir/all: cnora_cpp/protocol/CMakeFiles/cnora_protocol.dir/all
 CMakeFiles/dmp2db_smsc_lvl2.dir/all: coren_cpp/CMakeFiles/coren_interface.dir/all
-CMakeFiles/dmp2db_smsc_lvl2.dir/all: cnora_cpp/CMakeFiles/cnora_service.dir/all
 CMakeFiles/dmp2db_smsc_lvl2.dir/all: coren_cpp/protocol/CMakeFiles/coren_protocol.dir/all
 	$(MAKE) -f CMakeFiles/dmp2db_smsc_lvl2.dir/build.make CMakeFiles/dmp2db_smsc_lvl2.dir/depend
 	$(MAKE) -f CMakeFiles/dmp2db_smsc_lvl2.dir/build.make CMakeFiles/dmp2db_smsc_lvl2.dir/build

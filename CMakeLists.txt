@@ -21,11 +21,11 @@ target_link_libraries(dmp2db_smsc_lvl2 ${Boost_LIBRARIES})
 
 add_library(libpq STATIC IMPORTED)
 set_target_properties(libpq PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/lib/libpq.a)
-
 target_link_libraries(dmp2db_smsc_lvl2 libpq)
 add_library(libconfig STATIC IMPORTED)
 set_target_properties(libconfig PROPERTIES IMPORTED_LOCATION /usr/lib/x86_64-linux-gnu/libconfig++.a)
 #set_target_properties(libconfig PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/lib/libconfig++.a)
+target_link_libraries(${PROJECT_NAME} libconfig)
 target_link_libraries(${PROJECT_NAME} cnora_service)
 target_link_libraries(${PROJECT_NAME} coren_interface)
 # see https://cmake.org/cmake/help/latest/module/FindBoost.html

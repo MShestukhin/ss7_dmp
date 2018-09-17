@@ -33,7 +33,6 @@ namespace logging = boost::log;
 namespace sinks = boost::log::sinks;
 namespace src = boost::log::sources;
 namespace expr = boost::log::expressions;
-namespace attrs = boost::log::attributes;
 namespace keywords = boost::log::keywords;
 using namespace logging::trivial;
 using namespace std;
@@ -52,24 +51,21 @@ std::string file_name;
 int droped_by_filter;
 string dbSchema;
 string dbTable;
-string unix_socket_name;
-string cnora_name;
-int coren_timeout;
-int cnora_timeout;
+
 CoreN::InterfacePtr getCoreN(boost::asio::io_service& ios)
 {
-    //const std::string& unix_socket_name = "/opt/svyazcom/var/run/coren.sock";
+    const std::string& unix_socket_name = "/opt/svyazcom/var/run/coren.sock";
     unsigned int reconnect_tmo = 5;
-    return CoreN::Interface::Create(ios, unix_socket_name, coren_timeout);
+    return CoreN::Interface::Create(ios, unix_socket_name, reconnect_tmo);
 }
 
 CoreN::CNoraPtr getCNora(const CoreN::InterfacePtr& I)
 {
     const CoreN::Service::Address remote {
-        cnora_name, "", 0
+        "CNORA", "", 0
     };
     const boost::chrono::milliseconds timeout {
-        cnora_timeout
+        1000
     };
     CoreN::CNoraPtr svc = boost::make_shared<CoreN::CNora>(I, remote, timeout);
     I->AddService(CoreN::cnora_label, boost::dynamic_pointer_cast<CoreN::Service::Base>(svc));
@@ -269,7 +265,7 @@ vector<string> pars(string mass_from_js)
                     else
                     {
                         string new_pcap=val.GetString();
-                        pcap=pcap+new_pcap+"\\n";
+                        pcap=pcap+new_pcap+"\n";
                         data.at(data_for_search_iter)=pcap;
                     }
                 }
@@ -376,13 +372,8 @@ void init()
 
     string schemaDb=conf.lookup("application.dataBase.schema");
     string tableDb=conf.lookup("application.dataBase.table");
-    string socket_name=conf.lookup("application.coren.node.socket");
-    string cm=conf.lookup("application.coren.cnora.name");
-    cnora_timeout=conf.lookup("application.coren.cnora.timeout");
-    coren_timeout=conf.lookup("application.coren.node.reconnect");
     dbSchema=schemaDb;
     dbTable=tableDb;
-    unix_socket_name=socket_name;
     int number_of_table=conf.lookup("application.tableData").getLength();
     for(int i=0;i<number_of_table;i++)    
         table_name.push_back(conf.lookup("application.tableData")[i]);
@@ -483,30 +474,51 @@ void insertDB(vector<vector<string>> data_ln){
 void copyDb(vector<vector<string>> data_ln){
     const CoreN::CNoraPtr& cnora=getCNora(I);
     CoreN::CNora::Values v;
+    std::string insert_begin="INSERT INTO "+dbSchema+"."+dbTable+" (";
 
-    std::string query_str="copy "+dbSchema+"."+dbTable+"(";
-    int i=0;
-    for(i;i<table_name.size()-1;i++)
-        query_str+=table_name.at(i)+",";
-
-    query_str+=table_name.at(i)+") FROM STDIN DELIMITER ',';";
-    for(int j=0; j<data_ln.size();j++)
+    for(int i=0;i<table_name.size();i++)
     {
-        std::string row;
-        int i=0;
-        for(i;i<data_ln.at(j).size()-1;i++)
-            row+=data_ln.at(j).at(i)+",";
-        row+=data_ln.at(j).at(i)+"\n";
-        v.emplace_back(CoreN::CNora::Value(row));
+        insert_begin=insert_begin+table_name.at(i);
+        if((i+1)!=table_name.size())
+        {
+            insert_begin+=",";
+        }
     }
+    insert_begin+=") VALUES";
+    int i = 0;
+    for (auto row : data_ln)
+        {
+            if (i != 0) insert_begin += ",";
+//            insert_begin += "($" + std::to_string(data_ln.size()*i+1) + table_type.at(i) +
+//                    "$" + std::to_string(data_ln.size()*i+2) + "::varchar,"
+//                    "$" + std::to_string(data_ln.size()*i+3) + "::int8," +
+//                    "$" + std::to_string(data_ln.size()*i+4) + "::varchar," +
+//                    "$" + std::to_string(data_ln.size()*i+5) + "::varchar," +
+//                    "$" + std::to_string(data_ln.size()*i+6) + "::varchar," +
+//                    "$" + std::to_string(data_ln.size()*i+7) + "::varchar," +
+//                    "$" + std::to_string(data_ln.size()*i+8) + "::varchar)";
+            int j=0;
+            insert_begin+="(";
+            for(auto val : row){
+                if (j != 0) insert_begin += ",";
+                insert_begin += "$" + std::to_string(row.size()*i+(j+1)) + table_type.at(j);
+                 v.emplace_back(CoreN::CNora::Value(row.at(j)));
+                 j++;
+            }
+            insert_begin+=")";
+            i++;
+        }
+    std::cout<<insert_begin<<"\n";
     cnora->Request(
-        query_str, // SQL
+        insert_begin, // SQL
         v, // Binded params
         CoreN::CNora::Commit | CoreN::CNora::StopSession, // Some flags for request
             [](const CoreN::CNora::Rows& ) {},
             [](const CoreN::Error& error){
-                if(error!=0)
-                    std::cout << "Request status: " << error << std::endl;
+                if(error!=0){
+                    BOOST_LOG_SEV(lg, info)<<"Request status: "<< error<<error.message;
+                }
+                    //std::cout << "Request status: " << error << std::endl;
             } // Method on request finish
     );
     v.clear();
@@ -562,8 +574,9 @@ void mainThread(){
             BOOST_LOG_SEV(lg, info)<<data_ln.size()<<" lines to load into the database";
             BOOST_LOG_SEV(lg, warning)<<droped_by_filter<<" lines droped by filter";
             fclose(file);
-            insertDB(data_ln);
-            //copyDb(data_ln);
+//            insertDB(data_ln);
+            copyDb(data_ln);
+            data_ln.clear();
             std::string str_rm_cmd="mv "+work_file+" "+paths.at(1)+" -f";
             system(str_rm_cmd.c_str());
         }
@@ -580,7 +593,7 @@ int main()
         std::cout<<"\n" <<"Ready to work"<<"\n";
         handler();
     });
-  boost::asio::signal_set signals(io, SIGINT, SIGTERM);
+    boost::asio::signal_set signals(io, SIGINT, SIGTERM);
       signals.async_wait(
           boost::bind(&on_signal, _1, _2, boost::ref(I))
       );

@@ -18,10 +18,10 @@
 				</MakeCommands>
 			</Target>
 			<Target title="coren_interface">
-				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/libcoren_interface.so" prefix_auto="0" extension_auto="0"/>
+				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/libcoren_interface.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp"/>
 				<Option object_output="./"/>
-				<Option type="3"/>
+				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/coren_cpp/include"/>
@@ -44,10 +44,10 @@
 				</MakeCommands>
 			</Target>
 			<Target title="coren_interface/fast">
-				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/libcoren_interface.so" prefix_auto="0" extension_auto="0"/>
+				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/libcoren_interface.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp"/>
 				<Option object_output="./"/>
-				<Option type="3"/>
+				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/coren_cpp/include"/>
@@ -70,10 +70,10 @@
 				</MakeCommands>
 			</Target>
 			<Target title="coren_protocol">
-				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/libcoren_protocol.so" prefix_auto="0" extension_auto="0"/>
+				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/libcoren_protocol.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol"/>
 				<Option object_output="./"/>
-				<Option type="3"/>
+				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/coren_cpp/protocol"/>
@@ -95,10 +95,10 @@
 				</MakeCommands>
 			</Target>
 			<Target title="coren_protocol/fast">
-				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/libcoren_protocol.so" prefix_auto="0" extension_auto="0"/>
+				<Option output="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol/libcoren_protocol.a" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/ss7Cnora_build/coren_cpp/protocol"/>
 				<Option object_output="./"/>
-				<Option type="3"/>
+				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/coren_cpp/protocol"/>
