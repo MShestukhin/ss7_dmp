@@ -23,6 +23,7 @@ CMakeFiles/dmp2db_smsc_lvl2.dir/main.cpp.o: ../include/rapidjson/document.h
 CMakeFiles/dmp2db_smsc_lvl2.dir/main.cpp.o: ../include/rapidjson/encodedstream.h
 CMakeFiles/dmp2db_smsc_lvl2.dir/main.cpp.o: ../include/rapidjson/encodings.h
 CMakeFiles/dmp2db_smsc_lvl2.dir/main.cpp.o: ../include/rapidjson/error/error.h
+CMakeFiles/dmp2db_smsc_lvl2.dir/main.cpp.o: ../include/rapidjson/filereadstream.h
 CMakeFiles/dmp2db_smsc_lvl2.dir/main.cpp.o: ../include/rapidjson/internal/biginteger.h
 CMakeFiles/dmp2db_smsc_lvl2.dir/main.cpp.o: ../include/rapidjson/internal/diyfp.h
 CMakeFiles/dmp2db_smsc_lvl2.dir/main.cpp.o: ../include/rapidjson/internal/ieee754.h

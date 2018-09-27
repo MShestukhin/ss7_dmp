@@ -7,6 +7,7 @@
 #include "include/rapidjson/document.h"
 #include "include/rapidjson/reader.h"
 #include "include/rapidjson/pointer.h"
+#include "include/rapidjson/filereadstream.h"
 #include <boost/thread.hpp>
 #include "include/libpq-fe.h"
 #include "structs.h"
@@ -26,9 +27,13 @@
 #include <boost/thread.hpp>
 #include <boost/variant.hpp>
 #include "boost/signals2.hpp"
+#include "boost/regex.hpp"
 #include <ctime>
 #include "CNora.h"
-
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+#include <regex.h>
+using boost::property_tree::ptree;
 namespace logging = boost::log;
 namespace sinks = boost::log::sinks;
 namespace src = boost::log::sources;
@@ -111,7 +116,7 @@ bool compare_str(string str_first,string str_second ){
 
 std::string GetElementValue(const Value& val)
 {
-  if (val.GetType() == rapidjson::kNumberType)    
+  if (val.GetType() == rapidjson::kNumberType)
     return toString(val.GetInt());
   else if (val.GetType() == rapidjson::kStringType)
     return val.GetString();
@@ -198,11 +203,11 @@ vector<string> pars(string mass_from_js)
 {
     num_row++;
     vector<string> data;
-    if(!contains(mass_from_js,"RULE")){
-        droped_by_filter++;
-        data.clear();
-        return data;
-    }
+//    if(!contains(mass_from_js,"RULE")){
+//        droped_by_filter++;
+//        data.clear();
+//        return data;
+//    }
     for(int i=0;i<data_for_search.size();i++){
         string json_data=data_for_search.at(i);
         if(contains(json_data,"{:")){
@@ -230,6 +235,7 @@ vector<string> pars(string mass_from_js)
         }
         string pcap;
         for(Value::ValueIterator iter=document.Begin(); iter!=document.End();iter++){
+
             string json_str=data_for_search.at(data_for_search_iter); //object from conf file which should i find
             vector<string> mass_or_str=split(json_str,"/");
             vector<string> obj_str;
@@ -375,7 +381,7 @@ void init()
     dbSchema=schemaDb;
     dbTable=tableDb;
     int number_of_table=conf.lookup("application.tableData").getLength();
-    for(int i=0;i<number_of_table;i++)    
+    for(int i=0;i<number_of_table;i++)
         table_name.push_back(conf.lookup("application.tableData")[i]);
     for(int i=0;i<number_of_table;i++)
         table_type.push_back(conf.lookup("application.tableTypeData")[i]);
@@ -383,7 +389,7 @@ void init()
     //load data which should search in json file
     int count_data_for_search=conf.lookup("application.data_for_search").getLength();
 
-    for(int i=0;i<count_data_for_search;i++)    
+    for(int i=0;i<count_data_for_search;i++)
         data_for_search.push_back(conf.lookup("application.data_for_search")[i]);
 
     int ignor_list_size=conf.lookup("application.ignor_list").getLength();
@@ -403,19 +409,19 @@ void init()
         }
         ignor_lists.push_back(list);
     }
-        logging::add_file_log
-        (
-            keywords::file_name =paths.at(3)+"/%Y-%m-%d.log",
-                    keywords::auto_flush = true ,
-            keywords::time_based_rotation = sinks::file::rotation_at_time_point(0, 0, 0),
-            keywords::format =
-            (
-                expr::stream
-                << expr::format_date_time< boost::posix_time::ptime >("TimeStamp", "%Y-%m-%d %H:%M:%S")
-                << "\t: <" << logging::trivial::severity
-                << "> \t" << expr::smessage
-            )
-        );
+//        logging::add_file_log
+//        (
+//            keywords::file_name =paths.at(3)+"/%Y-%m-%d.log",
+//                    keywords::auto_flush = true ,
+//            keywords::time_based_rotation = sinks::file::rotation_at_time_point(0, 0, 0),
+//            keywords::format =
+//            (
+//                expr::stream
+//                << expr::format_date_time< boost::posix_time::ptime >("TimeStamp", "%Y-%m-%d %H:%M:%S")
+//                << "\t: <" << logging::trivial::severity
+//                << "> \t" << expr::smessage
+//            )
+//        );
 }
 
 void transport_dmp_to_upload(){
@@ -489,14 +495,6 @@ void copyDb(vector<vector<string>> data_ln){
     for (auto row : data_ln)
         {
             if (i != 0) insert_begin += ",";
-//            insert_begin += "($" + std::to_string(data_ln.size()*i+1) + table_type.at(i) +
-//                    "$" + std::to_string(data_ln.size()*i+2) + "::varchar,"
-//                    "$" + std::to_string(data_ln.size()*i+3) + "::int8," +
-//                    "$" + std::to_string(data_ln.size()*i+4) + "::varchar," +
-//                    "$" + std::to_string(data_ln.size()*i+5) + "::varchar," +
-//                    "$" + std::to_string(data_ln.size()*i+6) + "::varchar," +
-//                    "$" + std::to_string(data_ln.size()*i+7) + "::varchar," +
-//                    "$" + std::to_string(data_ln.size()*i+8) + "::varchar)";
             int j=0;
             insert_begin+="(";
             for(auto val : row){
@@ -508,7 +506,6 @@ void copyDb(vector<vector<string>> data_ln){
             insert_begin+=")";
             i++;
         }
-    std::cout<<insert_begin<<"\n";
     cnora->Request(
         insert_begin, // SQL
         v, // Binded params
@@ -538,6 +535,7 @@ void on_signal(const boost::system::error_code& error, int signal_number, const 
         log_info("Service UnRegistered " << error);
     });
     io.stop();
+    exit(3);
 }
 
 void mainThread(){
@@ -550,38 +548,54 @@ void mainThread(){
         for(int i=0; i<upload_file.size();i++){
             string work_file=upload_file.at(i).name;
             BOOST_LOG_SEV(lg, info) <<"Getting started with the file "<<work_file;
-            FILE * file;
-            file = fopen(work_file.c_str(),"r");
-            vector<string> rows;
-            while( !feof(file) ){
-                char buf[100000];
-                fgets(buf,100000,file);
-                if(strlen(buf)==0)
-                    break;
-                string str(buf);
-                memset(buf,0,100000);
-                rows.push_back(str);
-            }
-            int n=rows.size();
-            droped_by_filter=0;
-            vector<vector<std::string> > data_ln;
-            num_row=0;
-            for(int i=0;i<n;i++){
-                vector<std::string> ml_rows=pars(rows.at(i));
-                if(ml_rows.size()>0)
-                    data_ln.push_back(ml_rows);
-            }
-            BOOST_LOG_SEV(lg, info)<<data_ln.size()<<" lines to load into the database";
-            BOOST_LOG_SEV(lg, warning)<<droped_by_filter<<" lines droped by filter";
-            fclose(file);
-//            insertDB(data_ln);
-            copyDb(data_ln);
-            data_ln.clear();
-            std::string str_rm_cmd="mv "+work_file+" "+paths.at(1)+" -f";
-            system(str_rm_cmd.c_str());
+            string s; // сюда будем класть считанные строки
+            ifstream file(work_file.c_str()); // файл из которого читаем (для линукс путь будет выглядеть по другому)
+//"([^"]*)":([^,}]*)(,|})
+               while(getline(file, s)){ // пока не достигнут конец файла класть очередную строку в переменную (s)
+//                   cout << s << endl; // выводим на экран
+                   vector<string> v=split(s,",");
+                   boost::regex xRegEx("\"([^\"]*PCAP)\":([^,}]*)(,|})");
+                   boost::smatch xResults;
+                   std::cout<<boost::regex_search(s,  xResults, xRegEx, boost::match_extra)<<endl;
+//                   std::cout << "Print entire match:\n " << xResults[0] << std::endl;
+                   string val=xResults[2];
+                   std::cout << std::string( xResults[2].begin(), xResults[2].end()) << std::endl;
+                   }
+               file.close();
+               }
+//            FILE * file;
+//            file = fopen(work_file.c_str(),"r");
+//            vector<string> rows;
+//            while( !feof(file) ){
+//                char buf[100000];
+//                fgets(buf,100000,file);
+//                if(strlen(buf)==0)
+//                    break;
+//                string str(buf);
+//                memset(buf,0,100000);
+//                rows.push_back(str);
+//            }
+//            int n=rows.size();
+//            std::cout<<n;
+//            droped_by_filter=0;
+//            vector<vector<std::string> > data_ln;
+//            num_row=0;
+//            for(int i=0;i<n;i++){
+//                std::cout<<"tut";
+//                vector<std::string> ml_rows=pars(rows.at(i));
+//                if(ml_rows.size()>0)
+//                    data_ln.push_back(ml_rows);
+//            }
+//            BOOST_LOG_SEV(lg, info)<<data_ln.size()<<" lines to load into the database";
+//            BOOST_LOG_SEV(lg, warning)<<droped_by_filter<<" lines droped by filter";
+//            fclose(file);
+//            //insertDB(data_ln);
+//            copyDb(data_ln);
+//            data_ln.clear();
+//            std::string str_rm_cmd="mv "+work_file+" "+paths.at(1)+" -f";
+//            //system(str_rm_cmd.c_str());
         }
     }
-}
 
 int main()
 {

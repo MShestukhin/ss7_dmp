@@ -218,6 +218,12 @@ rapidjson.h
 ../rapidjson.h
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/rapidjson/rapidjson.h
 
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/rapidjson/filereadstream.h
+stream.h
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/rapidjson/stream.h
+cstdio
+-
+
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/rapidjson/internal/biginteger.h
 ../rapidjson.h
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/rapidjson/rapidjson.h
@@ -379,6 +385,8 @@ include/rapidjson/reader.h
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/rapidjson/reader.h
 include/rapidjson/pointer.h
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/rapidjson/pointer.h
+include/rapidjson/filereadstream.h
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/rapidjson/filereadstream.h
 boost/thread.hpp
 -
 include/libpq-fe.h
@@ -417,10 +425,18 @@ boost/variant.hpp
 -
 boost/signals2.hpp
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/boost/signals2.hpp
+boost/regex.hpp
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/boost/regex.hpp
 ctime
 -
 CNora.h
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/CNora.h
+boost/property_tree/ptree.hpp
+-
+boost/property_tree/json_parser.hpp
+-
+regex.h
+-
 
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/parser.h
 vector

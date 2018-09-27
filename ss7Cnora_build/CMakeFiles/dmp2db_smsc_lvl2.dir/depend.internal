@@ -24,6 +24,7 @@ CMakeFiles/dmp2db_smsc_lvl2.dir/main.cpp.o
  /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/rapidjson/encodedstream.h
  /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/rapidjson/encodings.h
  /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/rapidjson/error/error.h
+ /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/rapidjson/filereadstream.h
  /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/rapidjson/internal/biginteger.h
  /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/rapidjson/internal/diyfp.h
  /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/rapidjson/internal/ieee754.h
