@@ -1,5 +1,6 @@
 #include "parser.h"
-
+#include <iostream>
+#include <regex>
 parser::parser()
 {
 }
@@ -10,6 +11,38 @@ void parser::transform_to_timestamp_promat(vector<vector<std::string> >* mass_ln
         std::string timestamp=str_tr.substr(0,4)+"-"+str_tr.substr(4,2)+"-"+str_tr.substr(6,2)+" "+str_tr.substr(8,2)+":"+str_tr.substr(10,2)+":"+str_tr.substr(12,2);
         mass_ln_to_transform->at(i).at(num_row)=timestamp;
     }
+}
+
+std::string parser::Finding_All_Regex_Matches(std::string text, std::string regx){
+    string pcap;
+    try {
+        std::regex re(regx);
+      std::sregex_iterator next(text.begin(), text.end(), re);
+      std::sregex_iterator end;
+      while (next != end) {
+        std::smatch match = *next;
+        pcap+= match[2].str()+"\n";
+        next++;
+      }
+    } catch (std::regex_error& e) {
+      // Syntax error in the regular expression
+    }
+    return pcap;
+}
+std::string parser::Finding_Regex_Match(std::string text, std::string regx){
+    std::string result;
+    try {
+      std::regex re(regx);
+      std::smatch match;
+      if (std::regex_search(text, match, re) && match.size() > 1) {
+        result = match.str(2);
+      } else {
+        result = std::string("hhh");
+      }
+    } catch (std::regex_error& e) {
+      std::cout<<e.what();
+    }
+    return result;
 }
 
 vector<vector<std::string> > parser::pars_file(std::string fileName,char delimiter, int data_num, int start_reading_line){

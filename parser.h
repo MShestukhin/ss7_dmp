@@ -14,6 +14,8 @@ public:
     void transform_to_timestamp_promat(vector<vector<std::string> >* mass_ln_to_transform, int num_table);
     vector<vector<string> > pars_file(std::string fileName, char delimiter, int data_num, int start_reading_line);
     vector<std::string> mass_broken_ln;
+    std::string Finding_All_Regex_Matches(std::string text, std::string regx);
+    std::string Finding_Regex_Match(std::string text, std::string regx);
 };
 
 #endif // PARSER_H

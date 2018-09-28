@@ -425,8 +425,8 @@ boost/variant.hpp
 -
 boost/signals2.hpp
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/boost/signals2.hpp
-boost/regex.hpp
-/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/boost/regex.hpp
+regex
+-
 ctime
 -
 CNora.h

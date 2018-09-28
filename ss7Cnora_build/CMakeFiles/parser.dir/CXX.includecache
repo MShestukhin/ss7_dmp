@@ -9,6 +9,10 @@
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/parser.cpp
 parser.h
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/parser.h
+iostream
+-
+regex
+-
 
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/parser.h
 vector

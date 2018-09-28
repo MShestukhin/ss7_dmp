@@ -27,12 +27,14 @@
 #include <boost/thread.hpp>
 #include <boost/variant.hpp>
 #include "boost/signals2.hpp"
-#include "boost/regex.hpp"
+//#include "boost/regex.hpp"
+#include <regex>
 #include <ctime>
 #include "CNora.h"
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <regex.h>
+#define BOOST_REGEX_MATCH_EXTRA
 using boost::property_tree::ptree;
 namespace logging = boost::log;
 namespace sinks = boost::log::sinks;
@@ -167,8 +169,7 @@ int processing_ignor_list(string jstr)
                 Value& obj=val;
                 val=obj[mass_str.at(t).c_str()];
             }
-            for(int j=0;j<ignor_lists.at(i).values.size();j++)
-            {
+            for(int j=0;j<ignor_lists.at(i).values.size();j++){
                 string v=ignor_lists.at(i).values.at(j);
                 std::string vall=GetElementValue(val);
                 if(v==vall)
@@ -538,11 +539,12 @@ void on_signal(const boost::system::error_code& error, int signal_number, const 
     exit(3);
 }
 
+//"([^\"]*)":({[^}]*)(,|})
 void mainThread(){
     while(1){
         if(io.stopped())
             break;
-        sleep(dmp_processing_period);
+        sleep(1);
         transport_dmp_to_upload();
         vector<file_data> upload_file=dmpfile_lookup(paths.at(2),contains);
         for(int i=0; i<upload_file.size();i++){
@@ -550,19 +552,23 @@ void mainThread(){
             BOOST_LOG_SEV(lg, info) <<"Getting started with the file "<<work_file;
             string s; // сюда будем класть считанные строки
             ifstream file(work_file.c_str()); // файл из которого читаем (для линукс путь будет выглядеть по другому)
-//"([^"]*)":([^,}]*)(,|})
+            //"([^"]*)":([^,}]*)(,|})
                while(getline(file, s)){ // пока не достигнут конец файла класть очередную строку в переменную (s)
 //                   cout << s << endl; // выводим на экран
-                   vector<string> v=split(s,",");
-                   boost::regex xRegEx("\"([^\"]*PCAP)\":([^,}]*)(,|})");
-                   boost::smatch xResults;
-                   std::cout<<boost::regex_search(s,  xResults, xRegEx, boost::match_extra)<<endl;
-//                   std::cout << "Print entire match:\n " << xResults[0] << std::endl;
-                   string val=xResults[2];
-                   std::cout << std::string( xResults[2].begin(), xResults[2].end()) << std::endl;
+
+                   string data="MAP";
+//                   string regx="([^\"]*"+data+"\"):([^,}]*)(,|})";
+                   string regx="(\"[^\"]*MAP\"):([{][^}]*})";
+                   parser Parser;
+                   for(int i=0;i<data_for_search.size();i++){
+                       string data=data_for_search.at(i);
+
                    }
-               file.close();
+                   //std::cout<<Parser.Finding_All_Regex_Matches(s,regx);
+                   std::cout<<Parser.Finding_Regex_Match(s,regx);
                }
+               file.close();
+        }
 //            FILE * file;
 //            file = fopen(work_file.c_str(),"r");
 //            vector<string> rows;
