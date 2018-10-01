@@ -551,21 +551,40 @@ void mainThread(){
             string s; // сюда будем класть считанные строки
             ifstream file(work_file.c_str()); // файл из которого читаем (для линукс путь будет выглядеть по другому)
             //"([^"]*)":([^,}]*)(,|})
-               while(getline(file, s)){ // пока не достигнут конец файла класть очередную строку в переменную (s)
-//                   cout << s << endl; // выводим на экран
-
-                   string data="MAP";
-//                   string regx="([^\"]*"+data+"\"):([^,}]*)(,|})";
-                   string regx="(\"[^\"]*MAP\"):([{][^}]*})";
-                   parser Parser;
-                   for(int i=0;i<data_for_search.size();i++){
-                       string data=data_for_search.at(i);
-
-                   }
-                   //std::cout<<Parser.Finding_All_Regex_Matches(s,regx);
-                   std::cout<<Parser.Finding_Regex_Match(s,regx);
-               }
+            while(getline(file, s)){ // пока не достигнут конец файла класть очередную строку в переменную (s)
+                string data;
+                parser Parser;
+                for(int i=0;i<data_for_search.size();i++){
+                    string data=data_for_search.at(i);
+                    string val;
+                    if(contains(data, ".")){
+                        vector<string> data_mass=split(data,".");
+                        for(int i=0;i<data_mass.size()-1;i++){
+                            data=data_mass.at(i);
+                            string regx="(\"[^}]*"+data+"\"):([{][^}]*})";
+                            val=Parser.Finding_Regex_Match(s,regx,0);
+                        }
+                        data=data_mass.at(data_mass.size()-1);
+                        string regx="([^\"]*"+data+"\"):([^,}]*)(,|})";
+                        val = Parser.Finding_Regex_Match(s,regx,2);
+                    }
+                    else if(compare_str(data,"PCAP")){
+                        string regx="([^\"]*"+data+"\"):([^,}]*)(,|})";
+                        val = Parser.Finding_All_Regex_Matches(s,regx);
+                    }
+                    else if(compare_str(data,"TS")){
+                        string regx="([^\"]*"+data+"\"):([^,}]*)(,|})";
+                        val = Parser.Finding_Regex_Match(s,regx,2);
+                        val = timeStampToString(val);
+                    }
+                    else if(compare_str(data,"SESSION")){
+                        string regx="([^\"]*"+data+"\"):([^,}]*)(,|})";
+                        val = Parser.Finding_Regex_Match(s,regx,2);
+                        if(val.empty() || compare_str(val,"Can not find regular expression"))
+                            val="0";
+                    }
                file.close();
+                }
         }
 //            FILE * file;
 //            file = fopen(work_file.c_str(),"r");
@@ -600,6 +619,7 @@ void mainThread(){
 //            //system(str_rm_cmd.c_str());
         }
     }
+}
 
 int main()
 {

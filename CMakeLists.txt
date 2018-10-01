@@ -13,11 +13,11 @@ find_package(Boost COMPONENTS system log thread filesystem REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
-#add_library(parser STATIC  ./parser.cpp)
-#add_subdirectory(cnora_cpp)
-### coren library
-#add_subdirectory(coren_cpp)
-#target_link_libraries(dmp2db_smsc_lvl2 ${Boost_LIBRARIES})
+add_library(parser STATIC  ./parser.cpp)
+add_subdirectory(cnora_cpp)
+## coren library
+add_subdirectory(coren_cpp)
+target_link_libraries(dmp2db_smsc_lvl2 ${Boost_LIBRARIES})
 
 add_library(libpq STATIC IMPORTED)
 set_target_properties(libpq PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/lib/libpq.a)
