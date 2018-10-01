@@ -11,7 +11,6 @@
 #include <boost/thread.hpp>
 #include "include/libpq-fe.h"
 #include "structs.h"
-#include "libconfig.h++"
 #include <signal.h>
 #include "bd.h"
 #include <time.h>
@@ -30,11 +29,10 @@
 //#include "boost/regex.hpp"
 #include <regex>
 #include <ctime>
-#include "CNora.h"
+//#include "CNora.h"
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <regex.h>
-#define BOOST_REGEX_MATCH_EXTRA
 using boost::property_tree::ptree;
 namespace logging = boost::log;
 namespace sinks = boost::log::sinks;

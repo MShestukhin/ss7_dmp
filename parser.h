@@ -15,7 +15,11 @@ public:
     vector<vector<string> > pars_file(std::string fileName, char delimiter, int data_num, int start_reading_line);
     vector<std::string> mass_broken_ln;
     std::string Finding_All_Regex_Matches(std::string text, std::string regx);
-    std::string Finding_Regex_Match(std::string text, std::string regx);
+    std::string Finding_Regex_Match(std::string text, std::string regx, int element);
 };
+bool contains(std::string s_cel,std::string s_find);
+bool compare_str(string str_first,string str_second);
+std::string timeStampToString(string ts);
+vector<string> split(string str,const char * delimitr);
 
 #endif // PARSER_H
