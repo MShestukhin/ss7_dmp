@@ -10,8 +10,8 @@
 #include "include/rapidjson/filereadstream.h"
 #include <boost/thread.hpp>
 #include "include/libpq-fe.h"
+#include "include/libconfig.h++"
 #include "structs.h"
-#include "libconfig.h++"
 #include <signal.h>
 #include "bd.h"
 #include <time.h>
@@ -34,7 +34,6 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <regex.h>
-#define BOOST_REGEX_MATCH_EXTRA
 using boost::property_tree::ptree;
 namespace logging = boost::log;
 namespace sinks = boost::log::sinks;
@@ -82,10 +81,6 @@ CoreN::CNoraPtr getCNora(const CoreN::InterfacePtr& I)
 boost::asio::io_service io;
 const CoreN::InterfacePtr& I = getCoreN(io);
 
-int toNumber(std::string str){
-    return atoi(str.c_str());
-}
-
 void rebind(boost::function<void()>& f, const boost::function<void(const boost::function<void()>& handler)>& new_one)
 {
     boost::function<void()> origin;
@@ -95,26 +90,6 @@ void rebind(boost::function<void()>& f, const boost::function<void(const boost::
     };
 }
 
-std::string toString(int number)
-{
-    char str[11];
-    sprintf(str, "%d", number);
-    return std::string(str);
-}
-
-bool contains(std::string s_cel,std::string s_find){
-    if (s_cel.find(s_find) != std::string::npos) {
-        return true;
-    }
-    return false;
-}
-
-bool compare_str(string str_first,string str_second ){
-    if(str_first==str_second)
-        return true;
-    else
-        return false;
-}
 
 std::string GetElementValue(const Value& val)
 {
@@ -127,30 +102,6 @@ std::string GetElementValue(const Value& val)
   else if (val.GetType() == rapidjson::kObjectType)
     return "Object";
   return "Unknown";
-}
-
-std::string timeStampToString(string ts)
-{
-    int n=atoi(ts.c_str());
-    time_t t = n;
-    struct tm * ptm = localtime(&t);
-    char buf[30];
-    //Format: 2007-10-23 10:45:51
-    strftime (buf, 30, "%F %H:%M:%S",  ptm);
-    std::string result(buf);
-    return result;
-}
-
-vector<string> split(string str,const char * delimitr)
-{
-    std::vector<string> v;
-    char* chars_array = strtok((char*)str.c_str(), delimitr);
-    while(chars_array)
-    {
-        v.push_back(chars_array);
-        chars_array = strtok(nullptr, delimitr);
-    }
-    return v;
 }
 
 int processing_ignor_list(string jstr)
@@ -539,12 +490,53 @@ void on_signal(const boost::system::error_code& error, int signal_number, const 
     exit(3);
 }
 
+vector<string> new_pars(string s){
+    string data;
+    parser Parser;
+    vector<string> row;
+    for(int i=0;i<data_for_search.size();i++){
+        string data=data_for_search.at(i);
+        string val;
+        if(contains(data, ".")){
+            vector<string> data_mass=split(data,".");
+            for(int i=0;i<data_mass.size()-1;i++){
+                data=data_mass.at(i);
+                string regx="(\"[^}]*"+data+"\"):([{][^}]*})";
+                val=Parser.Finding_Regex_Match(s,regx,0);
+            }
+            data=data_mass.at(data_mass.size()-1);
+            string regx="([^\"]*"+data+"\"):([^,}]*)(,|})";
+            val = Parser.Finding_Regex_Match(s,regx,2);
+        }
+        else if(compare_str(data,"PCAP")){
+            string regx="([^\"]*"+data+"\"):([^,}]*)(,|})";
+            val = Parser.Finding_All_Regex_Matches(s,regx);
+        }
+        else if(compare_str(data,"TS")){
+            string regx="([^\"]*"+data+"\"):([^,}]*)(,|})";
+            val = Parser.Finding_Regex_Match(s,regx,2);
+            val = timeStampToString(val);
+        }
+        else if(compare_str(data,"SESSION")){
+            string regx="([^\"]*"+data+"\"):([^,}]*)(,|})";
+            val = Parser.Finding_Regex_Match(s,regx,2);
+            if(val.empty() || compare_str(val,"Can not find regular expression"))
+                val="0";
+        }
+//        if(contains(val,"\""))
+//            val.erase(std::remove(val.begin(), val.end(), '\"' ), val.end() );
+//        if(val.empty())
+//            val="0";
+        row.push_back(val);
+    }
+    return row;
+}
 //"([^\"]*)":({[^}]*)(,|})
 void mainThread(){
     while(1){
         if(io.stopped())
             break;
-        sleep(1);
+        sleep(5);
         transport_dmp_to_upload();
         vector<file_data> upload_file=dmpfile_lookup(paths.at(2),contains);
         for(int i=0; i<upload_file.size();i++){
@@ -553,22 +545,16 @@ void mainThread(){
             string s; // сюда будем класть считанные строки
             ifstream file(work_file.c_str()); // файл из которого читаем (для линукс путь будет выглядеть по другому)
             //"([^"]*)":([^,}]*)(,|})
-               while(getline(file, s)){ // пока не достигнут конец файла класть очередную строку в переменную (s)
-//                   cout << s << endl; // выводим на экран
-
-                   string data="MAP";
-//                   string regx="([^\"]*"+data+"\"):([^,}]*)(,|})";
-                   string regx="(\"[^\"]*MAP\"):([{][^}]*})";
-                   parser Parser;
-                   for(int i=0;i<data_for_search.size();i++){
-                       string data=data_for_search.at(i);
-
-                   }
-                   //std::cout<<Parser.Finding_All_Regex_Matches(s,regx);
-                   std::cout<<Parser.Finding_Regex_Match(s,regx);
-               }
-               file.close();
-        }
+            vector<vector<std::string> > rows;
+            while(getline(file, s)){ // пока не достигнут конец файла класть очередную строку в переменную (s)
+                rows.push_back(new_pars(s));
+            }
+            std::cout<<rows.size()<<" lines to load into the database";
+//            copyDb(rows);
+            rows.clear();
+            file.close();
+            std::string str_rm_cmd="mv "+work_file+" "+paths.at(1)+" -f";
+            system(str_rm_cmd.c_str());
 //            FILE * file;
 //            file = fopen(work_file.c_str(),"r");
 //            vector<string> rows;
@@ -599,9 +585,10 @@ void mainThread(){
 //            copyDb(data_ln);
 //            data_ln.clear();
 //            std::string str_rm_cmd="mv "+work_file+" "+paths.at(1)+" -f";
-//            //system(str_rm_cmd.c_str());
+//            system(str_rm_cmd.c_str());
         }
     }
+}
 
 int main()
 {

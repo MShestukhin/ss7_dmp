@@ -16,6 +16,7 @@ CMakeFiles/dmp2db_smsc_lvl2.dir/main.cpp.o: ../coren_cpp/include/Utils.h
 CMakeFiles/dmp2db_smsc_lvl2.dir/main.cpp.o: ../coren_cpp/include/asn_utils.h
 CMakeFiles/dmp2db_smsc_lvl2.dir/main.cpp.o: ../coren_cpp/include/logger.h
 CMakeFiles/dmp2db_smsc_lvl2.dir/main.cpp.o: ../bd.h
+CMakeFiles/dmp2db_smsc_lvl2.dir/main.cpp.o: ../include/libconfig.h++
 CMakeFiles/dmp2db_smsc_lvl2.dir/main.cpp.o: ../include/libpq-fe.h
 CMakeFiles/dmp2db_smsc_lvl2.dir/main.cpp.o: ../include/postgres_ext.h
 CMakeFiles/dmp2db_smsc_lvl2.dir/main.cpp.o: ../include/rapidjson/allocators.h

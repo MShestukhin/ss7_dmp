@@ -118,10 +118,10 @@ dmp2db_smsc_lvl2: /usr/lib/x86_64-linux-gnu/libboost_log_setup.a
 dmp2db_smsc_lvl2: /usr/lib/x86_64-linux-gnu/libboost_regex.a
 dmp2db_smsc_lvl2: /usr/lib/x86_64-linux-gnu/libboost_chrono.a
 dmp2db_smsc_lvl2: /usr/lib/x86_64-linux-gnu/libboost_atomic.a
-dmp2db_smsc_lvl2: ../lib/libpq.a
-dmp2db_smsc_lvl2: /usr/lib/x86_64-linux-gnu/libconfig++.a
 dmp2db_smsc_lvl2: cnora_cpp/libcnora_service.a
 dmp2db_smsc_lvl2: coren_cpp/libcoren_interface.a
+dmp2db_smsc_lvl2: ../lib/libpq.a
+dmp2db_smsc_lvl2: /usr/lib/x86_64-linux-gnu/libconfig++.a
 dmp2db_smsc_lvl2: coren_cpp/protocol/libcoren_protocol.a
 dmp2db_smsc_lvl2: cnora_cpp/protocol/libcnora_protocol.a
 dmp2db_smsc_lvl2: /usr/lib/x86_64-linux-gnu/libboost_program_options.a

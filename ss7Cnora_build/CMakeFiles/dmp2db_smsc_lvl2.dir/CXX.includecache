@@ -172,6 +172,14 @@ signal.h
 iostream
 -
 
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/libconfig.h++
+stdio.h
+-
+exception
+-
+string
+-
+
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/libpq-fe.h
 stdio.h
 -
@@ -391,10 +399,10 @@ boost/thread.hpp
 -
 include/libpq-fe.h
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/libpq-fe.h
+include/libconfig.h++
+/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/include/libconfig.h++
 structs.h
 /opt/svyazcom/ss7_dmp_cnora/ss7_dmp/structs.h
-libconfig.h++
-/opt/svyazcom/ss7_dmp_cnora/ss7_dmp/libconfig.h++
 signal.h
 -
 bd.h
