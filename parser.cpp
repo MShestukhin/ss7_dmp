@@ -37,10 +37,10 @@ std::string parser::Finding_Regex_Match(std::string text, std::string regx){
       if (std::regex_search(text, match, re) && match.size() > 1) {
         result = match.str(2);
       } else {
-        result = std::string("hhh");
+        result = std::string("Nothing to find");
       }
     } catch (std::regex_error& e) {
-      std::cout<<e.what();
+      result=e.what();
     }
     return result;
 }
