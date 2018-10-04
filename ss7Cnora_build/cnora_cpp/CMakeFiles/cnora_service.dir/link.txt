@@ -1,2 +1,0 @@
-/usr/bin/ar qc libcnora_service.a  CMakeFiles/cnora_service.dir/src/CNora.cpp.o CMakeFiles/cnora_service.dir/src/main.cpp.o
-/usr/bin/ranlib libcnora_service.a

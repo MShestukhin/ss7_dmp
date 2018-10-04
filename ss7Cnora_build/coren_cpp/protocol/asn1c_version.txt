@@ -1,2 +1,0 @@
-ASN.1 Compiler, v0.9.28
-Copyright (c) 2003-2016 Lev Walkin <vlm@lionet.info>
