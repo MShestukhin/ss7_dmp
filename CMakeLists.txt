@@ -13,7 +13,6 @@ find_package(Boost COMPONENTS system log thread filesystem REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
-add_library(parser STATIC  ./parser.cpp)
 add_subdirectory(cnora_cpp)
 ### coren library
 add_subdirectory(coren_cpp)

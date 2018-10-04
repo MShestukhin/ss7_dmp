@@ -1,4 +1,54 @@
 #include "parser.h"
+#include <iostream>
+#include <regex>
+
+std::string toString(int number)
+{
+    char str[11];
+    sprintf(str, "%d", number);
+    return std::string(str);
+}
+
+int toNumber(std::string str){
+    return atoi(str.c_str());
+}
+
+bool contains(std::string s_cel,std::string s_find){
+    if (s_cel.find(s_find) != std::string::npos) {
+        return true;
+    }
+    return false;
+}
+
+bool compare_str(string str_first,string str_second ){
+    if(str_first==str_second)
+        return true;
+    else
+        return false;
+}
+std::string timeStampToString(string ts)
+{
+    int n=atoi(ts.c_str());
+    time_t t = n;
+    struct tm * ptm = localtime(&t);
+    char buf[30];
+    //Format: 2007-10-23 10:45:51
+    strftime (buf, 30, "%F %H:%M:%S",  ptm);
+    std::string result(buf);
+    return result;
+}
+
+vector<string> split(string str,const char * delimitr)
+{
+    std::vector<string> v;
+    char* chars_array = strtok((char*)str.c_str(), delimitr);
+    while(chars_array)
+    {
+        v.push_back(chars_array);
+        chars_array = strtok(nullptr, delimitr);
+    }
+    return v;
+}
 
 parser::parser()
 {
@@ -10,6 +60,38 @@ void parser::transform_to_timestamp_promat(vector<vector<std::string> >* mass_ln
         std::string timestamp=str_tr.substr(0,4)+"-"+str_tr.substr(4,2)+"-"+str_tr.substr(6,2)+" "+str_tr.substr(8,2)+":"+str_tr.substr(10,2)+":"+str_tr.substr(12,2);
         mass_ln_to_transform->at(i).at(num_row)=timestamp;
     }
+}
+
+std::string parser::Finding_All_Regex_Matches(std::string text, std::string regx){
+    string pcap;
+    try {
+        std::regex re(regx);
+      std::sregex_iterator next(text.begin(), text.end(), re);
+      std::sregex_iterator end;
+      while (next != end) {
+        std::smatch match = *next;
+        pcap+= match[2].str()+"\n";
+        next++;
+      }
+    } catch (std::regex_error& e) {
+      // Syntax error in the regular expression
+    }
+    return pcap;
+}
+std::string parser::Finding_Regex_Match(std::string text, std::string regx, int element){
+    std::string result;
+    try {
+      std::regex re(regx);
+      std::smatch match;
+      if (std::regex_search(text, match, re) && match.size() > 1) {
+        result = match.str(element);
+      } else {
+        result = std::string("Can not find regular expression");
+      }
+    } catch (std::regex_error& e) {
+      result=e.what();
+    }
+    return result;
 }
 
 vector<vector<std::string> > parser::pars_file(std::string fileName,char delimiter, int data_num, int start_reading_line){
@@ -75,3 +157,4 @@ vector<vector<std::string> > parser::pars_file(std::string fileName,char delimit
     fclose(file);
     return rows;
 }
+
