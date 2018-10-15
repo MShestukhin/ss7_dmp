@@ -20,7 +20,7 @@ public:
 bool contains(std::string s_cel,std::string s_find);
 bool compare_str(string str_first,string str_second);
 std::string timeStampToString(string ts);
-vector<string> split(string str,const char * delimitr);
+std::vector<std::string> split(const std::string& str, const char* delim);
 std::string toString(int number);
 int toNumber(std::string str);
 vector<string> json_pars(string mass_from_js);

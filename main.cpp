@@ -23,6 +23,7 @@
 #include "working_file.h"
 #include "log.h"
 #include "worker_cnora.h"
+
 class log logg;
 using namespace std;
 using namespace rapidjson;
@@ -82,7 +83,6 @@ vector<string> new_pars(string mass_from_js){
         return data;
     }
     for(int i=0;i<data_for_search.size();i++){
-        string json_data=data_for_search.at(i);
             data.push_back("0");
     }
     Document document;
@@ -92,15 +92,18 @@ vector<string> new_pars(string mass_from_js){
         data.clear();
         return data;
     }
+    vector<string> mass_str;
     for(int i=0;i<data_for_search.size();i++){
         string json_str=data_for_search.at(i);
+        mass_str.clear();
+        mass_str=split(json_str, ".");
         string value;
         if(compare_str(json_str,"TS"))
             value=timeStampToString(json_data_find(json_str,mass_from_js, document));
         else
             value=json_data_find(json_str,mass_from_js, document);
-//        std::cout<<value<<"\n";
-        data.at(i)=value;
+        if(!value.empty())
+            data.at(i)=value;
     }
     document.Clear();
     return data;
@@ -115,20 +118,20 @@ void init(){
         conf.readFile("/opt/svyazcom/etc/dmp2db_smsc_lv2.conf");
     }
     catch (libconfig::FileIOException e){
-        std::cout<<e.what();
+        std::cout<<e.what()<<endl;
         exit(1);
     }
     catch (libconfig::ConfigException e){
-        std::cout<<e.what();
+        std::cout<<e.what()<<endl;
         exit(1);
     }
     catch(libconfig::SettingException e){
-        std::cout<<e.what();
+        std::cout<<e.what()<<endl;
         exit(1);
     }
     catch(libconfig::ParseException e)
     {
-        std::cout<<e.getError();
+        std::cout<<e.getError()<<endl;
         exit(1);
     }
     //load paths
@@ -169,7 +172,7 @@ void init(){
     //load data which should search in json file
     int count_data_for_search=conf.lookup("application.data_for_search").getLength();
 
-    for(int i=0;i<count_data_for_search;i++)    
+    for(int i=0;i<count_data_for_search;i++)
         data_for_search.push_back(conf.lookup("application.data_for_search")[i]);
     string cor_sock=conf.lookup("application.cnora.coren_socket");
     coren_socket=cor_sock;
@@ -182,7 +185,7 @@ boost::asio::io_service io;
 void on_signal(const boost::system::error_code& error, int signal_number)
 {
     if (error) {
-        logg.error("Signal with error :"+error.message());
+        logg.error("Signal with error : "+error.message());
     }
     logg.error("Got signal "+to_string(signal_number)+":"+strsignal(signal_number));
     exit(1);
@@ -210,9 +213,9 @@ int main()
     while(1){
         if(io.stopped())
             break;
-        sleep(10);
-        string format="";
-        transport_file(format,paths.at(0),paths.at(2),"dmp",contains);
+        sleep(dmp_processing_period);
+        string format="%B_%d_%Y_%I:%M:%S";
+        transport_file(format,paths.at(0),paths.at(2),"dmp",compare_str);
         vector<Working_file> upload_file=file_lookup(paths.at(2),"dmp",contains);
         for(int i=0; i<upload_file.size();i++){
             string work_file=upload_file.at(i).name;
@@ -220,7 +223,9 @@ int main()
             string s; // сюда будем класть считанные строки
             ifstream file(work_file.c_str());
             vector<vector<std::string> > rows;
+            num_row=0;
             while(getline(file, s)){ // пока не достигнут конец файла класть очередную строку в переменную (s)
+                num_row++;
                 vector<string> row=new_pars(s);
                 if(row.size()==table_name.size())
                     rows.push_back(row);

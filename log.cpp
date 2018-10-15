@@ -36,7 +36,7 @@ void log::msg(std::string s, std::string inf_level){
      }
      else
      {
-         std::cout << "Error opening file\n";
+         std::cout << "Error opening log file\n";
          exit(3);
      }
 

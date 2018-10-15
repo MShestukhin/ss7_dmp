@@ -38,16 +38,19 @@ std::string timeStampToString(string ts)
     return result;
 }
 
-vector<string> split(string str,const char * delimitr)
+std::vector<std::string> split(const std::string& str, const char* delim)
 {
-    std::vector<string> v;
-    char* chars_array = strtok((char*)str.c_str(), delimitr);
-    while(chars_array)
+    std::vector<std::string> dest;
+    char* pTempStr = strdup( str.c_str() );
+    char* pWord = strtok(pTempStr, delim);
+    while(pWord != NULL)
     {
-        v.push_back(chars_array);
-        chars_array = strtok(nullptr, delimitr);
+        dest.push_back(pWord);
+        pWord = strtok(NULL, delim);
     }
-    return v;
+
+    free(pTempStr);
+    return dest;
 }
 
 parser::parser()
@@ -62,22 +65,23 @@ void parser::transform_to_timestamp_promat(vector<vector<std::string> >* mass_ln
     }
 }
 
-std::string parser::Finding_All_Regex_Matches(std::string text, std::string regx){
-    string pcap;
-    try {
-        std::regex re(regx);
-      std::sregex_iterator next(text.begin(), text.end(), re);
-      std::sregex_iterator end;
-      while (next != end) {
-        std::smatch match = *next;
-        pcap+= match[2].str()+"\n";
-        next++;
-      }
-    } catch (std::regex_error& e) {
-      // Syntax error in the regular expression
-    }
-    return pcap;
-}
+//std::string parser::Finding_All_Regex_Matches(std::string text, std::string regx){
+//    string pcap;
+//    try {
+//        std::regex re(regx);
+//      std::sregex_iterator next(text.begin(), text.end(), re);
+//      std::sregex_iterator end;
+//      while (next != end) {
+//        std::smatch match = *next;
+//        pcap+= match[2].str()+"\n";
+//        next++;
+//      }
+//    } catch (std::regex_error& e) {
+//      // Syntax error in the regular expression
+//    }
+//    return pcap;
+//}
+
 std::string parser::Finding_Regex_Match(std::string text, std::string regx, int element){
     std::string result;
     try {
@@ -142,8 +146,6 @@ vector<vector<std::string> > parser::pars_file(std::string fileName,char delimit
             if(s1.at(i)!='\x0A') i=i+1;
             else break;
         }
-        std::cout<<i<<"\n";
-        std::cout<<end<<"\n";
         s1=s1.substr(end,i-end);
         row.push_back(s1);
         if(data_num!=0)

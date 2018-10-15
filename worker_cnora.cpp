@@ -4,6 +4,7 @@
 extern class log logg;
 extern string coren_socket;
 extern string cnora_name;
+
 CoreN::InterfacePtr getCoreN(boost::asio::io_service& ios)
 {
     const std::string& unix_socket_name =coren_socket ;

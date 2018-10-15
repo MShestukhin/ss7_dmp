@@ -11,18 +11,6 @@ Working_file::Working_file()
     name="";
 }
 
-//bool contains(std::string s_cel,std::string s_find){
-//    if (s_cel.find(s_find) != std::string::npos) {
-//        return true;
-//    }
-//    return false;
-//};
-//bool compare_str(string str_first,string str_second ){
-//    if(str_first==str_second)
-//        return true;
-//    else
-//        return false;
-//};
 vector<Working_file> file_lookup(string absolute_path, string file_name,bool (*pt2Func)(string,string )){
     DIR* dir;
     struct dirent* entry;
